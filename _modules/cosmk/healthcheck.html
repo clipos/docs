@@ -1,0 +1,284 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cosmk.healthcheck &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>cosmk.healthcheck</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cosmk.healthcheck</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
+<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+
+<span class="sd">&quot;&quot;&quot;CLIP OS toolkit healthcheck functions and stuff&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">CosmkEnvironmentError</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">debug</span>
+
+
+<div class="viewcode-block" id="healthcheck"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.healthcheck.healthcheck">[docs]</a><span class="k">def</span> <span class="nf">healthcheck</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Verify that the current system has everything to make work properly</span>
+<span class="sd">    cosmk. This verifies that the Linux kernel version and the available</span>
+<span class="sd">    features are , the availability of the required system utilities, the filesystem</span>
+<span class="sd">    options of the repo root underlying mountpoint, the available free space on</span>
+<span class="sd">    this mountpoint, etc.</span>
+
+<span class="sd">    TODO: extend this list :)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+    <span class="c1">#check_system()</span>
+    <span class="c1">#check_mountpoint()</span>
+    <span class="c1">#check_pythonenv()</span>
+
+
+<div class="viewcode-block" id="check_system"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.healthcheck.check_system">[docs]</a><span class="k">def</span> <span class="nf">check_system</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;Linux&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CosmkEnvironmentError</span><span class="p">(</span><span class="s2">&quot;this tool must run on a Linux machine&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># ignore type checking on the following because all exceptions are</span>
+        <span class="c1"># caught if this ever fails:</span>
+        <span class="n">linux_version</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(\d+(\.\d+)*)&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">())</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+        <span class="n">linux_version_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">linux_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CosmkEnvironmentError</span><span class="p">(</span>
+            <span class="s2">&quot;bad Linux kernel version string returned by platform.release&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">linux_version_tuple</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">CosmkEnvironmentError</span><span class="p">(</span>
+            <span class="s2">&quot;cosmk must be run on Linux kernel version 4.4 or above&quot;</span><span class="p">)</span>
+
+    <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;system running Linux </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">linux_version</span><span class="p">))</span>
+
+    <span class="c1"># Check kernel features by parsing /proc/config{,.gz}</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

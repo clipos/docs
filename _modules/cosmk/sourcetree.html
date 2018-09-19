@@ -1,0 +1,572 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cosmk.sourcetree &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>cosmk.sourcetree</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cosmk.sourcetree</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
+<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+
+<span class="sd">&quot;&quot;&quot;This module provide all the logic, functions and classes to manage the CLIP</span>
+<span class="sd">OS source tree.</span>
+<span class="sd">In a greater extent, this CLIP OS source tree is also managed by the ``repo``</span>
+<span class="sd">tool but this module provide enhanced functionalities to those provided only by</span>
+<span class="sd">``repo``.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">git</span>
+
+<span class="kn">from</span> <span class="nn">.commons</span> <span class="k">import</span> <span class="n">line</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="p">(</span><span class="n">CosmkEnvironmentError</span><span class="p">,</span>
+                         <span class="n">ProjectInRepoSourceTreeInUncleanState</span><span class="p">,</span>
+                         <span class="n">RepoSourceTreeManifestParsingError</span><span class="p">,</span>
+                         <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">critical</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">.privileges</span> <span class="k">import</span> <span class="n">ElevatedPrivileges</span>
+
+<span class="c1"># Usage of a global variable (masked from imports due to the leading</span>
+<span class="c1"># underscores) are to avoid uneeded recomputation by the function</span>
+<span class="c1"># repo_root_path() each time it is being called:</span>
+<span class="n">__repo_root</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="is_repo_root"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.is_repo_root">[docs]</a><span class="k">def</span> <span class="nf">is_repo_root</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns True if the given path contains a &quot;.repo&quot; directory.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;.repo&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="repo_root_path"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.repo_root_path">[docs]</a><span class="k">def</span> <span class="nf">repo_root_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Guess the repo root directory path from the current working directory or</span>
+<span class="sd">    (if the CWD does not seem to be a repo root) from the location of the</span>
+<span class="sd">    cosmk module.&quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">__repo_root</span>
+    <span class="k">if</span> <span class="n">__repo_root</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">__repo_root</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+        <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">is_repo_root</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">break</span>
+
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># fallback to the location of this file if the CWD is not in the</span>
+            <span class="c1"># repo root:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">is_repo_root</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="k">break</span>
+
+                <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span>
+                    <span class="s2">&quot;Could not find repo root!&quot;</span><span class="p">)</span>
+
+        <span class="n">__repo_root</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="k">return</span> <span class="n">__repo_root</span></div>
+
+
+<div class="viewcode-block" id="fix_output_nodes_ownerships"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.fix_output_nodes_ownerships">[docs]</a><span class="k">def</span> <span class="nf">fix_output_nodes_ownerships</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">repo_root</span> <span class="o">=</span> <span class="n">repo_root_path</span><span class="p">()</span>
+    <span class="n">out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">)</span>
+    <span class="n">cache_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root</span><span class="p">,</span> <span class="s2">&quot;cache&quot;</span><span class="p">)</span>
+    <span class="n">run_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">)</span>
+
+    <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Fixing ownership nodes in output (</span><span class="se">\&quot;</span><span class="s2">out/</span><span class="se">\&quot;</span><span class="s2">) and cache (</span><span class="se">\&quot;</span><span class="s2">cache/</span><span class="se">\&quot;</span><span class="s2">) &quot;</span>
+          <span class="s2">&quot;directories...&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">ElevatedPrivileges</span><span class="p">()</span> <span class="k">as</span> <span class="n">unprivileged_uid_gid</span><span class="p">:</span>
+        <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span> <span class="o">=</span> <span class="n">unprivileged_uid_gid</span>
+
+        <span class="c1"># &lt;repo_root&gt;/out:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                         <span class="n">onerror</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">followlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^out/[^/]+/[^/]+/[^/]+/[^/]+$&#39;</span><span class="p">,</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">repo_root</span><span class="p">)):</span>
+                <span class="c1"># Do not treat the directories in the action output directories</span>
+                <span class="c1"># as we want to preserve the ownerships of the files contained</span>
+                <span class="c1"># into those dirs.</span>
+                <span class="c1"># The following prevents os.walk() from recursing into the</span>
+                <span class="c1"># child dirs.</span>
+                <span class="n">dirs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirs</span> <span class="o">+</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+
+        <span class="c1"># &lt;repo_root&gt;/cache:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                         <span class="n">onerror</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">followlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirs</span> <span class="o">+</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+
+        <span class="c1"># &lt;repo_root&gt;/run:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">run_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">run_path</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="snapshot_manifest"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.snapshot_manifest">[docs]</a><span class="k">def</span> <span class="nf">snapshot_manifest</span><span class="p">(</span>
+        <span class="n">use_branches</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">snapshot_groups</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">no_snapshot_groups</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Snapshot the ``repo`` manifest file to the current state of the CLIP OS</span>
+<span class="sd">    source tree.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Locate the path to the manifest file with which repo has been</span>
+    <span class="c1"># initialized:</span>
+    <span class="n">root_path</span> <span class="o">=</span> <span class="n">repo_root_path</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">internal_manifest_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;.repo&quot;</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">readlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;.repo/manifest.xml&quot;</span><span class="p">)))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;Could not locate the manifest file currently used by repo.&quot;&quot;&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Compare the state of the &quot;{repo}/.repo/manifests&quot; and &quot;{repo}/manifest/&quot;</span>
+    <span class="c1"># git repositories:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">internal_manifest_repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span>
+                                                       <span class="s2">&quot;.repo/manifests&quot;</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;Could not identify &quot;{repo}/.repo/manifests/&quot; as a git</span>
+<span class="sd">            repository.&quot;&quot;&quot;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">modifiable_manifest_repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span>
+                                                         <span class="s2">&quot;manifest&quot;</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;Could not identify &quot;{repo}/manifest/&quot; as a git repository.&quot;&quot;&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">internal_manifest_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span> <span class="o">!=</span>
+            <span class="n">modifiable_manifest_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;The current HEAD commits of the two git repositories</span>
+<span class="sd">            &quot;{repo}/.repo/manifests/&quot; and &quot;{repo}/manifest/&quot; do not match.&quot;&quot;&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">internal_manifest_repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;The git repository in &quot;{repo}/.repo/manifests/&quot; is in a dirty</span>
+<span class="sd">            state.&quot;&quot;&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">modifiable_manifest_repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;The git repository in &quot;{repo}/manifest/&quot; is in a dirty</span>
+<span class="sd">            state.&quot;&quot;&quot;</span><span class="p">))</span>
+
+    <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Repositories &quot;</span><span class="si">{repo}</span><span class="s2">/.repo/manifests/&quot; and &quot;</span><span class="si">{repo}</span><span class="s2">/manifest/&quot;</span>
+<span class="s2">               are both in a clean state, on the same HEAD commit.&quot;&quot;&quot;</span><span class="p">))</span>
+
+    <span class="n">internal_manifest_repo_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">internal_manifest_repo</span><span class="o">.</span><span class="n">working_dir</span>
+    <span class="n">internal_manifest_repo_filesubpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span>
+        <span class="n">internal_manifest_filepath</span><span class="p">,</span> <span class="n">internal_manifest_repo_path</span><span class="p">)</span>
+    <span class="c1"># Sanity check:</span>
+    <span class="k">if</span> <span class="n">internal_manifest_repo_filesubpath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;The current manifest file in use by repo</span>
+<span class="sd">            &quot;{repo}/.repo/manifest.xml&quot; is not a symlink to a file within</span>
+<span class="sd">            &quot;{repo}/.repo/manifests&quot;.&quot;&quot;&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span>
+            <span class="n">manifest_file_subpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">processed_manifests</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Process a manifest root file and keep an acumulator for recursion on</span>
+<span class="sd">        ``&lt;include&gt;`` tags.&quot;&quot;&quot;</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Processing manifest file </span><span class="si">{!r}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">processed_manifests</span><span class="p">:</span>
+            <span class="n">processed_manifests</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">)</span> <span class="ow">in</span>
+                <span class="n">processed_manifests</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="n">RepoSourceTreeManifestParsingError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;An already processed manifest file ({!r}) is again candidate</span>
+<span class="sd">                to snapshot. Is there an include loop in the manifest file</span>
+<span class="sd">                structure?&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">XMLParser</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">CommentedTreeBuilder</span><span class="p">())</span>
+            <span class="n">xmldoc</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">internal_manifest_repo_path</span><span class="p">,</span>
+                                           <span class="n">manifest_file_subpath</span><span class="p">),</span>
+                              <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">RepoSourceTreeManifestParsingError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;Failure when parsing {!r} manifest file. Exception raised</span>
+<span class="sd">                was: {!r}&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">,</span> <span class="n">exc</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">proj</span> <span class="ow">in</span> <span class="n">xmldoc</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;./project&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">proj_repo_subpath</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;A project in manifest ({!r}) does not have a path.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># according to repo manifest documentation, groups can be</span>
+                <span class="c1"># separated with commas or spaces</span>
+                <span class="n">proj_group_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">proj</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span>
+                                         <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">proj_group_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+            <span class="c1"># skip this project if the project group set does not intersect</span>
+            <span class="c1"># with the groups to snapshot set (if provided) or if it does</span>
+            <span class="c1"># intersect with the groups NOT to snapshot set (if provided as</span>
+            <span class="c1"># well):</span>
+            <span class="k">if</span> <span class="n">snapshot_groups</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">snapshot_groups</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">proj_group_set</span><span class="p">:</span>
+                <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Skipping project {!r} because it does not belong to any</span>
+<span class="sd">                    group candidate for snapshot provided as argument.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">no_snapshot_groups</span> <span class="ow">and</span>
+                    <span class="nb">set</span><span class="p">(</span><span class="n">no_snapshot_groups</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">proj_group_set</span><span class="p">):</span>
+                <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Skipping project {!r} because it belongs to a repo group</span>
+<span class="sd">                    which shall not be snapshotted.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+                <span class="k">continue</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">proj_git_repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span>
+                                                      <span class="n">proj_repo_subpath</span><span class="p">))</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Repo project {!r} is not a git repository anymore.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">ProjectInRepoSourceTreeInUncleanState</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Repo project {!r} is in a dirty state.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">ProjectInRepoSourceTreeInUncleanState</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Repo project {!r} has not a valid git HEAD.&quot;&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">use_branches</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">proj_revision</span> <span class="o">=</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                        <span class="sd">&quot;&quot;&quot;Project {!r} cannot use git symbolic reference</span>
+<span class="sd">                        because it is in a detached HEAD state.&quot;&quot;&quot;</span><span class="p">)</span>
+                        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+                    <span class="n">proj_revision</span> <span class="o">=</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span><span class="o">.</span><span class="n">hexsha</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">proj_revision</span> <span class="o">=</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span><span class="o">.</span><span class="n">hexsha</span>
+
+            <span class="c1"># Check that the returned revision is effectively pointed by a Git</span>
+            <span class="c1"># reference or any ancestor of a Git reference. This is required in</span>
+            <span class="c1"># order to avoid using a Git revision that can be garbage-collected</span>
+            <span class="c1"># by Git.</span>
+            <span class="c1"># Important note: we do not check that the reference pointing on</span>
+            <span class="c1"># the current HEAD is effectively valid on at least one Git remote.</span>
+            <span class="c1"># We consider that it is up to the user to push that Git reference</span>
+            <span class="c1"># to the suitable authoritative Git repostitory for future usage.</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">references</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span> <span class="o">==</span> <span class="n">ref</span><span class="o">.</span><span class="n">commit</span> <span class="ow">or</span>
+                        <span class="n">proj_git_repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">commit</span> <span class="ow">in</span> <span class="n">ref</span><span class="o">.</span><span class="n">commit</span><span class="o">.</span><span class="n">parents</span><span class="p">):</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ProjectInRepoSourceTreeInUncleanState</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;No Git symbolic reference is pointing to the current</span>
+<span class="sd">                    HEAD commit of the project {!r} or any of its eventual</span>
+<span class="sd">                    sucessors.&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proj_repo_subpath</span><span class="p">))</span>
+
+            <span class="c1"># change the revision attribute in the XML project tag:</span>
+            <span class="n">proj</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;revision&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proj_revision</span>
+
+            <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Project </span><span class="si">{!r}</span><span class="s2"> will be snapshotted to revision </span><span class="si">{!r}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">proj_repo_subpath</span><span class="p">,</span> <span class="n">proj_revision</span><span class="p">))</span>
+
+        <span class="c1"># manifest is processed: all the projects have been snapshotted to a</span>
+        <span class="c1"># revision</span>
+        <span class="n">processed_manifests</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">manifest_file_subpath</span><span class="p">):</span> <span class="n">xmldoc</span>
+        <span class="p">})</span>
+
+        <span class="c1"># iterate with others manifests included</span>
+        <span class="k">for</span> <span class="n">manifest</span> <span class="ow">in</span> <span class="n">xmldoc</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;./include&quot;</span><span class="p">):</span>
+            <span class="n">manifest_subpath</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+            <span class="n">processed_manifests</span> <span class="o">=</span> <span class="n">_process</span><span class="p">(</span>
+                <span class="n">manifest_file_subpath</span><span class="o">=</span><span class="n">manifest_subpath</span><span class="p">,</span>
+                <span class="n">processed_manifests</span><span class="o">=</span><span class="n">processed_manifests</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">processed_manifests</span>
+
+    <span class="n">processed_manifests</span> <span class="o">=</span> <span class="n">_process</span><span class="p">(</span>
+        <span class="n">manifest_file_subpath</span><span class="o">=</span><span class="n">internal_manifest_repo_filesubpath</span><span class="p">,</span>
+        <span class="n">processed_manifests</span><span class="o">=</span><span class="p">{}</span>
+    <span class="p">)</span>
+
+    <span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;Manifest files successfully processed, proceeding to writing in</span>
+<span class="sd">        &quot;{repo}/manifest/&quot; repository.&quot;&quot;&quot;</span><span class="p">))</span>
+
+    <span class="n">modifiable_manifest_repo_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">modifiable_manifest_repo</span><span class="o">.</span><span class="n">working_dir</span>
+    <span class="k">for</span> <span class="n">manifest_file_subpath</span><span class="p">,</span> <span class="n">manifest_xmldoc</span> <span class="ow">in</span> <span class="n">processed_manifests</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">manifest_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">modifiable_manifest_repo_path</span><span class="p">,</span>
+                                          <span class="n">manifest_file_subpath</span><span class="p">)</span>
+        <span class="n">manifest_xmldoc</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">manifest_file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">,</span>
+                              <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># manually append a final newline since the write method above does</span>
+        <span class="c1"># not do it:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">manifest_file_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CommentedTreeBuilder"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.CommentedTreeBuilder">[docs]</a><span class="k">class</span> <span class="nc">CommentedTreeBuilder</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">TreeBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An :py:mod:`xml.etree.ElementTree.TreeBuilder` subclass that retains XML</span>
+<span class="sd">    comments.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CommentedTreeBuilder.comment"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.sourcetree.CommentedTreeBuilder.comment">[docs]</a>    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Text</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># FIXME: Typing confusion ET.TreeBuilder.start and ET.TreeBuilder.end</span>
+        <span class="c1"># take as first argument a Union[bytes, str] but ET.Comment is seen as</span>
+        <span class="c1"># a Callable[[Union[str, str]], Element].</span>
+        <span class="c1"># Awaiting proper fix or typing annotation fixing this issue:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">Comment</span><span class="p">,</span> <span class="p">{})</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">Comment</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

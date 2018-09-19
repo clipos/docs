@@ -1,0 +1,534 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Environment setup &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building" href="build.html" />
+    <link rel="prev" title="Roadmap" href="../clipos/roadmap.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Environment setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#global-environment-configuration-requirements">Global environment configuration requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#software-dependencies">Software dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies-installation-on-supported-linux-distributions">Dependencies installation on supported Linux-distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-fetch-the-entire-source-tree">How to fetch the entire source tree?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Environment setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/toolkit/setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="environment-setup">
+<span id="setup"></span><h1>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h1>
+<p>This document will walk you through the steps to setup the environment required
+to use the tools in the CLIP OS project.</p>
+<div class="section" id="global-environment-configuration-requirements">
+<h2>Global environment configuration requirements<a class="headerlink" href="#global-environment-configuration-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Here is a requirements check-list about your global environment:</p>
+<ol class="arabic">
+<li><p class="first">You must run a <strong>64-bit x86 system</strong> (a.k.a. <code class="docutils literal notranslate"><span class="pre">AMD64</span></code>, <code class="docutils literal notranslate"><span class="pre">Intel</span> <span class="pre">64</span></code> or
+<code class="docutils literal notranslate"><span class="pre">x86_64</span></code>) architecture.</p>
+<div class="tip admonition">
+<p class="first admonition-title">About other system architectures…</p>
+<p class="last">Cross-compiling to other system architectures is not supported yet. No
+other host system architecture is supported yet.</p>
+</div>
+</li>
+<li><p class="first">You must run <strong>Linux</strong>. No other operating system is supported. Any
+relatively recent and stable kernel provided by a major Linux distribution
+should be compatible with the CLIP OS toolkit.</p>
+<div class="note admonition">
+<p class="first admonition-title">Supported Linux distributions</p>
+<p>The project has been tested and is known to work with the following
+distributions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Arch Linux</li>
+<li>Debian testing (<em>buster</em>) and Debian unstable</li>
+<li>Fedora 28</li>
+<li>Ubuntu 18.04</li>
+</ul>
+</div></blockquote>
+<p>Similarly, the following kernels are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li>4.16 and above (Arch Linux, Debian unstable, etc.)</li>
+<li>4.9 (Debian stable (<em>stretch</em>))</li>
+</ul>
+</div></blockquote>
+<p class="last">The project will likely work on other distributions but we do not plan on
+supporting any other one yet.</p>
+</div>
+<div class="tip admonition">
+<p class="first admonition-title">About other Linux distributions…</p>
+<p class="last">Provided a kernel can support all the features used within the CLIP OS
+toolkit (such as namespaces, capabilities, cgroups for containerization,
+SquashFS, loop devices, OverlayFS, tmpfs, etc.), it is expected to work
+without issue.</p>
+</div>
+</li>
+<li><p class="first">Both your hardware and your kernel must support <strong>KVM</strong> (through Intel
+VT-x/VT-d or AMD-V/AMD-Vi technologies) to run CLIP OS virtual machine
+images.</p>
+</li>
+<li><p class="first"><strong>Super-user privileges</strong> are required on punctual occasions through the use
+of the <code class="docutils literal notranslate"><span class="pre">sudo</span></code> utility.</p>
+<div class="tip admonition">
+<p class="first admonition-title">Why this requirement?</p>
+<p>Super-user privileges are required to permit the CLIP OS toolkit to
+create and manage Linux containers, such as the CLIP OS SDK ephemeral
+containers.</p>
+<p>However, the CLIP OS toolkit will not run everything as root as it will
+lower its effective privileges when root privileges are not necessary.</p>
+<p class="last">For more information, see the implementation of the class
+<cite>cosmk.privileges.ElevatedPrivileges</cite> in <a class="reference internal" href="cosmk.html#cosmk"><span class="std std-ref">cosmk Python API reference</span></a>.</p>
+</div>
+</li>
+<li><p class="first">Make sure to have allocated a consequent size of <strong>swap space</strong> on your
+system as it might be required when working on large ephemeral SDK
+environments. Having a lot of RAM (16GB+) will also help.</p>
+<div class="tip admonition">
+<p class="first admonition-title">Why this requirement?</p>
+<p class="last">SDK ephemeral containers make use of “in-memory” <em>tmpfs</em> OverlayFS
+layers. As a consequence, there are scenarios where memory usage may be
+large (typically when bootstrapping the CLIP OS SDK image) and may not
+fit the entire memory of the system.</p>
+</div>
+</li>
+<li><p class="first">Make sure to have <strong>enough free storage space</strong> before getting the source
+tree as it can take up to several gigabytes of storage, and even more when
+you will begin building CLIP OS images. 50GB should be a minimum.</p>
+</li>
+<li><p class="first">Make sure to work in a <strong>filesystem without any restricted features</strong> such
+as <cite>noexec</cite> or <cite>nodev</cite> as it will cause undefined issues throughout the
+building process of some parts of the CLIP OS images.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="software-dependencies">
+<h2>Software dependencies<a class="headerlink" href="#software-dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="tip admonition">
+<p class="first admonition-title">TL;DR</p>
+<p class="last">If your are using a distribution supported by the project, you may skip this
+part of the documentation and jump directly to the section
+<a class="reference internal" href="#dependencies-installation-on-supported-linux-distributions"><span class="std std-ref">Dependencies installation on supported Linux-distributions</span></a>.
+Otherwise (or if you encounter issues with the above method), please
+continue reading this section.</p>
+</div>
+<p>To get a functional environment, you will need these software dependencies in
+your userland:</p>
+<ul>
+<li><p class="first"><strong>Git</strong> as all the source code is versioned through Git repositories.</p>
+</li>
+<li><p class="first"><strong>repo</strong> (tool from the Android Open Source Project) is required to fetch
+the source tree.</p>
+<div class="note admonition">
+<p class="first admonition-title">Alternative way to install <em>repo</em></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">repo</span></code> might be packaged by your Linux distribution. Otherwise you may
+have to get it and install it from source. To do so, follow the related
+instructions on <a class="reference external" href="https://source.android.com/setup/build/downloading#installing-repo">the Android Open Source project page regarding the setup
+of the environment for AOSP</a>.</p>
+</div>
+</li>
+<li><p class="first"><strong>Git LFS</strong> (Git Large File Storage extension) is required to fetch Git
+repositories with a lot of large binary files.</p>
+<div class="note admonition">
+<p class="first admonition-title">Alternative way to install Git LFS</p>
+<p class="last">If <code class="docutils literal notranslate"><span class="pre">git-lfs</span></code> is not provided through a package of your Linux
+distribution, you can follow instructions from the <a class="reference external" href="https://github.com/git-lfs/git-lfs/wiki/Installation">Git LFS project pages</a> to install it.</p>
+</div>
+</li>
+<li><p class="first"><strong>Python 3.6 (or later)</strong> with a working C compiler and some basic
+development libraries and tools as well as the appropriate CPython C header
+files.</p>
+<div class="note admonition">
+<p class="first admonition-title">Why a C compilation infrastructure is needed on the host
+             while all the compilations are done within containers?</p>
+<p class="last">These development packages are required to build some external Python
+packages vendored in the source tree and which embed some CPython code.</p>
+</div>
+</li>
+<li><p class="first"><strong>sudo</strong> (v1.8.21 or above) is required to permit the CLIP OS toolkit to
+elevate privileges to super-user privileges. The current unprivileged user
+must be a <code class="docutils literal notranslate"><span class="pre">sudoer</span></code> to be able to gain those privileges <em>via</em> the use of
+<code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+</li>
+<li><p class="first"><strong>runc</strong> (the OCI runtime tool) is required as it is used as the runtime
+for the CLIP OS SDK Linux containers.</p>
+<div class="tip admonition">
+<p class="first admonition-title">Alternative and more convenient way to get <em>runc</em> on your
+             system</p>
+<p>Since <em>runc</em> is a project originated from Docker and used as a container
+runtime by the Docker engine (since version 1.11 of the Docker Engine),
+installing <strong>the Docker Engine is an alternative</strong> to provide the <code class="docutils literal notranslate"><span class="pre">runc</span></code>
+utility to the CLIP OS toolkit (Docker embeds a <code class="docutils literal notranslate"><span class="pre">runc</span></code> binary under the
+name of <code class="docutils literal notranslate"><span class="pre">docker-runc</span></code>).</p>
+<p class="last">This tip may be useful if your distribution does not provide a standalone
+<code class="docutils literal notranslate"><span class="pre">runc</span></code> package but does provide a package for Docker.</p>
+</div>
+</li>
+<li><p class="first"><strong>squashfs-tools</strong> and <strong>util-linux</strong> system packages for the use of
+<code class="docutils literal notranslate"><span class="pre">mksquashfs</span></code> and <code class="docutils literal notranslate"><span class="pre">losetup</span></code> system utilities.</p>
+<div class="note admonition">
+<p class="first admonition-title">Why SquashFS and loop devices?</p>
+<p class="last">These two utilities are required to create and mount squashfs images used
+internally by the CLIP OS toolkit as the rootfs images of the ephemeral
+SDK containers.</p>
+</div>
+</li>
+<li><p class="first"><strong>Rust</strong> language support to build <a class="reference external" href="https://github.com/casey/just">just</a>.
+<code class="docutils literal notranslate"><span class="pre">just</span></code> is a simple command-line utility to launch and abstract sequences of
+shell commands within <code class="docutils literal notranslate"><span class="pre">Justfiles</span></code>. These files follow a <em>Makefile</em>-like
+syntax and provide an alternative way (in the context of the CLIP OS toolkit)
+to launch build jobs and other source code management common scripts as the
+<code class="docutils literal notranslate"><span class="pre">cosmk</span></code> tool does not implement all the required features yet.</p>
+<div class="note admonition">
+<p class="first admonition-title">Alternative way to install Rust</p>
+<p class="last">If Rust is not provided by any of your Linux distribution packages, you
+can install it with <a class="reference external" href="https://rustup.rs/">rustup</a>.</p>
+</div>
+</li>
+<li><p class="first"><strong>Bash 4.1 (or later)</strong> is required for some toolkit helper scripts.</p>
+</li>
+<li><p class="first"><strong>libvirt with QEMU and KVM support</strong> are required as the platform to run the
+CLIP OS virtual machines with QEMU with virtualized networks.</p>
+</li>
+</ul>
+<div class="section" id="dependencies-installation-on-supported-linux-distributions">
+<span id="id1"></span><h3>Dependencies installation on supported Linux-distributions<a class="headerlink" href="#dependencies-installation-on-supported-linux-distributions" title="Permalink to this headline">¶</a></h3>
+<p>On Ubuntu or Debian 10 (testing) and unstable (with <code class="docutils literal notranslate"><span class="pre">contrib</span></code> sources enabled
+for Debian):</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install <span class="se">\</span>
+       python3.6 python3.6-dev python3-venv <span class="se">\</span>
+       gnupg2 repo git git-lfs openssh-client <span class="se">\</span>
+       build-essential pkg-config <span class="se">\</span>
+       runc sudo squashfs-tools <span class="se">\</span>
+       qemu libvirt-dev libvirt-daemon <span class="se">\</span>
+       virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 <span class="se">\</span>
+       debootstrap <span class="se">\</span>
+       rustc cargo
+</pre></div>
+</div>
+<p>On Fedora 28:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dnf install <span class="se">\</span>
+       python2 python3-devel <span class="se">\</span>
+       gnupg git git-lfs openssh-clients <span class="se">\</span>
+       @development-tools <span class="se">\</span>
+       runc sudo squashfs-tools <span class="se">\</span>
+       qemu libvirt-devel libvirt-daemon <span class="se">\</span>
+       virt-manager <span class="se">\</span>
+       debootstrap <span class="se">\</span>
+       rust cargo
+</pre></div>
+</div>
+<p>On Arch Linux:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo pacman -Syu <span class="se">\</span>
+      python <span class="se">\</span>
+      gnupg repo git git-lfs openssh <span class="se">\</span>
+      base-devel <span class="se">\</span>
+      runc sudo squashfs-tools <span class="se">\</span>
+      qemu libvirt bridge-utils dnsmasq <span class="se">\</span>
+      virt-manager <span class="se">\</span>
+      debootstrap <span class="se">\</span>
+      rust
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-fetch-the-entire-source-tree">
+<h2>How to fetch the entire source tree?<a class="headerlink" href="#how-to-fetch-the-entire-source-tree" title="Permalink to this headline">¶</a></h2>
+<p>The project source tree is split among several distinct repositories that are
+managed together using <code class="docutils literal notranslate"><span class="pre">repo</span></code>.</p>
+<div class="important admonition">
+<p class="first admonition-title">Make sure the Git LFS filters are enabled</p>
+<p><strong>Please ensure to have installed the Git LFS filters hooks for Git</strong> either
+globally on your system (changes will be made in <code class="docutils literal notranslate"><span class="pre">/etc/gitconfig</span></code>) with
+the following command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo git-lfs install --system --skip-repo
+</pre></div>
+</div>
+<p>or only for your current user (changes will be made in <code class="docutils literal notranslate"><span class="pre">~/.gitconfig</span></code>):</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git-lfs install --skip-repo
+</pre></div>
+</div>
+<p class="last">This step is required to be done before synchronizing the whole CLIP OS
+source tree and allows to automatically download the files stored within the
+Git LFS server when <code class="docutils literal notranslate"><span class="pre">repo</span></code> checks out the Git LFS-backed repositories of
+the source tree.</p>
+</div>
+<div class="error admonition">
+<p class="first admonition-title">Watch out for unusual <em>umask</em> values!</p>
+<p>Due to the fact that we bind-mount the source tree within SDK containers,
+<strong>please ensure to fetch and synchronize the entire source tree with a umask
+value keeping permissions to read files and traverse directories</strong>
+(recommended <em>umask</em> value <code class="docutils literal notranslate"><span class="pre">0022</span></code>).</p>
+<p class="last">Failure to do so may lead to undefined issues when using the CLIP OS toolkit
+as all the file modes of this source tree are left unchanged when they are
+exposed within SDK containers. As a consequence, some unprivileged programs
+running in these containers might encounter a “Permission denied” error when
+trying to read files whose mode deny access for “others”.</p>
+</div>
+<p>Then to get the entire source tree:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir clipos
+<span class="gp">$</span> <span class="nb">cd</span> clipos
+<span class="gp">$</span> <span class="nb">umask</span> <span class="m">0022</span>
+<span class="gp">$</span> repo init -u https://github.com/CLIPOS/manifest
+<span class="gp">$</span> repo sync
+</pre></div>
+</div>
+<p>This may take some time (several minutes at least, but this depends on your
+network bandwidth) as several Git repositories need to be cloned, including
+large Git repositories holding lots of contents and history, such as the Linux
+kernel (<code class="docutils literal notranslate"><span class="pre">src/external/linux/</span></code>) or the Gentoo Portage tree
+(<code class="docutils literal notranslate"><span class="pre">src/portage/gentoo/</span></code>).</p>
+<div class="tip admonition">
+<p class="first admonition-title">Quicker synchronization</p>
+<p>If you are certain to have set everything up correctly and if you are not
+intreseted in the output of the <code class="docutils literal notranslate"><span class="pre">repo</span> <span class="pre">sync</span></code> command, you can instruct
+<em>repo</em> to synchronize all the sub-repositories concurrently by using
+multiple Git processes:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo sync -j4
+</pre></div>
+</div>
+<p class="last">This should be significantly faster than the method above but the output of
+the Git cloning processes might be interlaced and not easily readable.</p>
+</div>
+<p>At this point, you should have successfully set up your environment and
+fetched the whole source tree of the CLIP OS project.</p>
+<p>Congratulations, you are now ready to launch a <a class="reference internal" href="build.html#build"><span class="std std-ref">build of a CLIP OS image</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="build.html" class="btn btn-neutral float-right" title="Building" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../clipos/roadmap.html" class="btn btn-neutral" title="Roadmap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

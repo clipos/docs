@@ -1,0 +1,391 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to the CLIP OS project documentation! &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Architecture" href="clipos/architecture.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to the CLIP OS project documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-the-clip-os-project-documentation">
+<h1>Welcome to the CLIP OS project documentation!<a class="headerlink" href="#welcome-to-the-clip-os-project-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This is the documentation for the CLIP OS project, the tools and the OS
+architecture.</p>
+<div class="warning admonition">
+<p class="first admonition-title">Status of the project</p>
+<p class="last">The CLIP OS project is still in <strong>alpha</strong> stage. Please check out the
+<a class="reference external" href="https://clip-os.org">project homepage</a> and the <a class="reference internal" href="clipos/roadmap.html#roadmap"><span class="std std-ref">project
+roadmap</span></a> to know more about the CLIP OS project history, its
+current status and its objectives.</p>
+</div>
+<div class="tip admonition">
+<p class="first admonition-title">How to get started?</p>
+<ul class="last simple">
+<li>If you wish to build an image of the CLIP OS project, please check out the
+<a class="reference internal" href="toolkit/setup.html#setup"><span class="std std-ref">development environment setup</span></a> and <a class="reference internal" href="toolkit/build.html#build"><span class="std std-ref">build</span></a>
+instructions.</li>
+<li>If you wish to contribue to this project, please check out the
+<a class="reference internal" href="toolkit/contribute.html#contribute"><span class="std std-ref">How to contribute</span></a> guide.</li>
+<li>If you wish to adapt this project to your specific use case, please check
+out the <a class="reference internal" href="toolkit/derive.html#derive"><span class="std std-ref">How to derive this project</span></a> guide.</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="clipos/architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/architecture.html#system-components-and-their-interactions">System components and their interactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/security.html">Security objectives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/security.html#hardware-requirements">Hardware requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/security.html#hypotheses">Hypotheses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/security.html#threat-scenarios">Threat scenarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/security.html#objectives">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/security.html#assets-summary">Assets summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/kernel.html">Kernel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#objectives">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#compilation">Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#sysctl-security-tuning">Sysctl Security Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#command-line-parameters">Command line parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/secure_boot.html">Secure Boot support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#security-properties">Security properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#setup-for-testing-under-qemu">Setup for testing under QEMU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#setup-for-testing-with-real-hardware">Setup for testing with real hardware</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/roadmap.html#alpha-initial-open-source-preview-release">5.0 Alpha (initial open source preview release)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/roadmap.html#beta-main-security-service-enabling-release">5.0 Beta (main security &amp; service enabling release)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/roadmap.html#first-stable-release-multi-level-support">5.0: First stable release (Multi-level support)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/roadmap.html#milestone-features-whose-integration-planning-are-yet-to-be-determined">Milestone features whose integration planning are yet to be determined</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/setup.html">Environment setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/setup.html#global-environment-configuration-requirements">Global environment configuration requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/setup.html#software-dependencies">Software dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/setup.html#dependencies-installation-on-supported-linux-distributions">Dependencies installation on supported Linux-distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/setup.html#how-to-fetch-the-entire-source-tree">How to fetch the entire source tree?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#activate-the-toolkit-environment">Activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#build-steps">Build steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#caching-and-binary-packages">Caching and binary packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#sdk">SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#core">Core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#efi-boot-partition">EFI boot partition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#qemu-image-debian-sdk">QEMU image &amp; Debian SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#testing-the-qemu-image">Testing the QEMU image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumented-build-for-testing">Instrumented build for testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/source-tree.html">Source tree organization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#id1"><code class="docutils literal notranslate"><span class="pre">.repo/</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#assets"><code class="docutils literal notranslate"><span class="pre">assets/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-crates-io"><code class="docutils literal notranslate"><span class="pre">assets/crates-io/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-debian"><code class="docutils literal notranslate"><span class="pre">assets/debian/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-distfiles"><code class="docutils literal notranslate"><span class="pre">assets/distfiles/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-gentoo"><code class="docutils literal notranslate"><span class="pre">assets/gentoo/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-toolkit"><code class="docutils literal notranslate"><span class="pre">assets/toolkit/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#cache"><code class="docutils literal notranslate"><span class="pre">cache/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#cache-product-version-recipe-binpkgs"><code class="docutils literal notranslate"><span class="pre">cache/&lt;product&gt;/&lt;version&gt;/&lt;recipe&gt;/binpkgs/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#manifest"><code class="docutils literal notranslate"><span class="pre">manifest/</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#out"><code class="docutils literal notranslate"><span class="pre">out/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#out-product-version-recipe"><code class="docutils literal notranslate"><span class="pre">out/&lt;product&gt;/&lt;version&gt;/&lt;recipe&gt;/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#products"><code class="docutils literal notranslate"><span class="pre">products/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#products-clipos"><code class="docutils literal notranslate"><span class="pre">products/clipos/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#run"><code class="docutils literal notranslate"><span class="pre">run/</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#src"><code class="docutils literal notranslate"><span class="pre">src/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#src-external"><code class="docutils literal notranslate"><span class="pre">src/external/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#src-platform"><code class="docutils literal notranslate"><span class="pre">src/platform/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#src-portage"><code class="docutils literal notranslate"><span class="pre">src/portage/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#toolkit"><code class="docutils literal notranslate"><span class="pre">toolkit/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-cosmk"><code class="docutils literal notranslate"><span class="pre">tookit/cosmk/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-doc"><code class="docutils literal notranslate"><span class="pre">tookit/doc/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-docroot"><code class="docutils literal notranslate"><span class="pre">tookit/docroot/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-qa"><code class="docutils literal notranslate"><span class="pre">tookit/qa/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-repo-scripts"><code class="docutils literal notranslate"><span class="pre">tookit/repo-scripts/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-scripts"><code class="docutils literal notranslate"><span class="pre">tookit/scripts/</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#justfile"><code class="docutils literal notranslate"><span class="pre">justfile</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#license"><code class="docutils literal notranslate"><span class="pre">LICENSE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#readme-first"><code class="docutils literal notranslate"><span class="pre">README-FIRST</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/derive.html">How to derive this project</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="clipos/architecture.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

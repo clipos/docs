@@ -1,0 +1,572 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Roadmap &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Environment setup" href="../toolkit/setup.html" />
+    <link rel="prev" title="Secure Boot support" href="secure_boot.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-initial-open-source-preview-release">5.0 Alpha (initial open source preview release)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#features">Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#security-aware-system-architecture-and-partition-layout">Security aware system architecture and partition layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity">Initial boot chain integrity with UEFI Secure Boot support and DM-Verity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#development-model-and-secure-by-default-software-compilation">Development model and secure by default software compilation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux-kernel">Linux kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hardware-support">Hardware support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#beta-main-security-service-enabling-release">5.0 Beta (main security &amp; service enabling release)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#robust-update-system">Robust update system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#system-partition-integrity-and-confidentiality">System partition integrity and confidentiality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#confined-system-services">Confined system services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services-available">Services available</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firewall-rules">Firewall rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#confined-non-root-administration-roles">Confined (non-root) administration roles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Linux kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Hardware support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#first-stable-release-multi-level-support">5.0: First stable release (Multi-level support)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user-data-integrity-and-confidentiality">User data integrity and confidentiality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-level-environment-support">Multi-level environment support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-level-aware-device-assignment">Multi-level aware device assignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virtualized-environments-support">Virtualized environments support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Firewall rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trusted-graphical-environment">Trusted graphical environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arbitrary-code-execution-restrictions-in-user-environments">Arbitrary code execution restrictions in user environments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Linux kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Hardware support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#milestone-features-whose-integration-planning-are-yet-to-be-determined">Milestone features whose integration planning are yet to be determined</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Roadmap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/clipos/roadmap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="roadmap">
+<span id="id1"></span><h1>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h1>
+<p>This roadmap lists CLIP OS features planned for integration into each release.</p>
+<div class="warning admonition">
+<p class="first admonition-title">Work in progress</p>
+<p class="last"><strong>This roadmap is still a work in progress and will evolve with the project
+as features are added.</strong></p>
+</div>
+<div class="section" id="alpha-initial-open-source-preview-release">
+<h2>5.0 Alpha (initial open source preview release)<a class="headerlink" href="#alpha-initial-open-source-preview-release" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status:</th><td class="field-body">Released on <strong>2018-09-18</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="security-aware-system-architecture-and-partition-layout">
+<h4>Security aware system architecture and partition layout<a class="headerlink" href="#security-aware-system-architecture-and-partition-layout" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Root partition mounted read-only</li>
+<li>Restricted set of state partitions bind-mounted at pre-determined
+emplacements (listed in the read only root partition)</li>
+</ul>
+</div>
+<div class="section" id="initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity">
+<h4>Initial boot chain integrity with UEFI Secure Boot support and DM-Verity<a class="headerlink" href="#initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Signed EFI bootloader</li>
+<li>Signed EFI binaries (includes Linux kernel, initramfs and kernel command
+line)</li>
+<li>Root partition integrity enforced by DM-Verity</li>
+</ul>
+</div>
+<div class="section" id="development-model-and-secure-by-default-software-compilation">
+<h4>Development model and secure by default software compilation<a class="headerlink" href="#development-model-and-secure-by-default-software-compilation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Everything is rebuilt from source (excepted proprietary firmware required for
+hardware support).</li>
+<li>Gentoo Hardened based binary executable compilation</li>
+<li>Most of the Portage compilation security features are enabled.</li>
+</ul>
+</div>
+<div class="section" id="linux-kernel">
+<h4>Linux kernel<a class="headerlink" href="#linux-kernel" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Latest stable kernel:<ul>
+<li>is properly configured,</li>
+<li>and includes additional security features imported from public patches.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="hardware-support">
+<h4>Hardware support<a class="headerlink" href="#hardware-support" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>QEMU/KVM with virtio devices on Linux</li>
+<li>Boot with Secure Boot enabled UEFI firmware</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="beta-main-security-service-enabling-release">
+<h2>5.0 Beta (main security &amp; service enabling release)<a class="headerlink" href="#beta-main-security-service-enabling-release" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status:</th><td class="field-body">In progress</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id2">
+<h3>Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="robust-update-system">
+<h4>Robust update system<a class="headerlink" href="#robust-update-system" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Atomic system update using A/B partitions (similar to Android or ChromeOS)</li>
+<li>Fallback system version available in case of unexpected failure or bug</li>
+<li>Supports updating both the system and other environments</li>
+</ul>
+</div>
+<div class="section" id="system-partition-integrity-and-confidentiality">
+<h4>System partition integrity and confidentiality<a class="headerlink" href="#system-partition-integrity-and-confidentiality" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>LUKS2/DM-Crypt/DM-Integrity support</li>
+<li>Optional system read only partition encryption</li>
+<li>Mandatory system read/write partition encryption (journal logs,
+configuration, etc.)</li>
+<li>TPM backed secret sealing and unsealing for unattended system partition
+decryption</li>
+<li>Support for install time escrow keys setup for administrator enabled recovery</li>
+</ul>
+</div>
+<div class="section" id="confined-system-services">
+<h4>Confined system services<a class="headerlink" href="#confined-system-services" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Confinement using Linux security features supported in systemd:<ul>
+<li>namespaces</li>
+<li>cgroups</li>
+<li>seccomp-bpf</li>
+<li>capability bounding set</li>
+<li>etc.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="services-available">
+<h4>Services available<a class="headerlink" href="#services-available" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>IPsec client</li>
+<li>Update daemon</li>
+<li>SSH daemon</li>
+</ul>
+</div>
+<div class="section" id="firewall-rules">
+<h4>Firewall rules<a class="headerlink" href="#firewall-rules" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Static firewall rules for system services</li>
+</ul>
+</div>
+<div class="section" id="confined-non-root-administration-roles">
+<h4>Confined (non-root) administration roles<a class="headerlink" href="#confined-non-root-administration-roles" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Admin role: can edit files in the state configuration folder</li>
+<li>Audit role: can read all system logs</li>
+<li>Administration roles are accessible:<ul>
+<li>through the IPsec tunnel, over SSH with key based authentication;</li>
+<li>locally on a console, using a password.</li>
+</ul>
+</li>
+<li>Split credential management for password based authentication (<code class="docutils literal notranslate"><span class="pre">pam-tcb</span></code>)</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h4>Linux kernel<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Latest stable kernel:<ul>
+<li>Inclusion of additional security features, some expected to be merged
+upstream</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h4>Hardware support<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Initial laptop, desktop and server platforms support</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="first-stable-release-multi-level-support">
+<h2>5.0: First stable release (Multi-level support)<a class="headerlink" href="#first-stable-release-multi-level-support" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status:</th><td class="field-body">Not started yet</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id5">
+<h3>Features<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="user-data-integrity-and-confidentiality">
+<h4>User data integrity and confidentiality<a class="headerlink" href="#user-data-integrity-and-confidentiality" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Fixed size LUKS2/DM-Crypt/DM-Integrity based user partition support</li>
+<li>Encryption based on user-only known secret</li>
+<li>User credentials managed independently from system roles credentials</li>
+<li>User credentials supported:<ul>
+<li>Password</li>
+<li>Smartcard</li>
+</ul>
+</li>
+<li>Smartcard daemon isolation using Caml Crush.</li>
+</ul>
+</div>
+<div class="section" id="multi-level-environment-support">
+<h4>Multi-level environment support<a class="headerlink" href="#multi-level-environment-support" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Multiple isolated environment available with different security settings:<ul>
+<li>Environments confined using a kernel LSM inspired from Vserver</li>
+<li>Controlled communication between environments (UNIX sockets or encrypted
+connections)</li>
+</ul>
+</li>
+<li>Host and inter-levels interaction enabled through trusted services on the
+host:<ul>
+<li>File transfer, encryption and decryption using diodes</li>
+</ul>
+</li>
+<li>Intra-level application isolation using Flatpak</li>
+</ul>
+</div>
+<div class="section" id="multi-level-aware-device-assignment">
+<h4>Multi-level aware device assignment<a class="headerlink" href="#multi-level-aware-device-assignment" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Printers, scanners</li>
+<li>USB flash drives</li>
+<li>Smartcards</li>
+<li>Webcam</li>
+<li>Sound cards</li>
+<li>Microphone</li>
+</ul>
+</div>
+<div class="section" id="virtualized-environments-support">
+<h4>Virtualized environments support<a class="headerlink" href="#virtualized-environments-support" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Linux only</li>
+<li>virtio based peripherals only</li>
+<li>UEFI Secure Boot optional</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h4>Firewall rules<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Dynamic firewall rules for user environments</li>
+</ul>
+</div>
+<div class="section" id="trusted-graphical-environment">
+<h4>Trusted graphical environment<a class="headerlink" href="#trusted-graphical-environment" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Wayland based system compositor and lock screen</li>
+<li>Permanently displayed and trusted panel for interaction with system
+services and configuration</li>
+</ul>
+</div>
+<div class="section" id="arbitrary-code-execution-restrictions-in-user-environments">
+<h4>Arbitrary code execution restrictions in user environments<a class="headerlink" href="#arbitrary-code-execution-restrictions-in-user-environments" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Applied to interpreters (e.g. Bash, Python, Perl): <code class="docutils literal notranslate"><span class="pre">O_MAYEXEC</span></code></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4>Linux kernel<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Additional kernel version supported: latest LTS kernel:<ul>
+<li>Supported until the next upstream LTS kernel release</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4>Hardware support<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>List of validated laptop, desktop and server platforms supported</li>
+<li>Generic laptop, desktop and server platforms support</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="milestone-features-whose-integration-planning-are-yet-to-be-determined">
+<h2>Milestone features whose integration planning are yet to be determined<a class="headerlink" href="#milestone-features-whose-integration-planning-are-yet-to-be-determined" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Remote integrity and version attestation using TPM backed signatures.</li>
+<li>Port remaining security features from CLIP OS version 4:<ul>
+<li>Ignored SUID binaries</li>
+<li>System entropy and RNG improvements: timer_entropyd, kernel patch</li>
+<li>Remaining kernel features from CLIP LSM patches:<ul>
+<li>Veriexec: additional integrity measurements and capability granting tool</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Mandatory Access Control support:<ul>
+<li>SELinux</li>
+</ul>
+</li>
+<li>Reproducible builds</li>
+<li>Additional user credential support:<ul>
+<li>U2F based user session unlocking</li>
+</ul>
+</li>
+<li>Append-only log storage and automatic log rotation support</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../toolkit/setup.html" class="btn btn-neutral float-right" title="Environment setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="secure_boot.html" class="btn btn-neutral" title="Secure Boot support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

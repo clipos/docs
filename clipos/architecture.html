@@ -1,0 +1,283 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Security objectives" href="security.html" />
+    <link rel="prev" title="Welcome to the CLIP OS project documentation!" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-components-and-their-interactions">System components and their interactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/clipos/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="system-components-and-their-interactions">
+<h2>System components and their interactions<a class="headerlink" href="#system-components-and-their-interactions" title="Permalink to this headline">¶</a></h2>
+<p>A CLIP OS system is split into several logically separated entities:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A <strong>bootloader</strong> and an <strong>initial EFI binary</strong> responsible for the system
+start-up.</li>
+<li>A <strong>Core</strong> responsible for system service hosting and sub environments
+(called <em>Cages</em> from now on) start-up. The <em>Core</em> is also responsible for
+the isolation and control of all interactions between those <em>Cages</em>.</li>
+<li>One or several <strong>Cages</strong> usually available as graphical sessions for users.
+Each <em>Cage</em> may host applications and documents from a specific
+confidentiality level.</li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id1" style="width: 90%">
+<span id="clipos-high-level-architecture"></span><img alt="../_images/clipos-high-level-architecture.svg" src="../_images/clipos-high-level-architecture.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">High level overview of CLIP OS components</span></p>
+</div>
+<p>The execution environment of each Cage is logically isolated from the Core and
+from the all other Cages. Interactions between a Cage and the Core is carefully
+controlled and goes through confined and unprivileged services as shown in
+<a class="reference internal" href="#clipos-cage-and-service-isolation"><span class="std std-numref">Fig. 2</span></a>.</p>
+<div class="figure align-center" id="id2" style="width: 90%">
+<span id="clipos-cage-and-service-isolation"></span><img alt="../_images/clipos-cage-and-service-isolation.svg" src="../_images/clipos-cage-and-service-isolation.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Communication channels between a Cage, the Core and the hardware</span></p>
+</div>
+<p>Direct communication between Cages is forbidden. All inter-Cage interaction is
+mediated by services running in the Core.</p>
+<div class="figure align-center" id="id3" style="width: 90%">
+<span id="clipos-inter-level-interactions"></span><img alt="../_images/clipos-inter-level-interactions.svg" src="../_images/clipos-inter-level-interactions.svg" /><p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Flow of interaction required for inter-level communications</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="security.html" class="btn btn-neutral float-right" title="Security objectives" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to the CLIP OS project documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

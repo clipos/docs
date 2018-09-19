@@ -1,0 +1,286 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Secure Boot support &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Roadmap" href="roadmap.html" />
+    <link rel="prev" title="Kernel" href="kernel.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Secure Boot support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#security-properties">Security properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-for-testing-under-qemu">Setup for testing under QEMU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-for-testing-with-real-hardware">Setup for testing with real hardware</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Secure Boot support</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/clipos/secure_boot.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="secure-boot-support">
+<h1>Secure Boot support<a class="headerlink" href="#secure-boot-support" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="security-properties">
+<h2>Security properties<a class="headerlink" href="#security-properties" title="Permalink to this headline">¶</a></h2>
+<p>All EFI binaries installed in the CLIP OS EFI System Partition (ESP) are
+signed in order to protect their integrity <em>via</em> Secure Boot. Their
+confidentiality however is not affected. Currently, two EFI binaries are
+necessary:</p>
+<ul class="simple">
+<li>The <strong>main CLIP OS EFI binary</strong> containing the initial kernel image, the
+initramfs and the kernel command line. Signing this binary guarantees the
+integrity of its three components. Note that the kernel command line also
+includes the DM-Verity root hash for the CLIP OS Core partition.</li>
+<li>The <strong>systemd-boot EFI stub binary</strong>, which is responsible for verifying and
+executing the main CLIP OS EFI binary.</li>
+</ul>
+</div>
+<div class="section" id="setup-for-testing-under-qemu">
+<h2>Setup for testing under QEMU<a class="headerlink" href="#setup-for-testing-under-qemu" title="Permalink to this headline">¶</a></h2>
+<p>The optimal way of setting up Secure Boot for a virtual machine will be to
+develop and use an EFI binary to automatically enroll PK, KEK and db keys,
+similarly to <a class="reference external" href="https://github.com/puiterwijk/qemu-ovmf-secureboot">what Fedora is performing</a>.  Such keys would be
+generated at build time for a given deployment using the relevant PKI.</p>
+<p>As a short term solution, however, we use hard-coded dummy keys to sign the
+EFI binaries with <strong>sbsigntools</strong> and ship an OVMF VARS template file in which
+these keys have been manually enrolled.</p>
+</div>
+<div class="section" id="setup-for-testing-with-real-hardware">
+<h2>Setup for testing with real hardware<a class="headerlink" href="#setup-for-testing-with-real-hardware" title="Permalink to this headline">¶</a></h2>
+<p>This is not supported at the moment. The main difference is that Secure Boot
+keys will need to be enrolled through the manufacturer’s UEFI firmware.
+However, we expect the EFI binary mentioned above to make this step as
+automated as possible.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="roadmap.html" class="btn btn-neutral float-right" title="Roadmap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kernel.html" class="btn btn-neutral" title="Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

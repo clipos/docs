@@ -1,0 +1,356 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cosmk.exceptions &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>cosmk.exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cosmk.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
+<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+
+<span class="sd">&quot;&quot;&quot;CLIP OS toolkit exceptions&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+
+<div class="viewcode-block" id="CosmkError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.CosmkError">[docs]</a><span class="k">class</span> <span class="nc">CosmkError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base exception for all the other cosmk related exceptions. This</span>
+<span class="sd">    exception can also be raised when the error is unknown or unhandled by the</span>
+<span class="sd">    tool.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="CosmkEnvironmentError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.CosmkEnvironmentError">[docs]</a><span class="k">class</span> <span class="nc">CosmkEnvironmentError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when the runtime environment does not meet the</span>
+<span class="sd">    requirements to run properly (*e.g.* a system utility command is</span>
+<span class="sd">    missing).&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UnexpectedRepoSourceTreeStructure"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.UnexpectedRepoSourceTreeStructure">[docs]</a><span class="k">class</span> <span class="nc">UnexpectedRepoSourceTreeStructure</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when the repo directory structure does not match what</span>
+<span class="sd">    is expected or when the &quot;.repo&quot; directory cannot be found in the underlying</span>
+<span class="sd">    directory tree of the current working directory.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InstrumentationSpecificationError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.InstrumentationSpecificationError">[docs]</a><span class="k">class</span> <span class="nc">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when the &quot;instrumentation.toml&quot; drop-in file is badly</span>
+<span class="sd">    formatted or has unexpected content.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ProjectInRepoSourceTreeInUncleanState"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.ProjectInRepoSourceTreeInUncleanState">[docs]</a><span class="k">class</span> <span class="nc">ProjectInRepoSourceTreeInUncleanState</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a project within the CLIP OS repo source tree is</span>
+<span class="sd">    not in a clean state (*e.g.* unstaged elements).&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="RepoSourceTreeManifestParsingError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.RepoSourceTreeManifestParsingError">[docs]</a><span class="k">class</span> <span class="nc">RepoSourceTreeManifestParsingError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a ``repo`` manifest file has an unexpected XML</span>
+<span class="sd">    structure or cannot be parsed as valid XML.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SdkNotFoundError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.SdkNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">SdkNotFoundError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a target requires a SDK which cannot be found</span>
+<span class="sd">    because it has not been bootstrap (*i.e.* built) yet.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SdkBootstrapError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.SdkBootstrapError">[docs]</a><span class="k">class</span> <span class="nc">SdkBootstrapError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when an error occurs while bootstrapping a SDK</span>
+<span class="sd">    image.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SdkError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.SdkError">[docs]</a><span class="k">class</span> <span class="nc">SdkError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when an error occurs inside a SDK container.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ProductPropertiesError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.ProductPropertiesError">[docs]</a><span class="k">class</span> <span class="nc">ProductPropertiesError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a product has a bad &quot;properties.toml&quot;</span>
+<span class="sd">    definition.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="RecipeConfigurationError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.RecipeConfigurationError">[docs]</a><span class="k">class</span> <span class="nc">RecipeConfigurationError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a recipe has a bad &quot;recipe.toml&quot; definition.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="RecipeActionError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.RecipeActionError">[docs]</a><span class="k">class</span> <span class="nc">RecipeActionError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a recipe has a bad &quot;recipe.toml&quot; definition.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SystemCommandError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.SystemCommandError">[docs]</a><span class="k">class</span> <span class="nc">SystemCommandError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a system command (such as ``mount(8)`` or</span>
+<span class="sd">    ``losetup(8)``) fails. Reason should be provided as arguments to the</span>
+<span class="sd">    exception.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">command</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+                 <span class="n">reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">stdout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">stderr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">stdouterr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># stringify the command if ever provided as a subprocess command list</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">shlex</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">command</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">command</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">reason</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">stdouterr</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;A reason of failure or an output of the failed command must &quot;</span>
+                <span class="s2">&quot;be provided.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="o">=</span> <span class="n">reason</span>
+        <span class="k">if</span> <span class="n">stdouterr</span> <span class="ow">and</span> <span class="p">(</span><span class="n">stdout</span> <span class="ow">or</span> <span class="n">stderr</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot provide both a mixed output (stdout+stderr) and &quot;</span>
+                <span class="s2">&quot;on the same time either stdout or stderr.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">stderr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdouterr</span> <span class="o">=</span> <span class="n">stdouterr</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Command </span><span class="si">{!r}</span><span class="s2"> failed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reason</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reason of failure: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> v-- stdout --v</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s2"> ^-- end of stdout --^&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> v-- stderr --v</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s2"> ^-- end of stderr --^&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stdouterr</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> v-- mixed output (stdout+stderr) --v</span><span class="se">\n</span><span class="s2">&quot;</span>
+                     <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2"> ^-- end of output --^&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdouterr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="ContainerSnapshotError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.ContainerSnapshotError">[docs]</a><span class="k">class</span> <span class="nc">ContainerSnapshotError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when a container sesssion snapshotting fails.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="VirtualizedEnvironmentError"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.exceptions.VirtualizedEnvironmentError">[docs]</a><span class="k">class</span> <span class="nc">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">CosmkError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised when an operation on a virtualized environment (*e.g.*</span>
+<span class="sd">    a `libvirt` &quot;domain&quot;, a network configuration made by `libvirt`, *etc.*)</span>
+<span class="sd">    cannot be pursued or has failed.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
