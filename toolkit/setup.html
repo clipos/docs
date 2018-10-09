@@ -359,6 +359,19 @@ can install it with <a class="reference external" href="https://rustup.rs/">rust
 </li>
 <li><p class="first"><strong>libvirt with QEMU and KVM support</strong> are required as the platform to run the
 CLIP OS virtual machines with QEMU with virtualized networks.</p>
+<div class="tip admonition">
+<p class="first admonition-title">Avoid running QEMU as root if not necessary</p>
+<p>On some Linux distributions (e.g., Arch Linux), libvirt is provided with a
+default configuration which runs QEMU as root. If you intend to use
+libvirt only for the purpose of running CLIP OS QEMU images, you may want
+to run the QEMU processes launched by libvirt as your current user.</p>
+<p>To do so, edit the file <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code> and change the values
+for the <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">group</span></code> as follows:</p>
+<div class="last highlight-guess notranslate"><div class="highlight"><pre><span></span>user = &quot;myusername&quot;  # replace with your current username
+group = &quot;kvm&quot;
+</pre></div>
+</div>
+</div>
 </li>
 </ul>
 <div class="section" id="dependencies-installation-on-supported-linux-distributions">
@@ -395,9 +408,10 @@ for Debian):</p>
       base-devel <span class="se">\</span>
       runc sudo squashfs-tools <span class="se">\</span>
       qemu libvirt bridge-utils dnsmasq <span class="se">\</span>
-      virt-manager <span class="se">\</span>
+      virt-manager ebtables <span class="se">\</span>
       debootstrap <span class="se">\</span>
-      rust
+      rust <span class="se">\</span>
+      debian-archive-keyring
 </pre></div>
 </div>
 </div>
@@ -439,6 +453,7 @@ trying to read files whose mode deny access for “others”.</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir clipos
 <span class="gp">$</span> <span class="nb">cd</span> clipos
 <span class="gp">$</span> <span class="nb">umask</span> <span class="m">0022</span>
+<span class="gp">$</span> git lfs install --skip-repo
 <span class="gp">$</span> repo init -u https://github.com/CLIPOS/manifest
 <span class="gp">$</span> repo sync
 </pre></div>
@@ -462,6 +477,16 @@ the Git cloning processes might be interlaced and not easily readable.</p>
 </div>
 <p>At this point, you should have successfully set up your environment and
 fetched the whole source tree of the CLIP OS project.</p>
+<div class="note admonition">
+<p class="first admonition-title">In case you forgot to install the Git LFS filters <em>before</em>
+             synchronizing the whole source tree</p>
+<p>If you forgot to setup the Git LFS filter before running <code class="docutils literal notranslate"><span class="pre">repo</span> <span class="pre">sync</span></code>, you
+can still download the missing contents of the files backed by Git LFS (and
+therefore fix your current source tree checkout) by running this command:</p>
+<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo forall -c <span class="s1">&#39;git lfs install &amp;&amp; git lfs pull&#39;</span>
+</pre></div>
+</div>
+</div>
 <p>Congratulations, you are now ready to launch a <a class="reference internal" href="build.html#build"><span class="std std-ref">build of a CLIP OS image</span></a>.</p>
 </div>
 </div>
