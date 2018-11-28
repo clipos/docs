@@ -95,7 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clipos/architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/kernel.html">Kernel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipos/secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
@@ -222,10 +222,11 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 <li class="toctree-l2"><a class="reference internal" href="clipos/kernel.html#command-line-parameters">Command line parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="clipos/secure_boot.html">Secure Boot support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#security-properties">Security properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#setup-for-testing-under-qemu">Setup for testing under QEMU</a></li>
-<li class="toctree-l2"><a class="reference internal" href="clipos/secure_boot.html#setup-for-testing-with-real-hardware">Setup for testing with real hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/boot_integrity.html">Boot chain and integrity guarantees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/boot_integrity.html#on-disk-layout">On-disk layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/boot_integrity.html#boot-chain-order">Boot chain order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/boot_integrity.html#boot-chain-and-rootfs-integrity">Boot chain and rootfs integrity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/boot_integrity.html#setup-for-testing">Setup for testing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a><ul>
@@ -298,14 +299,12 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-cosmk"><code class="docutils literal notranslate"><span class="pre">tookit/cosmk/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-doc"><code class="docutils literal notranslate"><span class="pre">tookit/doc/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-docroot"><code class="docutils literal notranslate"><span class="pre">tookit/docroot/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-helpers"><code class="docutils literal notranslate"><span class="pre">tookit/helpers/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-qa"><code class="docutils literal notranslate"><span class="pre">tookit/qa/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-repo-scripts"><code class="docutils literal notranslate"><span class="pre">tookit/repo-scripts/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-scripts"><code class="docutils literal notranslate"><span class="pre">tookit/scripts/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#tookit-maintenance"><code class="docutils literal notranslate"><span class="pre">tookit/maintenance/</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#justfile"><code class="docutils literal notranslate"><span class="pre">justfile</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#license"><code class="docutils literal notranslate"><span class="pre">LICENSE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#readme-first"><code class="docutils literal notranslate"><span class="pre">README-FIRST</span></code></a></li>
 </ul>
 </li>
 </ul>

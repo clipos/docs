@@ -1,0 +1,397 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Boot chain and integrity guarantees &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Roadmap" href="roadmap.html" />
+    <link rel="prev" title="Kernel" href="kernel.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Alpha)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Boot chain and integrity guarantees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#on-disk-layout">On-disk layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boot-chain-order">Boot chain order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boot-chain-and-rootfs-integrity">Boot chain and rootfs integrity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#secure-boot">Secure Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dm-verity">DM-Verity</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-for-testing">Setup for testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#under-qemu-with-ovmf">Under QEMU with OVMF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#with-real-hardware">With real hardware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Boot chain and integrity guarantees</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/clipos/boot_integrity.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="boot-chain-and-integrity-guarantees">
+<h1>Boot chain and integrity guarantees<a class="headerlink" href="#boot-chain-and-integrity-guarantees" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="on-disk-layout">
+<h2>On-disk layout<a class="headerlink" href="#on-disk-layout" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="first sidebar-title">Disk partition layout</p>
+<div class="last figure align-center" id="id1">
+<span id="clipos-disk-layout"></span><img alt="../_images/clipos-disk-layout.svg" src="../_images/clipos-disk-layout.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Disk partition layout</span></p>
+</div>
+</div>
+<p>The main disk GPT partition layout is as follows (<a class="reference internal" href="#clipos-disk-layout"><span class="std std-numref">Fig. 4</span></a>):</p>
+<ol class="arabic simple">
+<li>EFI system partition (ESP) which includes:<ul>
+<li>The EFI bootloader and its configuration;</li>
+<li>An EFI binary for each version currently installed (usually two, but only
+one at installation time). Each EFI binary bundles a Linux kernel, its
+command line and an initramfs.</li>
+</ul>
+</li>
+<li>LVM partition which holds all LVM Volume Groups and Logical Volumes for the
+system. The currently available ones are:</li>
+</ol>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="8%" />
+<col width="8%" />
+<col width="42%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Volume Group</th>
+<th class="head">Logical Volume</th>
+<th class="head">Layer</th>
+<th class="head">Filesystem</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>mainvg</td>
+<td>core_&lt;version&gt;</td>
+<td>DM-Verity block device and metadata appended at
+the end</td>
+<td>Uncompressed squashfs filesystem</td>
+</tr>
+<tr class="row-odd"><td>mainvg</td>
+<td>core_state</td>
+<td>None (Planned: DM-Crypt + DM-Integrity block
+device)</td>
+<td>ext4 filesystem</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boot-chain-order">
+<h2>Boot chain order<a class="headerlink" href="#boot-chain-order" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="first sidebar-title">Boot chain order</p>
+<div class="last figure align-center" id="id2">
+<span id="clipos-boot-order"></span><img alt="../_images/clipos-boot-order.svg" src="../_images/clipos-boot-order.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Boot chain order</span></p>
+</div>
+</div>
+<p>As shown in <a class="reference internal" href="#clipos-boot-order"><span class="std std-numref">Fig. 5</span></a>, the boot steps (following hardware
+initialization) are as follows:</p>
+<ol class="arabic simple">
+<li>The UEFI Firmware will execute the initial bootloader from the EFI system
+partition.</li>
+<li>Following the <a class="reference external" href="TheBootLoaderSpecification">Boot Loader Specification</a>,
+the bootloader (gummiboot/systemd-boot) will execute the EFI binary in the
+<code class="docutils literal notranslate"><span class="pre">EFI/Linux</span></code> folder with the highest version number.</li>
+<li>The executed EFI binary is a bundle created by <a class="reference external" href="http://man7.org/linux/man-pages/man8/dracut.8.html">dracut</a> which wraps a Linux
+kernel, its command line and an initramfs. The initramfs will open the
+<code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> DM-Verity block device and mount the SquashFS filesystem
+in <code class="docutils literal notranslate"><span class="pre">/sysroot</span></code>. Then it will mount the <code class="docutils literal notranslate"><span class="pre">core_state</span></code> ext4 partition in
+<code class="docutils literal notranslate"><span class="pre">/sysroot/mnt/state</span></code>. Finally, it will perform a pivot_root to switch to
+the final root.</li>
+</ol>
+</div>
+<div class="section" id="boot-chain-and-rootfs-integrity">
+<h2>Boot chain and rootfs integrity<a class="headerlink" href="#boot-chain-and-rootfs-integrity" title="Permalink to this headline">¶</a></h2>
+<p>The integrity of the boot chain and root filesystem is guaranteed by the
+following mechanisms.</p>
+<div class="section" id="secure-boot">
+<h3>Secure Boot<a class="headerlink" href="#secure-boot" title="Permalink to this headline">¶</a></h3>
+<p>All EFI binaries installed in the EFI System Partition (ESP) are
+signed in order to protect their integrity <em>via</em> Secure Boot. Their
+confidentiality however is not assured. Currently, two EFI binaries are
+necessary:</p>
+<ul class="simple">
+<li>The <strong>systemd-boot EFI bootloader</strong>. Its only purpose is to execute the
+latest CLIP OS EFI binary. This bootloader is minimal and only acts as a
+switch between the available CLIP OS versions. This enables recovery in case
+of update failure or temporary rollback due to bugs in a new version.</li>
+<li>The <strong>main CLIP OS EFI binary</strong>. It contains the initial kernel image, the
+initramfs and the kernel command line. Signing this binary guarantees the
+integrity of its three components. Note that the kernel command line also
+includes the DM-Verity root hash for the CLIP OS Core partition. This binary
+is chosen by the bootloader and the Secure Boot signature verification is
+performed by the UEFI Firmware.</li>
+</ul>
+<p>No default keys are supported (e.g., Microsoft keys) thus you will need to
+generate you own Secure Boot signing keys and use them during the build
+process. Those keys must then be enrolled in hardware.</p>
+</div>
+<div class="section" id="dm-verity">
+<h3>DM-Verity<a class="headerlink" href="#dm-verity" title="Permalink to this headline">¶</a></h3>
+<p>Once the kernel is booted with the initial initramfs, it will look for the
+<code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> LVM Logical Volume which includes a DM-Verity block device.
+The <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">hash</span></code> used to verify the integrity of this partition is included in
+the kernel command line (thus protected in integrity by Secure Boot). This
+assures the integrity of the content of the DM-Verity block device, which
+includes the read-only uncompressed SquashFS root filesystem. Support for
+forward error correction (FEC) is also enabled thus increasing resistance to
+disk read errors or failures.</p>
+</div>
+</div>
+<div class="section" id="setup-for-testing">
+<h2>Setup for testing<a class="headerlink" href="#setup-for-testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="under-qemu-with-ovmf">
+<h3>Under QEMU with OVMF<a class="headerlink" href="#under-qemu-with-ovmf" title="Permalink to this headline">¶</a></h3>
+<p>As a short term solution, we use hard-coded dummy keys to sign the EFI binaries
+with <strong>sbsigntools</strong> and ship an OVMF VARS template file in which these keys
+have been manually enrolled.</p>
+<p>The optimal way of setting up Secure Boot for a virtual machine will be to
+develop and use an EFI binary to automatically enroll PK, KEK and db keys,
+similarly to <a class="reference external" href="https://github.com/puiterwijk/qemu-ovmf-secureboot">what Fedora is performing</a>.  Such keys would be
+generated at build time for a given deployment using the relevant PKI.</p>
+<p>The standard CLIP OS build process includes build steps to enable Secure Boot
+testing under QEMU with OVMF.</p>
+</div>
+<div class="section" id="with-real-hardware">
+<h3>With real hardware<a class="headerlink" href="#with-real-hardware" title="Permalink to this headline">¶</a></h3>
+<p>This is not supported at the moment. The main difference is that Secure Boot
+keys will need to be enrolled through the manufacturer’s UEFI firmware.
+However, we expect the EFI binary mentioned above to make this step as
+automated as possible.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="roadmap.html" class="btn btn-neutral float-right" title="Roadmap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kernel.html" class="btn btn-neutral" title="Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.0.0_alpha1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

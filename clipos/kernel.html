@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Secure Boot support" href="secure_boot.html" />
+    <link rel="next" title="Boot chain and integrity guarantees" href="boot_integrity.html" />
     <link rel="prev" title="Security objectives" href="security.html" /> 
 
   
@@ -114,7 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#command-line-parameters">Command line parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="secure_boot.html">Secure Boot support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
@@ -227,7 +227,7 @@ the CLIP OS kernel. Before starting, it is worth mentioning that:</p>
 only used when needed either for the initramfs or to ease the automation of
 the deployment of CLIP OS on multiple different machines (for the moment, we
 only target a QEMU-KVM guest). This is particularly important as module
-loading will be disabled after CLIP OS startup.</p>
+loading is disabled after CLIP OS startup.</p>
 </li>
 <li><p class="first">We <strong>focus on a secure configuration</strong>. The remaining of the configuration
 is minimal and it is your job to tune it for your machines and use cases.</p>
@@ -416,9 +416,9 @@ cover all cases.</p>
 <dd><p>Enforce strict memory mappings permissions for loadable kernel modules.</p>
 </dd></dl>
 
-<p>Although CLIP OS stores kernel modules in an initramfs located in a signed
-EFI binary (together with the kernel itself and its command line), we still
-enable and enforce module signing as an additional layer of security:</p>
+<p>Although CLIP OS stores kernel modules in a read-only rootfs whose integrity is
+guaranteed by dm-verity, we still enable and enforce module signing as an
+additional layer of security:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
@@ -1018,8 +1018,8 @@ users.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">kernel.yama.ptrace_scope = 1</code></dt>
-<dd><p>Enable the ptrace scope restriction provided by the Yama LSM.</p>
+<code class="descname">kernel.yama.ptrace_scope = 3</code></dt>
+<dd><p>Enable the strictest ptrace scope restriction provided by the Yama LSM.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1106,10 +1106,14 @@ disable all core dumps by setting <code class="docutils literal notranslate"><sp
 <dd><p>Increase the space for PID values.</p>
 </dd></dl>
 
-<p>For each hardware configuration, a predefined fixed list of modules for
-hardware support will be loaded in the kernel at boot time. Once all modules
-are loaded and the system is considered booted, module loading will be disabled
-by setting <code class="docutils literal notranslate"><span class="pre">kernel.modules_disabled</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<dl class="describe">
+<dt>
+<code class="descname">kernel.modules_disabled = 1</code></dt>
+<dd><p>Disable module loading once systemd has loaded the ones required for the
+running machine according to a profile (i.e., a predefined and
+hardware-specific list of modules).</p>
+</dd></dl>
+
 <p>Pure network sysctls (<code class="docutils literal notranslate"><span class="pre">net.ipv4.*</span></code> and <code class="docutils literal notranslate"><span class="pre">net.ipv6.*</span></code>) will be detailed in a
 separate place.</p>
 </div>
@@ -1149,7 +1153,9 @@ mitigation requires updated microcode for Intel processors.</p>
 <code class="descname">iommu=force</code></dt>
 <dd><p>Even if we correctly enable the IOMMU in the kernel configuration, the
 kernel can still decide for various reasons to not initialize it at boot.
-Therefore, we force it with this parameter.</p>
+Therefore, we force it with this parameter. Note that with some Intel
+chipsets, you may need to add <code class="docutils literal notranslate"><span class="pre">intel_iommu=igfx_off</span></code> to allow your GPU to
+access the physical memory directly without going through the DMA Remapping.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1205,7 +1211,7 @@ finer granularity).</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="secure_boot.html" class="btn btn-neutral float-right" title="Secure Boot support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="boot_integrity.html" class="btn btn-neutral float-right" title="Boot chain and integrity guarantees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="security.html" class="btn btn-neutral" title="Security objectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
