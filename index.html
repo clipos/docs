@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Architecture" href="clipos/architecture.html" /> 
@@ -97,11 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -236,6 +236,10 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 <li class="toctree-l2"><a class="reference internal" href="clipos/roadmap.html#milestone-features-whose-integration-planning-are-yet-to-be-determined">Milestone features whose integration planning are yet to be determined</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/development.html">Development and debug</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clipos/development.html#effect-of-instrumentation-levels">Effect of instrumentation levels</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -252,17 +256,19 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 </li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#activate-the-toolkit-environment">Activate the toolkit environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#build-steps">Build steps</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#building-the-documentation">Building the documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#caching-and-binary-packages">Caching and binary packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#sdk">SDK</a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#core">Core</a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#efi-boot-partition">EFI boot partition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/build.html#qemu-image-debian-sdk">QEMU image &amp; Debian SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-the-full-project">Building the full project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumented-build-for-testing">Instrumented build for testing</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#testing-the-qemu-image">Testing the QEMU image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumented-build-for-testing">Instrumented build for testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolkit/build-steps.html">Build steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#sdk">SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#core">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#efi-boot-partition">EFI boot partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#qemu-image-debian-sdk">QEMU image &amp; Debian SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#testing-the-qemu-image">Testing the QEMU image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#caching-and-binary-packages">Caching and binary packages</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/source-tree.html">Source tree organization</a><ul>
@@ -342,7 +348,7 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -361,20 +367,14 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
 
   
 

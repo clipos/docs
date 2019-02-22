@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 
@@ -96,11 +94,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -175,7 +175,7 @@
             
   <h1>Source code for cosmk.__main__</h1><div class="highlight"><pre>
 <span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
-<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+<span class="c1"># Copyright © 2017 ANSSI. All rights reserved.</span>
 
 <span class="sd">&quot;&quot;&quot;The CLIP OS toolkit command line utility&quot;&quot;&quot;</span>
 
@@ -302,6 +302,13 @@
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;recipe&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the recipe to run&quot;</span>
     <span class="p">)</span><span class="o">.</span><span class="n">completer</span> <span class="o">=</span> <span class="n">recipe_completer</span>
+    <span class="n">run_sp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span> <span class="c1"># type: ignore</span>
+        <span class="s2">&quot;command&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;command&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;the command to run inside the SDK&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="n">build_sp</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;build&quot;</span><span class="p">,</span>
@@ -461,6 +468,10 @@
                     <span class="s2">&quot;clear_cache&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">clear_cache</span><span class="p">,</span>
                     <span class="s2">&quot;clear_previous_build&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">no_clear_previous_build</span><span class="p">,</span>
                 <span class="p">}</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s1">&#39;run&#39;</span><span class="p">:</span>
+                <span class="n">subcommand_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">command</span><span class="p">)</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">}</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">)(</span><span class="o">**</span><span class="n">subcommand_kwargs</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
@@ -534,7 +545,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -553,20 +564,14 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
 
   
 

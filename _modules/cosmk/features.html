@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 
@@ -96,11 +94,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -175,7 +175,7 @@
             
   <h1>Source code for cosmk.features</h1><div class="highlight"><pre>
 <span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
-<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+<span class="c1"># Copyright © 2017 ANSSI. All rights reserved.</span>
 
 <span class="sd">&quot;&quot;&quot;This module manages all the recipe features.</span>
 
@@ -242,15 +242,16 @@
 
 
 <div class="viewcode-block" id="RecipeRootFeature"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeRootFeature">[docs]</a><span class="k">class</span> <span class="nc">RecipeRootFeature</span><span class="p">(</span><span class="n">RecipeFeature</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Recipe feature for building rootfs from sources and binary packages&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Recipe feature for building rootfs from sources and binary packages.</span>
+<span class="sd">    Provides the &#39;run&#39; attribute for development and debug.&quot;&quot;&quot;</span>
 
     <span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span>
 
-    <span class="n">FEATURED_ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">}</span>
+    <span class="n">FEATURED_ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">}</span>
 
     <span class="n">SCHEMA</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
+        <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
         <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
             <span class="n">schema</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">{}):</span> <span class="p">{</span>
                 <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">ENVVAR_FORMAT_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span>
                              <span class="n">error</span><span class="o">=</span><span class="s2">&quot;Bad environment variable name&quot;</span><span class="p">):</span> <span class="nb">str</span>
@@ -276,7 +277,7 @@
 
         <span class="c1"># using getattr to avoid static analyzers from complaining about</span>
         <span class="c1"># missing attr (but brought by a recipe feature):</span>
-        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">][</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
+        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
 
         <span class="n">action_out_subpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">out_subpath</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">)</span>
         <span class="n">action_out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="n">action_out_subpath</span><span class="p">)</span>
@@ -321,7 +322,7 @@
 
         <span class="c1"># using getattr to avoid static analyzers from complaining about</span>
         <span class="c1"># missing attr (but brought by a recipe feature):</span>
-        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">][</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
+        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
 
         <span class="n">action_out_subpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">out_subpath</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">)</span>
         <span class="n">action_out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="n">action_out_subpath</span><span class="p">)</span>
@@ -350,7 +351,22 @@
             <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">][</span><span class="s2">&quot;image_steps&quot;</span><span class="p">]:</span>
                 <span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2"> images recipe </span><span class="si">{!r}</span><span class="s2">, runs:</span><span class="se">\n</span><span class="s2">  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">sdk</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="n">cmd</span><span class="p">))</span>
-                <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">sdk_context</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div></div>
+                <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">sdk_context</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RecipeRootFeature.run"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeRootFeature.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># using getattr to avoid static analyzers from complaining about</span>
+        <span class="c1"># missing attr (but brought by a recipe feature):</span>
+        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
+
+        <span class="n">sdk</span><span class="o">.</span><span class="n">interactive_run</span><span class="p">(</span>
+            <span class="n">recipe</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">sdk_context</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">][</span><span class="s2">&quot;env&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="RecipeConfigureFeature"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeConfigureFeature">[docs]</a><span class="k">class</span> <span class="nc">RecipeConfigureFeature</span><span class="p">(</span><span class="n">RecipeFeature</span><span class="p">):</span>
@@ -362,8 +378,8 @@
     <span class="n">FEATURED_ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;configure&quot;</span><span class="p">}</span>
 
     <span class="n">SCHEMA</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
+        <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
         <span class="s2">&quot;configure&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
             <span class="n">schema</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">{}):</span> <span class="p">{</span>
                 <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">ENVVAR_FORMAT_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span>
                              <span class="n">error</span><span class="o">=</span><span class="s2">&quot;Bad environment variable name&quot;</span><span class="p">):</span> <span class="nb">str</span>
@@ -379,8 +395,7 @@
 
         <span class="c1"># using getattr to avoid static analyzers from complaining about</span>
         <span class="c1"># missing attr (but brought by a recipe feature):</span>
-        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;configure&quot;</span><span class="p">][</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span>
-                      <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
+        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
 
         <span class="c1"># the recipe to configure (i.e. what is the recipe for which we need to</span>
         <span class="c1"># get image-resulting root tree on which running the configuration</span>
@@ -453,8 +468,8 @@
     <span class="n">FEATURED_ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;bundle&quot;</span><span class="p">}</span>
 
     <span class="n">SCHEMA</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
+        <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
         <span class="s2">&quot;bundle&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;sdk&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">),</span>
             <span class="n">schema</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">{}):</span> <span class="p">{</span>
                 <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">ENVVAR_FORMAT_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span>
                              <span class="n">error</span><span class="o">=</span><span class="s2">&quot;Bad environment variable name&quot;</span><span class="p">):</span> <span class="nb">str</span>
@@ -467,8 +482,7 @@
 <div class="viewcode-block" id="RecipeBundleFeature.bundle"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeBundleFeature.bundle">[docs]</a>    <span class="k">def</span> <span class="nf">bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># using getattr to avoid static analyzers from complaining about</span>
         <span class="c1"># missing attr (but brought by a recipe feature):</span>
-        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;bundle&quot;</span><span class="p">][</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span>
-                      <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
+        <span class="n">sdk</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">Recipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sdk&quot;</span><span class="p">]),</span> <span class="s2">&quot;sdk&quot;</span><span class="p">)</span>
 
         <span class="n">action_out_subpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">out_subpath</span><span class="p">,</span> <span class="s2">&quot;bundle&quot;</span><span class="p">)</span>
         <span class="n">action_out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="n">action_out_subpath</span><span class="p">)</span>
@@ -529,13 +543,6 @@
             <span class="p">},</span>
             <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="p">},</span>
-        <span class="s2">&quot;run&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">schema</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">{}):</span> <span class="p">{</span>
-                <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">ENVVAR_FORMAT_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span>
-                             <span class="n">error</span><span class="o">=</span><span class="s2">&quot;Bad environment variable name&quot;</span><span class="p">):</span> <span class="nb">str</span>
-            <span class="p">},</span>
-            <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">([</span><span class="nb">str</span><span class="p">],</span> <span class="nb">len</span><span class="p">),</span>
-        <span class="p">},</span>
         <span class="nb">str</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>  <span class="c1"># do not consider other keys</span>
     <span class="p">})</span>
 
@@ -556,15 +563,14 @@
             <span class="p">},</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="RecipeSdkFeature.run"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeSdkFeature.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="RecipeSdkFeature.run"><a class="viewcode-back" href="../../toolkit/cosmk.html#cosmk.features.RecipeSdkFeature.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sdk</span><span class="o">.</span><span class="n">interactive_run</span><span class="p">(</span>
-            <span class="n">steps</span><span class="o">=</span><span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">sdk_context</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">][</span><span class="s2">&quot;steps&quot;</span><span class="p">]</span>
-            <span class="p">],</span>
+            <span class="n">recipe</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
             <span class="n">env</span><span class="o">=</span><span class="p">{</span>
                 <span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">sdk_context</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">][</span><span class="s2">&quot;env&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;runtime&quot;</span><span class="p">][</span><span class="s2">&quot;env&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">},</span>
         <span class="p">)</span></div>
 
@@ -689,7 +695,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -708,20 +714,14 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
 
   
 

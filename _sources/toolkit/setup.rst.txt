@@ -57,8 +57,7 @@ Here is a requirements check-list about your global environment:
       without issue.
 
 3. Both your hardware and your kernel must support **KVM** (through Intel
-   VT-x/VT-d or AMD-V/AMD-Vi technologies) to run CLIP OS virtual machine
-   images.
+   VT-x or AMD-V technologies) to run CLIP OS virtual machine images.
 
 4. **Super-user privileges** are required on punctual occasions through the use
    of the ``sudo`` utility.
@@ -223,7 +222,7 @@ for Debian):
 .. code-block:: shell-session
 
    $ sudo apt install \
-          python3.6 python3.6-dev python3-venv \
+          python3 python3-dev python3-venv \
           gnupg2 repo git git-lfs openssh-client \
           build-essential pkg-config \
           runc sudo squashfs-tools \
@@ -257,9 +256,8 @@ On Arch Linux:
          runc sudo squashfs-tools \
          qemu libvirt bridge-utils dnsmasq \
          virt-manager ebtables \
-         debootstrap \
-         rust \
-         debian-archive-keyring
+         debootstrap debian-archive-keyring \
+         rust
 
 
 How to fetch the entire source tree?

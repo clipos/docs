@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Kernel" href="kernel.html" />
@@ -119,7 +117,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#arbitrary-code-execution-restrictions-w-x-a-k-a-write-xor-execute">Arbitrary code execution restrictions (W^X, a.k.a. Write XOR Execute)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#system-administration-roles-separation">System administration roles separation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#system-and-user-authentication-separation">System and user authentication separation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#non-persistency-of-eventual-system-or-user-session-compromise">Non-persistency of eventual system or user session compromise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-persistency-of-potential-system-or-user-session-compromise">Non-persistency of potential system or user session compromise</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#journaling">Journaling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#robust-update-system">Robust update system</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#remote-attestation">Remote attestation</a></li>
@@ -157,11 +155,13 @@
 <li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -855,8 +855,8 @@ from writable filesystems.</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="non-persistency-of-eventual-system-or-user-session-compromise">
-<h4>Non-persistency of eventual system or user session compromise<a class="headerlink" href="#non-persistency-of-eventual-system-or-user-session-compromise" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="non-persistency-of-potential-system-or-user-session-compromise">
+<h4>Non-persistency of potential system or user session compromise<a class="headerlink" href="#non-persistency-of-potential-system-or-user-session-compromise" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Privileged user (i.e., <code class="docutils literal notranslate"><span class="pre">root</span></code>) level compromises are mitigated against
 persistency methods which make use of the filesystem. Such compromises would
@@ -1572,7 +1572,7 @@ the system partition.</td></tr>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -1591,20 +1591,14 @@ the system partition.</td></tr>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
 
   
 

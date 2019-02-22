@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="How to derive this project" href="derive.html" /> 
@@ -97,11 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -370,14 +370,14 @@ leading and trailing whitespaces.</p>
 
 <dl class="function">
 <dt id="cosmk.commons.run">
-<code class="descclassname">cosmk.commons.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>terminal=False</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>stdouterr=None</em>, <em>timeout=None</em>, <em>check=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/commons.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.commons.run" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">cosmk.commons.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>terminal=False</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>stdouterr=None</em>, <em>timeout=None</em>, <em>check=True</em>, <em>outside_of_virtualenv=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/commons.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.commons.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the <code class="docutils literal notranslate"><span class="pre">submodule.run</span></code> function with capture of the output
 streams (<code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code> or both streams interlaced as one).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the command line to run (either in the form of a sh-escaped
 command line string or a list of arguments as <cite>subprocess</cite> takes)</li>
 <li><strong>terminal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the terminal shall be forwarded to the
@@ -392,16 +392,30 @@ appears in an interactive shell without output redirection)</li>
 <li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – the time out value to apply to the command run</li>
 <li><strong>check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – raise an exception if the command exits with a non-null
 return value</li>
+<li><strong>outside_of_virtualenv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if running from a virtualenv, then this
+parameter will strip all the parameters proper to the virtualenv from
+the environment variable set to be given to the process to run</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The function detects if <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> is run from a virtualenv by looking
+the value of the <code class="docutils literal notranslate"><span class="pre">VIRTUAL_ENV</span></code> environment variable.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
 <li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if bad parameters are given to this function</li>
 <li><a class="reference internal" href="#cosmk.exceptions.SystemCommandError" title="cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure when executing the command</li>
 </ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </td>
 </tr>
 </tbody>
@@ -862,7 +876,7 @@ final recipe target.</p>
 
 <dl class="attribute">
 <dt id="cosmk.features.RecipeBundleFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'bundle': {'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeBundleFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'bundle': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeBundleFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -898,7 +912,7 @@ feature</p>
 
 <dl class="attribute">
 <dt id="cosmk.features.RecipeConfigureFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'configure': {'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'root': Regex('^[^\\s/]+/[^\\s/]+$'), 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeConfigureFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'configure': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'root': Regex('^[^\\s/]+/[^\\s/]+$'), 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeConfigureFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -949,7 +963,7 @@ directly. Use a subclass of this metaclass.</p>
 </div>
 <dl class="attribute">
 <dt id="cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = set()</em><a class="headerlink" href="#cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {}</em><a class="headerlink" href="#cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -983,10 +997,11 @@ copy of this string.</p>
 <dt id="cosmk.features.RecipeRootFeature">
 <em class="property">class </em><code class="descclassname">cosmk.features.</code><code class="descname">RecipeRootFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/features.html#RecipeRootFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.features.RecipeRootFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#cosmk.features.RecipeFeature" title="cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">cosmk.features.RecipeFeature</span></code></a></p>
-<p>Recipe feature for building rootfs from sources and binary packages</p>
+<p>Recipe feature for building rootfs from sources and binary packages.
+Provides the ‘run’ attribute for development and debug.</p>
 <dl class="attribute">
 <dt id="cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'build', 'image'}</em><a class="headerlink" href="#cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'build', 'image', 'run'}</em><a class="headerlink" href="#cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -996,7 +1011,7 @@ copy of this string.</p>
 
 <dl class="attribute">
 <dt id="cosmk.features.RecipeRootFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'root': {'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'build_steps': [&lt;class 'str'&gt;], 'image_steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeRootFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'root': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'build_steps': [&lt;class 'str'&gt;], 'image_steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeRootFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1038,6 +1053,19 @@ and without any build-time dependency.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cosmk.features.RecipeRootFeature.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/features.html#RecipeRootFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.features.RecipeRootFeature.run" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1048,7 +1076,7 @@ and without any build-time dependency.</p>
 features.</p>
 <dl class="attribute">
 <dt id="cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'sdk', 'run', 'bootstrap'}</em><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'bootstrap', 'run', 'sdk'}</em><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1058,7 +1086,7 @@ features.</p>
 
 <dl class="attribute">
 <dt id="cosmk.features.RecipeSdkFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'runtime': {'additional_capabilities': [&lt;class 'str'&gt;], 'additional_device_bindings': [&lt;class 'str'&gt;], 'cwd': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'prelude_commands': [&lt;class 'str'&gt;], 'postlude_commands': [&lt;class 'str'&gt;], Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'writable_assets_dirs_at_build': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]}, 'bootstrap': {'rootfs_archive': &lt;class 'str'&gt;, Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': [&lt;class 'str'&gt;]}, 'run': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SCHEMA</code><em class="property"> = Schema({'runtime': {'additional_capabilities': [&lt;class 'str'&gt;], 'additional_device_bindings': [&lt;class 'str'&gt;], 'cwd': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'prelude_commands': [&lt;class 'str'&gt;], 'postlude_commands': [&lt;class 'str'&gt;], Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'writable_assets_dirs_at_build': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]}, 'bootstrap': {'rootfs_archive': &lt;class 'str'&gt;, Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': [&lt;class 'str'&gt;]}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1076,7 +1104,7 @@ features.</p>
 
 <dl class="method">
 <dt id="cosmk.features.RecipeSdkFeature.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/features.html#RecipeSdkFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/features.html#RecipeSdkFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.features.RecipeSdkFeature.run" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1122,7 +1150,7 @@ features.</p>
 environment created from other recipe feature results.</p>
 <dl class="attribute">
 <dt id="cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'spawn', 'create', 'destroy'}</em><a class="headerlink" href="#cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'create', 'destroy', 'spawn'}</em><a class="headerlink" href="#cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1864,8 +1892,9 @@ mountpoints of the SDK context.</p>
 
 <dl class="method">
 <dt id="cosmk.sdk.Sdk.interactive_run">
-<code class="descname">interactive_run</code><span class="sig-paren">(</span><em>steps</em>, <em>env=None</em>, <em>shared_host_netns=True</em>, <em>writable_repo_root=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/sdk.html#Sdk.interactive_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.sdk.Sdk.interactive_run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run a command interactively in this SDK</p>
+<code class="descname">interactive_run</code><span class="sig-paren">(</span><em>recipe</em>, <em>command=None</em>, <em>env=None</em>, <em>shared_host_netns=True</em>, <em>writable_repo_root=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cosmk/sdk.html#Sdk.interactive_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cosmk.sdk.Sdk.interactive_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a command interactively in this SDK, in the given recipe
+context</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2043,7 +2072,7 @@ be guessed and no dummy value has been provided</td>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -2062,20 +2091,14 @@ be guessed and no dummy value has been provided</td>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
 
   
 

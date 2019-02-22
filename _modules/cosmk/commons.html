@@ -1,8 +1,5 @@
 
 
-
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -31,7 +28,8 @@
 
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/colors.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 
@@ -96,11 +94,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../toolkit/build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../toolkit/source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
@@ -175,7 +175,7 @@
             
   <h1>Source code for cosmk.commons</h1><div class="highlight"><pre>
 <span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
-<span class="c1"># Copyright © 2017-2018 ANSSI. All rights reserved.</span>
+<span class="c1"># Copyright © 2017 ANSSI. All rights reserved.</span>
 
 <span class="sd">&quot;&quot;&quot;Miscellanous utility functions and helpers that may be used globally in this</span>
 <span class="sd">package.&quot;&quot;&quot;</span>
@@ -270,7 +270,8 @@
         <span class="n">stderr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IO</span><span class="p">[</span><span class="n">AnyStr</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">stdouterr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IO</span><span class="p">[</span><span class="n">AnyStr</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">check</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">outside_of_virtualenv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Wrapper around the ``submodule.run`` function with capture of the output</span>
 <span class="sd">    streams (``stdout``, ``stderr`` or both streams interlaced as one).</span>
 
@@ -288,11 +289,44 @@
 <span class="sd">    :param timeout: the time out value to apply to the command run</span>
 <span class="sd">    :param check: raise an exception if the command exits with a non-null</span>
 <span class="sd">        return value</span>
+<span class="sd">    :param outside_of_virtualenv: if running from a virtualenv, then this</span>
+<span class="sd">        parameter will strip all the parameters proper to the virtualenv from</span>
+<span class="sd">        the environment variable set to be given to the process to run</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">       The function detects if ``cosmk`` is run from a virtualenv by looking</span>
+<span class="sd">       the value of the ``VIRTUAL_ENV`` environment variable.</span>
 
 <span class="sd">    :raise ValueError: if bad parameters are given to this function</span>
 <span class="sd">    :raise SystemCommandError: in case of failure when executing the command</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Inherit by default the environment of cosmk:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>  <span class="c1"># use dict to avoid modifying current environment</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outside_of_virtualenv</span> <span class="ow">and</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;VIRTUAL_ENV&quot;</span><span class="p">]:</span>
+            <span class="c1"># Retrieve path to the virtualenv and all the items composing PATH:</span>
+            <span class="n">venv_path</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;VIRTUAL_ENV&quot;</span><span class="p">]</span>
+            <span class="n">path_items</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">new_path_items</span> <span class="o">=</span> <span class="n">path_items</span><span class="p">[:]</span>  <span class="c1"># copy object to receive changes</span>
+
+            <span class="c1"># Iterate on the PATH items and strip all items beginning by the</span>
+            <span class="c1"># virtualenv path (using canonical paths):</span>
+            <span class="k">for</span> <span class="n">path_component</span> <span class="ow">in</span> <span class="n">path_items</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">path_component</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">venv_path</span><span class="p">)):</span>
+                    <span class="n">new_path_items</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path_component</span><span class="p">)</span>
+
+            <span class="c1"># Unset VIRTUAL_ENV and set new PATH (with virtualenv binaries path</span>
+            <span class="c1"># stripped):</span>
+            <span class="k">del</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;VIRTUAL_ENV&quot;</span><span class="p">]</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_path_items</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="c1"># if we land here, then either PATH or VIRTUAL_ENV is missing in the</span>
+        <span class="c1"># environment, proceed silently (even if this is strange...)</span>
+        <span class="k">pass</span>
 
     <span class="c1"># split the command into a list of arguments as expected by subprocess</span>
     <span class="n">cmd_split</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">cmd</span>
@@ -306,7 +340,7 @@
                 <span class="sd">&quot;&quot;&quot;You cannot provide both file-object to capture any command</span>
 <span class="sd">                output and run the command in the current terminal.&quot;&quot;&quot;</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SystemCommandError</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span> <span class="s2">&quot;Command not found in PATH&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
@@ -335,7 +369,7 @@
                                 <span class="k">if</span> <span class="ow">not</span> <span class="n">stdouterr</span> <span class="k">else</span> <span class="n">stdouterr</span><span class="p">)</span>
                 <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">stdouterr_fp</span><span class="p">,</span>
                                <span class="n">stderr</span><span class="o">=</span><span class="n">stdouterr_fp</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-                               <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">)</span>
+                               <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SystemCommandError</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span>
                                          <span class="s2">&quot;Command not found in PATH&quot;</span><span class="p">)</span>
@@ -362,7 +396,7 @@
                                  <span class="k">if</span> <span class="ow">not</span> <span class="n">stderr</span> <span class="k">else</span> <span class="n">stderr</span><span class="p">)</span>
                     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">stdout_fp</span><span class="p">,</span>
                                    <span class="n">stderr</span><span class="o">=</span><span class="n">stderr_fp</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-                                   <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">)</span>
+                                   <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">SystemCommandError</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">,</span>
                                             <span class="s2">&quot;Command not found in PATH&quot;</span><span class="p">)</span>
@@ -394,7 +428,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data).
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
 
     </p>
   </div>
@@ -413,20 +447,14 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'5.0.0_alpha1',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
 
   
 
