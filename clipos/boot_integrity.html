@@ -100,10 +100,20 @@
 <li class="toctree-l2"><a class="reference internal" href="#boot-chain-and-rootfs-integrity">Boot chain and rootfs integrity</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#secure-boot">Secure Boot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dm-verity">DM-Verity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trusted-boot">Trusted Boot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objective">Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chosen-solution">Chosen Solution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implementation-choices">Implementation Choices</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-for-testing">Setup for testing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#under-qemu-with-ovmf">Under QEMU with OVMF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#under-qemu-with-ovmf">Under QEMU with OVMF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Secure Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Trusted Boot</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#with-real-hardware">With real hardware</a></li>
 </ul>
 </li>
@@ -124,9 +134,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<p class="caption"><span class="caption-text">Toolkit API references</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
 </ul>
 
             
@@ -197,7 +207,7 @@
 <h2>On-disk layout<a class="headerlink" href="#on-disk-layout" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="first sidebar-title">Disk partition layout</p>
-<div class="last figure align-center" id="id1">
+<div class="last figure align-center" id="id3">
 <span id="clipos-disk-layout"></span><img alt="../_images/clipos-disk-layout.svg" src="../_images/clipos-disk-layout.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Disk partition layout</span></p>
 </div>
 </div>
@@ -236,9 +246,14 @@ the end</td>
 </tr>
 <tr class="row-odd"><td>mainvg</td>
 <td>core_state</td>
-<td>None (Planned: DM-Crypt + DM-Integrity block
-device)</td>
-<td>ext4 filesystem</td>
+<td>DM-Crypt + DM-Integrity block device</td>
+<td>ext4
+filesystem</td>
+</tr>
+<tr class="row-even"><td>mainvg</td>
+<td>swap</td>
+<td>DM-Crypt with a random key generated at boot time</td>
+<td>N/A</td>
 </tr>
 </tbody>
 </table>
@@ -247,24 +262,25 @@ device)</td>
 <h2>Boot chain order<a class="headerlink" href="#boot-chain-order" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="first sidebar-title">Boot chain order</p>
-<div class="last figure align-center" id="id2">
+<div class="last figure align-center" id="id4">
 <span id="clipos-boot-order"></span><img alt="../_images/clipos-boot-order.svg" src="../_images/clipos-boot-order.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Boot chain order</span></p>
 </div>
 </div>
 <p>As shown in <a class="reference internal" href="#clipos-boot-order"><span class="std std-numref">Fig. 5</span></a>, the boot steps (following hardware
 initialization) are as follows:</p>
 <ol class="arabic simple">
-<li>The UEFI Firmware will execute the initial bootloader from the EFI system
+<li>The UEFI Firmware executes the initial bootloader from the EFI system
 partition.</li>
-<li>Following the <a class="reference external" href="TheBootLoaderSpecification">Boot Loader Specification</a>,
-the bootloader (gummiboot/systemd-boot) will execute the EFI binary in the
-<code class="docutils literal notranslate"><span class="pre">EFI/Linux</span></code> folder with the highest version number.</li>
-<li>The executed EFI binary is a bundle created by <a class="reference external" href="http://man7.org/linux/man-pages/man8/dracut.8.html">dracut</a> which wraps a Linux
-kernel, its command line and an initramfs. The initramfs will open the
-<code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> DM-Verity block device and mount the SquashFS filesystem
-in <code class="docutils literal notranslate"><span class="pre">/sysroot</span></code>. Then it will mount the <code class="docutils literal notranslate"><span class="pre">core_state</span></code> ext4 partition in
-<code class="docutils literal notranslate"><span class="pre">/sysroot/mnt/state</span></code>. Finally, it will perform a pivot_root to switch to
-the final root.</li>
+<li>Following the <a class="reference external" href="https://systemd.io/BOOT_LOADER_SPECIFICATION.html">Boot Loader Specification</a>, the bootloader
+(gummiboot/systemd-boot) executes the EFI binary in the <code class="docutils literal notranslate"><span class="pre">EFI/Linux</span></code> folder
+with the highest version number. The executed EFI binary is a bundle created
+by <a class="reference external" href="http://man7.org/linux/man-pages/man8/dracut.8.html">dracut</a> which
+wraps a Linux kernel, its command line and an initramfs.</li>
+<li>The initramfs opens the <code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> DM-Verity block device and mounts
+the SquashFS filesystem in <code class="docutils literal notranslate"><span class="pre">/sysroot</span></code>. Then, using the TPM, it unseals the
+key required to open the DM-Crypt/DM-Integrity <code class="docutils literal notranslate"><span class="pre">core_state</span></code> partition and
+mounts the resulting ext4 partition in <code class="docutils literal notranslate"><span class="pre">/sysroot/mnt/state</span></code>. Finally, it
+performs a pivot_root to switch to the final root.</li>
 </ol>
 </div>
 <div class="section" id="boot-chain-and-rootfs-integrity">
@@ -304,11 +320,97 @@ includes the read-only uncompressed SquashFS root filesystem. Support for
 forward error correction (FEC) is also enabled thus increasing resistance to
 disk read errors or failures.</p>
 </div>
+<div class="section" id="trusted-boot">
+<h3>Trusted Boot<a class="headerlink" href="#trusted-boot" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="objective">
+<h4>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h4>
+<p>We want to achieve full-disk encryption in a way that is both secure and
+unnoticeable to the end user. The TPM enables us to do that by sealing the
+encryption key and providing it at boot time if and only if the machine is in a
+known-good state (via PCRs extension). In other words, we want to be able to
+decrypt the disk only once we <em>prove</em> we have booted trusted code.</p>
+<p>However, we would like to avoid re-sealing the encryption key every single
+time we upgrade the kernel, the initramfs or the command line.</p>
+</div>
+<div class="section" id="chosen-solution">
+<h4>Chosen Solution<a class="headerlink" href="#chosen-solution" title="Permalink to this headline">¶</a></h4>
+<p>We already have Secure Boot, ensuring the UEFI firmware boots our signed EFI
+binary containing the kernel, the initramfs and the command line. In other
+words, we already <em>assert</em> the boot of trusted code.</p>
+<p>A <a class="reference external" href="https://docs.microsoft.com/en-us/previous-versions/windows/hardware/hck/jj923068(v=vs.85)#appendix_a__static_root_of_trust_measurements">specification</a>,
+pointed out <a class="reference external" href="https://mjg59.dreamwidth.org/48897.html">here</a>, exists that
+combines Secure and Trusted Boot, using PCR 7, by:</p>
+<ul class="simple">
+<li>recording whether Secure Boot is turned on;</li>
+<li>recording the key database;</li>
+<li>recording which keys were used.</li>
+</ul>
+<p>By sealing the disk-encryption key according to the PCR 7 value, we ensure that
+the disk is decrypted if and only if our Secure Boot policy has not been
+tampered with, which in turn means that we booted a trusted EFI binary, i.e.
+trusted kernel, initramfs and command line.</p>
+<p>Naturally, we can in addition use most if not all PCRs 0 to 6 to measure
+firmware integrity. In the future, we may also use an additional PCR to
+measure the LUKS header(s), similarly to what
+<a class="reference external" href="https://github.com/Rohde-Schwarz-Cybersecurity/TrustedGRUB2">TrustedGRUB2</a>
+does with PCR 12.</p>
+</div>
+<div class="section" id="implementation-choices">
+<h4>Implementation Choices<a class="headerlink" href="#implementation-choices" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="tpm-specification">
+<h5>TPM specification<a class="headerlink" href="#tpm-specification" title="Permalink to this headline">¶</a></h5>
+<p>We rely on TPM 2.0, for various reasons including:</p>
+<ul class="simple">
+<li>TPM 1.2 only supports deprecated cryptographic algorithms and TrouSerS is
+hard to deal with and not satisfying (partly due to tcsd);</li>
+<li>TPM 2.0 is already replacing TPM 1.2 in new machines;</li>
+<li>TPM 2.0 offers several new interesting functionalities, such as multiple
+hierarchies.</li>
+</ul>
+<p>One issue with TPM 2.0 is that utilities and libraries to deal with it are
+still under heavy development. We chose to use the <a class="reference external" href="https://github.com/tpm2-software/tpm2-tools">tpm2-tools</a>, which rely on the <a class="reference external" href="https://github.com/tpm2-software/tpm2-tss">tpm2-tss</a> implementation of the TCG’s TPM2
+Software Stack (TSS2).</p>
+</div>
+<div class="section" id="initramfs-and-luks">
+<h5>Initramfs and LUKS<a class="headerlink" href="#initramfs-and-luks" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>We use a Bash script located in our initramfs.</li>
+<li>TPM-sealed LUKS keyfiles are located in the EFI System Partition.</li>
+<li>The kernel’s Resource Manager (RM) is used to ease objects management.
+Basically, the RM presents each new call to a <code class="docutils literal notranslate"><span class="pre">tpm2_*</span></code> tool with an empty
+TPM (i.e. it cleans transient objects when the file handle to <code class="docutils literal notranslate"><span class="pre">/dev/tpmrm0</span></code>
+is closed).</li>
+<li>We use the Owner Hierarchy (OH) and leave the Endorsement Hierarchy (EH) for
+remote attestation.</li>
+<li>One could make the primary object persistent (with <code class="docutils literal notranslate"><span class="pre">tpm2_evictcontrol</span></code>) to
+avoid re-derivating it from the seed each time and save some time at the
+expense of additional complexity.</li>
+<li>We do not directly make the loaded keyfile object persistent as we would not
+have enough space in the TPM for all keyfiles we are going to want to use.</li>
+</ul>
+</div>
+<div class="section" id="planned-improvements">
+<h5>Planned Improvements<a class="headerlink" href="#planned-improvements" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>We would like to use different PCR lists for a given machine’s first boots
+following/during its provisioning, as we may for instance change its BIOS
+configuration.</li>
+<li>We would like to use keyctl in order to directly store the decrypted LUKS key
+in a kernel keyslot so that cryptsetup can use it without it being passed
+through userspace. Note that, currently, keyfiles are in memory and may be
+swapped to disk, but that is tolerable as we use an encrypted swap device.
+Another solution could be to use ramfs instead of tmpfs.</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="setup-for-testing">
 <h2>Setup for testing<a class="headerlink" href="#setup-for-testing" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="under-qemu-with-ovmf">
 <h3>Under QEMU with OVMF<a class="headerlink" href="#under-qemu-with-ovmf" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h4>Secure Boot<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>As a short term solution, we use hard-coded dummy keys to sign the EFI binaries
 with <strong>sbsigntools</strong> and ship an OVMF VARS template file in which these keys
 have been manually enrolled.</p>
@@ -318,6 +420,26 @@ similarly to <a class="reference external" href="https://github.com/puiterwijk/q
 generated at build time for a given deployment using the relevant PKI.</p>
 <p>The standard CLIP OS build process includes build steps to enable Secure Boot
 testing under QEMU with OVMF.</p>
+</div>
+<div class="section" id="id2">
+<h4>Trusted Boot<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>QEMU (and libvirt) support two TPM backends:</p>
+<ul class="simple">
+<li>TPM passthrough device: requires the end user to have a hardware TPM on its
+host machine, which in addition cannot be used simultaneously by anything
+else. There are also some problems due to the way the TPM is initialized by
+the host, and thus some commands used by the guest cannot work as expected,
+and so on.</li>
+<li>TPM emulator: provides TPM functionality for each VM using a TPM emulator
+installed on the host. <a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> is
+currently the only supported emulator.</li>
+</ul>
+<p>The second option is more adapted to our needs but requires people to install
+swtpm, which requires <a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a>.</p>
+<p>The EFI firmware (OVMF) needs to be built with TPM support. We provide and use
+our own derived <code class="docutils literal notranslate"><span class="pre">sys-firmware/edk2-ovmf</span></code> to enable Secure Boot and TPM
+support.</p>
+</div>
 </div>
 <div class="section" id="with-real-hardware">
 <h3>With real hardware<a class="headerlink" href="#with-real-hardware" title="Permalink to this headline">¶</a></h3>

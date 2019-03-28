@@ -99,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#general-setup">General setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#processor-type-and-features">Processor type and features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#power-management-and-acpi-options">Power management and ACPI options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-drivers">Firmware Drivers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#executable-file-formats-emulations">Executable file formats / Emulations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#networking-support">Networking support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#device-drivers">Device Drivers</a></li>
@@ -128,9 +129,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<p class="caption"><span class="caption-text">Toolkit API references</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
 </ul>
 
             
@@ -625,6 +626,19 @@ increases the kernel attack surface.</p>
 <code class="descname">CONFIG_HIBERNATION=n</code></dt>
 <dd><p>The CLIP OS swap partition is encrypted with an ephemeral key and thus
 cannot support suspend to disk.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="firmware-drivers">
+<h3>Firmware Drivers<a class="headerlink" href="#firmware-drivers" title="Permalink to this headline">¶</a></h3>
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_RESET_ATTACK_MITIGATION=n</code></dt>
+<dd><p>In order to work properly, this mitigation requires userspace support that
+is currently not available in CLIP OS. Moreover, due to our use of Secure
+Boot, Trusted Boot and the fact that machines running CLIP OS are expected
+to lock their BIOS with a password, the type of <em>cold boot attacks</em> this
+mitigation is supposed to thwart should not be an issue.</p>
 </dd></dl>
 
 </div>

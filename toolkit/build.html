@@ -102,7 +102,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#activate-the-toolkit-environment">Activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instrumented-build-for-testing">Instrumented build for testing</a></li>
@@ -116,9 +116,9 @@
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API &amp; Reference</span></p>
+<p class="caption"><span class="caption-text">Toolkit API references</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cosmk.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
 </ul>
 
             
@@ -191,14 +191,25 @@
 <p class="last">You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">toolkit environment setup</span></a> before
 executing any command from this page.</p>
 </div>
-<div class="section" id="activate-the-toolkit-environment">
-<h2>Activate the toolkit environment<a class="headerlink" href="#activate-the-toolkit-environment" title="Permalink to this headline">¶</a></h2>
-<p>Create and activate the CLIP OS toolkit environment in which you will be able
-to use the cosmk Python module and its associated tools (such as the
-<code class="docutils literal notranslate"><span class="pre">justfile</span></code>’s):</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">source</span> toolkit/source_me.sh
-<span class="gp">(toolkit) $</span>
+<div class="section" id="setup-and-activate-the-toolkit-environment">
+<h2>Setup and activate the toolkit environment<a class="headerlink" href="#setup-and-activate-the-toolkit-environment" title="Permalink to this headline">¶</a></h2>
+<p>Setup and activate the CLIP OS toolkit environment in which you will be able
+to use all the CLIP OS tools required to build and conveniently manage the
+source tree (such as <code class="docutils literal notranslate"><span class="pre">just</span></code> to handle the <code class="docutils literal notranslate"><span class="pre">justfile</span></code>’s and <code class="docutils literal notranslate"><span class="pre">cosmk</span></code>):</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> toolkit/setup.sh    <span class="c1"># This is to be run at least once on your machine.</span>
+<span class="gp">$</span> <span class="nb">source</span> toolkit/activate
+<span class="gp">(toolkit) $</span>           <span class="c1"># Your shell prompt is automatically prefixed.</span>
 </pre></div>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">About the CLIP OS toolkit virtualenv setup</p>
+<p>The purpose of the script <code class="docutils literal notranslate"><span class="pre">toolkit/setup.sh</span></code> is to compile and store the
+CLIP OS toolkit environment under the form of a Python virtualenv in
+<code class="docutils literal notranslate"><span class="pre">run/venv</span></code> directory. You might be invited to run it again if the
+specification of the toolkit environment has changed over time.</p>
+<p class="last">This setup script can take some time (up to a couple of minutes) to complete
+on the first launch as it will automatically trigger the compilation of some
+CPython packages required by the CLIP OS toolkit. Thanks for your patience.</p>
 </div>
 </div>
 <div class="section" id="building-the-full-project">
@@ -225,11 +236,11 @@ manipulation) which <strong>do not</strong> require <code class="docutils litera
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>On most distributions, the default configuration will reset the
-<code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable set by <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> to a fixed default value
-when calling <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable set by the CLIP OS toolkit environment to a
+fixed default value when calling <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
 <p class="last">To workaround this issue without modifying your <code class="docutils literal notranslate"><span class="pre">sudoers</span></code> configuration,
-the <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> environment sets an alias for the sudo command to keep your
-current <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+the CLIP OS toolkit environment sets an alias for the sudo command to keep
+your current <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -253,6 +264,14 @@ machine with <code class="docutils literal notranslate"><span class="pre">libvir
 <p class="last">The default build configuration will create production images with root
 access disabled. See the next paragraph for instructions to create an
 instrumented build.</p>
+</div>
+<div class="important admonition">
+<p class="first admonition-title">TPM support</p>
+<p class="last">To test the TPM support, you need to install
+<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
+<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> using either instructions
+from the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their respective GitHub repositories or the AUR
+packages for Arch Linux users.</p>
 </div>
 </div>
 <div class="section" id="instrumented-build-for-testing">
