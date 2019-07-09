@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -191,7 +193,6 @@
 <span class="kn">from</span> <span class="nn">.commons</span> <span class="k">import</span> <span class="p">(</span><span class="n">ENVVAR_FORMAT_RE</span><span class="p">,</span> <span class="n">RECIPE_IDENTIFIER_RE</span><span class="p">,</span> <span class="n">RECIPE_NAME_RE</span><span class="p">,</span>
                       <span class="n">line</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">RecipeConfigurationError</span>
-<span class="kn">from</span> <span class="nn">.instrumentation</span> <span class="k">import</span> <span class="n">InstrumentationLevel</span><span class="p">,</span> <span class="n">instrumented_recipes</span>
 <span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">critical</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">warn</span>
 <span class="kn">from</span> <span class="nn">.product</span> <span class="k">import</span> <span class="n">Product</span>
 <span class="kn">from</span> <span class="nn">.sourcetree</span> <span class="k">import</span> <span class="n">repo_root_path</span>
@@ -239,12 +240,6 @@
             <span class="k">raise</span> <span class="n">RecipeConfigurationError</span><span class="p">(</span>
                 <span class="s2">&quot;Cannot parse or open </span><span class="se">\&quot;</span><span class="s2">recipe.toml</span><span class="se">\&quot;</span><span class="s2"> configuration file.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_metaconfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-
-        <span class="c1"># Recipe instrumentation level with fallback to production if not</span>
-        <span class="c1"># defined:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_level</span><span class="p">:</span> <span class="n">InstrumentationLevel</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">instrumented_recipes</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
-                                       <span class="n">InstrumentationLevel</span><span class="o">.</span><span class="n">PRODUCTION</span><span class="p">))</span>
 
         <span class="c1"># initialize features for this recipe:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;features.RecipeFeature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -397,26 +392,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

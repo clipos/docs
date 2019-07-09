@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -34,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Environment setup" href="../toolkit/setup.html" />
     <link rel="prev" title="Roadmap" href="roadmap.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -97,12 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="boot_integrity.html">Boot chain and integrity guarantees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development and debug</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#effect-of-instrumentation-levels">Effect of instrumentation levels</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#clipos-core">clipos/core</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#clipos-efiboot">clipos/efiboot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#clipos-qemu">clipos/qemu</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#effect-of-instrumentation-features">Effect of instrumentation features</a></li>
 </ul>
 </li>
 </ul>
@@ -186,73 +183,99 @@
            <div itemprop="articleBody">
             
   <div class="section" id="development-and-debug">
-<h1>Development and debug<a class="headerlink" href="#development-and-debug" title="Permalink to this headline">¶</a></h1>
+<span id="development"></span><h1>Development and debug<a class="headerlink" href="#development-and-debug" title="Permalink to this headline">¶</a></h1>
 <p>This section describes all changes and information specific to development and
 debug that only applies to the CLIP OS product.</p>
-<div class="section" id="effect-of-instrumentation-levels">
-<h2>Effect of instrumentation levels<a class="headerlink" href="#effect-of-instrumentation-levels" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="effect-of-instrumentation-features">
+<h2>Effect of instrumentation features<a class="headerlink" href="#effect-of-instrumentation-features" title="Permalink to this headline">¶</a></h2>
 <p>This is a summary of all changes made to the project during build and
-configuration steps for each instrumentation level available for development
-only. This is organized as a list of recipes, each with their instrumentation
-level. Instrumentation levels must be configured before project builds in
+configuration steps for each instrumentation feature available for development
+only. Instrumentation features must be configured before project builds in
 <code class="docutils literal notranslate"><span class="pre">instrumentation.toml</span></code> which must be located in the project repo root
-directory.</p>
-<div class="section" id="clipos-core">
-<h3>clipos/core<a class="headerlink" href="#clipos-core" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><em>development</em>:<ul>
-<li>Enable local and remote (SSH) <strong>root</strong> login without password</li>
-<li>Install additional development and debug tools (non exhaustive list, see
-<code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-core</span></code>: vim, tmux, tree, strace, grep, ip, less, gdb,
-etc.)</li>
-<li><code class="docutils literal notranslate"><span class="pre">sys-apps/systemd</span></code>:<ul>
-<li>Build <em>coredump</em> related tools</li>
-<li>Enable debug shell support (still disabled by default, see <em>debug</em> for
-<code class="docutils literal notranslate"><span class="pre">clipos/efiboot</span></code>)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><em>debug</em>:<ul>
-<li>Tune the kernel <code class="docutils literal notranslate"><span class="pre">sysctl</span></code>’s in order to lower security to ease binary
-debugging:<ul>
-<li>Enable signed kernel module loading</li>
-<li>Disable <code class="docutils literal notranslate"><span class="pre">PTRACE</span></code> protections</li>
-<li>Do not hide kernel pointers values from the kernel log</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+directory. See <code class="docutils literal notranslate"><span class="pre">toolkit/instrumentation.toml.example</span></code> to get good default
+values for development.</p>
+<ul>
+<li><p><strong>instrumented-core:</strong> Install additional software development tools in the
+Core, such as Bash, Vim, tmux, tree, strace, grep, ip, less, gdb, tcpdump,
+etc. (This is a non-exhautive list, for the complete list please refer to
+the <code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-core</span></code> ebuild)</p></li>
+<li><p><strong>passwordless-root-login:</strong> Enable local and remote (SSH) root login
+without password.</p>
+<div class="warning admonition">
+<p class="admonition-title">Dependency</p>
+<p>To use this instrumentation feature, you must also enable
+<strong>instrumented-core</strong>.</p>
 </div>
-<div class="section" id="clipos-efiboot">
-<h3>clipos/efiboot<a class="headerlink" href="#clipos-efiboot" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><em>development</em>:<ul>
-<li>Increase bootloader timeout</li>
-<li>Enable interactive serial console</li>
-<li>Install additional development and debug tools (non exhaustive list, see
-<code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-efiboot</span></code>: strace, ltrace, less, grep, gdb, etc.)</li>
-</ul>
 </li>
-<li><em>debug</em>:<ul>
-<li>Enable persistent debug shell in <code class="docutils literal notranslate"><span class="pre">clipos/core</span></code></li>
-<li>Enable <code class="docutils literal notranslate"><span class="pre">dracut</span></code> breakpoints with interactive shell (requires multiple
-interactions on the serial console to resume boot)</li>
-</ul>
-</li>
-</ul>
+<li><p><strong>allow-ssh-root-login:</strong> Configure SSH in order to allow a developer to
+log in as root (account must be enabled with the appropriate
+instrumentation feature) via SSH and without any password thanks to an
+installed SSH key pair (an SSH key pair will be generated in the cache
+directory at first usage of this instrumentation feature).</p>
+<div class="warning admonition">
+<p class="admonition-title">Dependency</p>
+<p>To use this instrumentation feature, you must also enable
+<strong>passwordless-root-login</strong> and <strong>instrumented-core</strong>.</p>
 </div>
-<div class="section" id="clipos-qemu">
-<h3>clipos/qemu<a class="headerlink" href="#clipos-qemu" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><em>development</em>:<ul>
-<li>Create <em>root</em> home directory and setup <code class="docutils literal notranslate"><span class="pre">.ssh/authorized_keys</span></code> for remote
-login</li>
-</ul>
+</li>
+<li><p><strong>dev-friendly-bootloader:</strong> Configure the bootloader to provide handy
+features to developer (i.e.  “Reboot into firmware”) and set a smaller
+timeout before loading the default boot entry.</p></li>
+<li><p><strong>instrumented-initramfs:</strong> Install additional software development tools in
+the initramfs, such as strace, ltrace, less, grep, gdb, etc. (This is a
+non-exhautive list, for the complete list please refer to the
+<code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-efiboot</span></code> ebuild).</p></li>
+<li><p><strong>soften-kernel-configuration:</strong> Lower Linux kernel security parameters at
+runtime.</p></li>
+<li><p><strong>initramfs-no-require-tpm:</strong> Do not require a TPM 2.0 for the LUKS disk
+partition decryption.  Therefore, in case of missing TPM 2.0, LUKS passphrase
+will be prompted on the active console (either tty or serial console ttyS0).</p></li>
+<li><p><strong>initramfs-no-tpm-lockout:</strong> Do not lockout TPM (brute-force attack
+protection) when interacting with the TPM 2.0 (check out the TPM
+documentation for the “noDA” attribute and for “dictionary attack
+protections”).</p></li>
+<li><p><strong>debuggable-initramfs:</strong> Activate alterations to initramfs/efiboot packages
+intended to ease their debugging (e.g. debugging symbols):</p></li>
+<li><p><strong>breakpointed-initramfs:</strong> Enable dracut breakpoints with interactive shell
+drop-outs.</p>
+<div class="important admonition">
+<p class="admonition-title">Important note</p>
+<p>This feature requires multiple interactions on the console (or serial
+console for the QEMU target) to make the boot sequence proceed to the
+final pivot_root(2).</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Dependency</p>
+<p>To use this instrumentation feature, you must also enable
+<strong>instrumented-initramfs</strong>.</p>
+</div>
+</li>
+<li><p><strong>early-root-shell:</strong> Spawn a persistent root interactive shell on a serial
+console or an tty very early in the boot up sequence (right after the
+pivot_root(2) done by the initramfs) in order to ease systemd debugging
+tasks. See <a class="reference external" href="https://freedesktop.org/wiki/Software/systemd/Debugging">systemd debugging</a> for more
+information.</p>
+<div class="warning admonition">
+<p class="admonition-title">Dependency</p>
+<p>To use this instrumentation feature, you must also enable
+<strong>instrumented-core</strong>.</p>
+</div>
+</li>
+<li><p><strong>debuggable-kernel:</strong> Activates features for debugging purposes in the
+kernel (KALLSYMS, core dump production, etc.) with logging output sent on the
+serial port (ttyS0) early on boot up sequence.</p></li>
+<li><p><strong>verbose-systemd:</strong> Sets parameters on the kernel command line to make
+systemd very verbose on the defined console output (ttyS0 serial port by
+default):</p></li>
+<li><p><strong>coredump-handler:</strong> Configure systemd in order to install the
+systemd-coredump to allow kernel produce core dump files.</p>
+<div class="warning admonition">
+<p class="admonition-title">Dependency</p>
+<p>To use this instrumentation feature, you must also enable
+<strong>debuggable-kernel</strong>.</p>
+</div>
 </li>
 </ul>
-</div>
 </div>
 </div>
 
@@ -267,7 +290,7 @@ login</li>
         <a href="../toolkit/setup.html" class="btn btn-neutral float-right" title="Environment setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="roadmap.html" class="btn btn-neutral" title="Roadmap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="roadmap.html" class="btn btn-neutral float-left" title="Roadmap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -293,26 +316,16 @@ login</li>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

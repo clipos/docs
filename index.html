@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -33,21 +40,16 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Architecture" href="clipos/architecture.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -181,22 +183,22 @@
 <p>This is the documentation for the CLIP OS project, the tools and the OS
 architecture.</p>
 <div class="warning admonition">
-<p class="first admonition-title">Status of the project</p>
-<p class="last">The CLIP OS project is still in <strong>alpha</strong> stage. Please check out the
+<p class="admonition-title">Status of the project</p>
+<p>The CLIP OS project is still in <strong>alpha</strong> stage. Please check out the
 <a class="reference external" href="https://clip-os.org">project homepage</a> and the <a class="reference internal" href="clipos/roadmap.html#roadmap"><span class="std std-ref">project
 roadmap</span></a> to know more about the CLIP OS project history, its
 current status and its objectives.</p>
 </div>
 <div class="tip admonition">
-<p class="first admonition-title">How to get started?</p>
-<ul class="last simple">
-<li>If you wish to build an image of the CLIP OS project, please check out the
+<p class="admonition-title">How to get started?</p>
+<ul class="simple">
+<li><p>If you wish to build an image of the CLIP OS project, please check out the
 <a class="reference internal" href="toolkit/setup.html#setup"><span class="std std-ref">development environment setup</span></a> and <a class="reference internal" href="toolkit/build.html#build"><span class="std std-ref">build</span></a>
-instructions.</li>
-<li>If you wish to contribue to this project, please check out the
-<a class="reference internal" href="toolkit/contribute.html#contribute"><span class="std std-ref">How to contribute</span></a> guide.</li>
-<li>If you wish to adapt this project to your specific use case, please check
-out the <a class="reference internal" href="toolkit/derive.html#derive"><span class="std std-ref">How to derive this project</span></a> guide.</li>
+instructions.</p></li>
+<li><p>If you wish to contribue to this project, please check out the
+<a class="reference internal" href="toolkit/contribute.html#contribute"><span class="std std-ref">How to contribute</span></a> guide.</p></li>
+<li><p>If you wish to adapt this project to your specific use case, please check
+out the <a class="reference internal" href="toolkit/derive.html#derive"><span class="std std-ref">How to derive this project</span></a> guide.</p></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -237,7 +239,7 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/development.html">Development and debug</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="clipos/development.html#effect-of-instrumentation-levels">Effect of instrumentation levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clipos/development.html#effect-of-instrumentation-features">Effect of instrumentation features</a></li>
 </ul>
 </li>
 </ul>
@@ -256,9 +258,9 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
 </li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumented-build-for-testing">Instrumented build for testing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/build-steps.html">Build steps</a><ul>
@@ -365,26 +367,16 @@ out the <a class="reference internal" href="toolkit/derive.html#derive"><span cl
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

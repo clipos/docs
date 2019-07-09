@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -33,21 +40,16 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="How to derive this project" href="derive.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -199,7 +201,7 @@
 <span id="cosmk-python-api"></span><span id="cosmk-api"></span><h1><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API<a class="headerlink" href="#module-clipostoolkit.cosmk" title="Permalink to this headline">¶</a></h1>
 <p>The CLIP OS build tool.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p><strong>This module has side-effects on the Python runtime!</strong></p>
 <p>Since parts of this module and its submodule require super-user rights to
 perform some vital operations (<em>e.g.</em> managing Linux containers or creating
@@ -229,13 +231,13 @@ retrieve elevated privileges with the same method as the
 <cite>ElevatedPrivileges</cite> context manager does. The only purpose of this was to
 avoid running the whole <cite>cosmk</cite> package and its module dependencies with
 a privileged Python runtime which might cause issues.</p>
-<p class="last">If imported from an unprivileged Python runtime, this module will fail at
+<p>If imported from an unprivileged Python runtime, this module will fail at
 the first attempt of privileges elevation with the context manager
 <code class="xref py py-class docutils literal notranslate"><span class="pre">cosmk.privileges.ElevatedPrivileges</span></code>.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since the context manager <code class="xref py py-class docutils literal notranslate"><span class="pre">cosmk.privileges.ElevatedPrivileges</span></code>
+<p class="admonition-title">Note</p>
+<p>Since the context manager <code class="xref py py-class docutils literal notranslate"><span class="pre">cosmk.privileges.ElevatedPrivileges</span></code>
 requires unprivileged UID and GID to change both <em>real</em> and <em>effective</em>
 UIDs and GIDs at initialization, this module uses the environment variables
 <code class="docutils literal notranslate"><span class="pre">SUDO_UID</span></code> and <code class="docutils literal notranslate"><span class="pre">SUDO_GID</span></code>. These variables are provided by the famous
@@ -250,17 +252,15 @@ launched without super-user privileges.</p>
 <dt id="clipostoolkit.cosmk.__main__.main">
 <code class="descclassname">clipostoolkit.cosmk.__main__.</code><code class="descname">main</code><span class="sig-paren">(</span><em>as_module=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/__main__.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.__main__.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function of the cosmk command-line utility.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>as_module</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – <cite>True</cite> when called as a module (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span>
-<span class="pre">cosmk</span></code>)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>as_module</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – <cite>True</cite> when called as a module (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span>
+<span class="pre">cosmk</span></code>)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -275,19 +275,17 @@ In case of success, this function does not return since it calls
 variables of the unprivileged user (as well as the contents of <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
 which can be overwritten by Sudo for safety reasons).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This requires Sudo 1.8.21 or above.</p>
+<p class="admonition-title">Note</p>
+<p>This requires Sudo 1.8.21 or above.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><strong>CosmkError</strong></a> – if <code class="docutils literal notranslate"><span class="pre">sudo</span></code> could not be found in PATH or if the call has failed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><strong>CosmkError</strong></a> – if <code class="docutils literal notranslate"><span class="pre">sudo</span></code> could not be found in PATH or if the call has failed</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -300,14 +298,11 @@ package.</p>
 <code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">is_tty_attached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#is_tty_attached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.is_tty_attached" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the current process is attached to a TTY (<em>i.e.</em> if both
 <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> are TTY).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -324,14 +319,11 @@ line.</p>
 <span class="go">&quot;A potentially long message that can overflow the 79 chars limit of PEP 8.&quot;</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -340,17 +332,15 @@ line.</p>
 <dd><p>Returns the current Linux kernel version under the form of a 3-tuple of
 int (<em>e.g.</em> on a <code class="docutils literal notranslate"><span class="pre">4.16.12-1-ARCH</span></code> Linux kernel, this function will return
 the tuple <code class="xref py py-data docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">16,</span> <span class="pre">12)</span></code>).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkEnvironmentError" title="clipostoolkit.cosmk.exceptions.CosmkEnvironmentError"><strong>CosmkEnvironmentError</strong></a> – in case the underlying system does not run
-a Linux kernel or if the kernel version string is unparseable</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkEnvironmentError" title="clipostoolkit.cosmk.exceptions.CosmkEnvironmentError"><strong>CosmkEnvironmentError</strong></a> – in case the underlying system does not run
+a Linux kernel or if the kernel version string is unparseable</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -358,14 +348,11 @@ a Linux kernel or if the kernel version string is unparseable</td>
 <code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">rewrap</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#rewrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.rewrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rewrap a message by stripping the unneeded indentation and removing
 leading and trailing whitespaces.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -373,53 +360,45 @@ leading and trailing whitespaces.</p>
 <code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>terminal=False</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>stdouterr=None</em>, <em>timeout=None</em>, <em>check=True</em>, <em>outside_of_virtualenv=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the <code class="docutils literal notranslate"><span class="pre">submodule.run</span></code> function with capture of the output
 streams (<code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code> or both streams interlaced as one).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the command line to run (either in the form of a sh-escaped
-command line string or a list of arguments as <cite>subprocess</cite> takes)</li>
-<li><strong>terminal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the terminal shall be forwarded to the
-command</li>
-<li><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command <code class="docutils literal notranslate"><span class="pre">stdout</span></code>
-output stream</li>
-<li><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command <code class="docutils literal notranslate"><span class="pre">stderr</span></code>
-output stream</li>
-<li><strong>stdouterr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command output
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the command line to run (either in the form of a sh-escaped
+command line string or a list of arguments as <cite>subprocess</cite> takes)</p></li>
+<li><p><strong>terminal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the terminal shall be forwarded to the
+command</p></li>
+<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command <code class="docutils literal notranslate"><span class="pre">stdout</span></code>
+output stream</p></li>
+<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command <code class="docutils literal notranslate"><span class="pre">stderr</span></code>
+output stream</p></li>
+<li><p><strong>stdouterr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – file-object receiving the capture of the command output
 stream with both <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> interlaced (<em>i.e.</em> as it
-appears in an interactive shell without output redirection)</li>
-<li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – the time out value to apply to the command run</li>
-<li><strong>check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – raise an exception if the command exits with a non-null
-return value</li>
-<li><strong>outside_of_virtualenv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if running from a virtualenv, then this
+appears in an interactive shell without output redirection)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – the time out value to apply to the command run</p></li>
+<li><p><strong>check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – raise an exception if the command exits with a non-null
+return value</p></li>
+<li><p><strong>outside_of_virtualenv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if running from a virtualenv, then this
 parameter will strip all the parameters proper to the virtualenv from
-the environment variable set to be given to the process to run</li>
+the environment variable set to be given to the process to run</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The function detects if <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> is run from a virtualenv by looking
+<p class="admonition-title">Note</p>
+<p>The function detects if <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> is run from a virtualenv by looking
 the value of the <code class="docutils literal notranslate"><span class="pre">VIRTUAL_ENV</span></code> environment variable.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if bad parameters are given to this function</li>
-<li><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure when executing the command</li>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – if bad parameters are given to this function</p></li>
+<li><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure when executing the command</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -432,16 +411,14 @@ within <code class="xref py py-mod docutils literal notranslate"><span class="pr
 <code class="descclassname">clipostoolkit.cosmk.completion.</code><code class="descname">features_for_action</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#features_for_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.features_for_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of recipe feature names which provide the given action
 name.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the requested action name</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the requested action name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -449,14 +426,11 @@ name.</p>
 <code class="descclassname">clipostoolkit.cosmk.completion.</code><code class="descname">product_completer</code><span class="sig-paren">(</span><em>prefix</em>, <em>parsed_args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#product_completer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.product_completer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all the products available in the current repo source
 tree.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -465,14 +439,11 @@ tree.</p>
 <dd><p>Returns a list of all the recipes available in the current repo source
 tree that would be appropriate regarding the current parsed arguments from
 the <code class="xref py py-func docutils literal notranslate"><span class="pre">main()</span></code> function of <code class="docutils literal notranslate"><span class="pre">cosmk</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -486,28 +457,24 @@ the <code class="xref py py-func docutils literal notranslate"><span class="pre"
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Overly-simplified Linux OCI container abstraction with wrappers around
 the <code class="docutils literal notranslate"><span class="pre">runc</span></code> runtime for the command execution methods.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name of the container</li>
-<li><strong>rootfs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the rootfs squashfs image file</li>
-<li><strong>hostname</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the hostname within the container (defaults to the
-container name if set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>)</li>
-<li><strong>readonly_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the rootfs shall be read-only mounted</li>
-<li><strong>shared_host_netns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the container shall share the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name of the container</p></li>
+<li><p><strong>rootfs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the rootfs squashfs image file</p></li>
+<li><p><strong>hostname</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the hostname within the container (defaults to the
+container name if set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>)</p></li>
+<li><p><strong>readonly_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the rootfs shall be read-only mounted</p></li>
+<li><p><strong>shared_host_netns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the container shall share the
 network namespace of the host in order to have networking access (to
 prevent having the hassle to configure IP routing and filtering on the
-host for this container)</li>
+host for this container)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Eventhough this abstraction can be used independently outside of
+<p class="admonition-title">Note</p>
+<p>Eventhough this abstraction can be used independently outside of
 <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> context, this class (and this module in a greater extent)
 is primarily intended to be used by the CLIP OS SDK abstraction to
 produce ephemeral containers (<em>i.e.</em> container sessions with their
@@ -528,14 +495,11 @@ being snapshotted into a reusable container squashfs image).</p>
 <dt id="clipostoolkit.cosmk.container.Container.mountpoints">
 <code class="descname">mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>This list does not include the root mountpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -543,14 +507,11 @@ being snapshotted into a reusable container squashfs image).</p>
 <code class="descname">required_mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.required_mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual required default system mountpoints (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">/proc</span></code>,
 <code class="docutils literal notranslate"><span class="pre">/dev</span></code>, etc.) for the container to run properly.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -558,14 +519,11 @@ being snapshotted into a reusable container squashfs image).</p>
 <code class="descname">run</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shortcut function to run a single command in this container (a
 session will be instanciated temporarily just for this command).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -581,27 +539,21 @@ limited to the time span where the context manager is opened).
 This context manager has also the responsibility of mounting the
 container root filesystem (from its base squashfs image) in the
 suitable directory.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerSession" title="clipostoolkit.cosmk.container.ContainerSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerSession</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerSession" title="clipostoolkit.cosmk.container.ContainerSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerSession</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.container.Container.unshared_namespaces">
 <code class="descname">unshared_namespaces</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.unshared_namespaces" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -613,8 +565,8 @@ suitable directory.</p>
 <p>Device node binding for a container that can be output as a dict for the
 runc JSON spec.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The OCI runtime automatically provides these devices nodes:
+<p class="admonition-title">Note</p>
+<p>The OCI runtime automatically provides these devices nodes:
 <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/zero</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/full</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/random</span></code>,
 <code class="docutils literal notranslate"><span class="pre">/dev/urandom</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/tty</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/console</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/ptmx</span></code>.
 Therefore, there is no need to specify them.
@@ -625,14 +577,11 @@ See: &lt;<a class="reference external" href="https://github.com/opencontainers/r
 <code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return this container device binding as a dict ready to be
 JSON-ified for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -640,14 +589,11 @@ JSON-ified for the runc <code class="docutils literal notranslate"><span class="
 <code class="descname">cgroup_authorization_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.cgroup_authorization_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.cgroup_authorization_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the device cgroup authorization dict structure ready to be
 JSON-ified for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -663,14 +609,11 @@ container rootfs) that can be output as a dict for the runc JSON spec.</p>
 <code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerMountpoint.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerMountpoint.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return this container mountpoint as a dict ready to be JSON-ified
 for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -684,45 +627,38 @@ for the runc <code class="docutils literal notranslate"><span class="pre">config
 <dt id="clipostoolkit.cosmk.container.ContainerSession.run">
 <code class="descname">run</code><span class="sig-paren">(</span><em>command</em>, <em>cwd='/'</em>, <em>env=None</em>, <em>terminal=False</em>, <em>user=(0</em>, <em>0)</em>, <em>stdout=None</em>, <em>stderr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command in this container session.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the command to run (command line splitted into a list
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – the command to run (command line splitted into a list
 in the manner of the <code class="docutils literal notranslate"><span class="pre">argv</span></code> argument of the traditional
-<code class="docutils literal notranslate"><span class="pre">execve(2)</span></code> syscall)</li>
-<li><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the current working directory</li>
-<li><strong>env</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – the environment variable set</li>
-<li><strong>terminal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – hook the current TTY to the container if <code class="docutils literal notranslate"><span class="pre">True</span></code></li>
-<li><strong>user</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – UID and GID couple values to use for the process run in
-the container</li>
-<li><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – facultative stream object able to receive for writing
-the standard output of the process run in the container</li>
-<li><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – facultative stream object able to receive for writing
-the standard error output of the process run in the container</li>
+<code class="docutils literal notranslate"><span class="pre">execve(2)</span></code> syscall)</p></li>
+<li><p><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the current working directory</p></li>
+<li><p><strong>env</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]) – the environment variable set</p></li>
+<li><p><strong>terminal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – hook the current TTY to the container if <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p><strong>user</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – UID and GID couple values to use for the process run in
+the container</p></li>
+<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – facultative stream object able to receive for writing
+the standard output of the process run in the container</p></li>
+<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Io</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">AnyStr</span></code></a>]]) – facultative stream object able to receive for writing
+the standard error output of the process run in the container</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerSession.snapshot">
 <code class="descname">snapshot</code><span class="sig-paren">(</span><em>squashfs_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Snapshot the rootfs of this container</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -882,14 +818,11 @@ final recipe target.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature.bundle">
 <code class="descname">bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeBundleFeature.bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.bundle" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -919,14 +852,11 @@ feature</p>
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature.configure">
 <code class="descname">configure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeConfigureFeature.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>TODO</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -936,29 +866,25 @@ feature</p>
 <em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Recipe feature meta-class</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>recipe</strong> (<a class="reference internal" href="#clipostoolkit.cosmk.recipe.Recipe" title="clipostoolkit.cosmk.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recipe</span></code></a>) – the recipe on which this feature applies</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.NAME" title="clipostoolkit.cosmk.features.RecipeBundleFeature.NAME"><strong>NAME</strong></a> – the name of the feature that can be specified in the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>recipe</strong> (<a class="reference internal" href="#clipostoolkit.cosmk.recipe.Recipe" title="clipostoolkit.cosmk.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recipe</span></code></a>) – the recipe on which this feature applies</p>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.NAME" title="clipostoolkit.cosmk.features.RecipeBundleFeature.NAME"><strong>NAME</strong></a> – the name of the feature that can be specified in the
 <code class="docutils literal notranslate"><span class="pre">features</span></code> list in the recipe configuration files to specify that a
-recipe implements this current feature</li>
-<li><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES" title="clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES"><strong>FEATURED_ATTRIBUTES</strong></a> – the set of all the featured attributes provided
-to the <code class="xref py py-data docutils literal notranslate"><span class="pre">Recipe</span></code> object by this recipe feature</li>
-<li><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA" title="clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA"><strong>SCHEMA</strong></a> – the <code class="xref py py-data docutils literal notranslate"><span class="pre">dict</span></code> schema for the recipe configuration part
-relative to the current feature</li>
+recipe implements this current feature</p></li>
+<li><p><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES" title="clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES"><strong>FEATURED_ATTRIBUTES</strong></a> – the set of all the featured attributes provided
+to the <code class="xref py py-data docutils literal notranslate"><span class="pre">Recipe</span></code> object by this recipe feature</p></li>
+<li><p><a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA" title="clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA"><strong>SCHEMA</strong></a> – the <code class="xref py py-data docutils literal notranslate"><span class="pre">dict</span></code> schema for the recipe configuration part
+relative to the current feature</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is a metaclass and therefore must not be used or initialized
+<p class="admonition-title">Note</p>
+<p>This is a metaclass and therefore must not be used or initialized
 directly. Use a subclass of this metaclass.</p>
 </div>
 <dl class="attribute">
@@ -981,14 +907,11 @@ directly. Use a subclass of this metaclass.</p>
 <code class="descname">replace_placeholders</code><span class="sig-paren">(</span><em>s</em>, <em>sdk_context=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature.replace_placeholders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.replace_placeholders" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace the placeholders of a given string <cite>s</cite> and return a
 copy of this string.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1019,23 +942,19 @@ Provides the ‘run’ attribute for development and debug.</p>
 <code class="descname">build</code><span class="sig-paren">(</span><em>clear_cache=False</em>, <em>clear_previous_build=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a root tree for this recipe from sources and binary packages
 cache.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>clear_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the cache has to clear before
-processing root build</li>
-<li><strong>clear_previous_build</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the previous root build
-result has to be cleared</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clear_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the cache has to clear before
+processing root build</p></li>
+<li><p><strong>clear_previous_build</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether or not the previous root build
+result has to be cleared</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1043,27 +962,21 @@ result has to be cleared</li>
 <code class="descname">image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a root tree for this recipe only from binary packages cache
 and without any build-time dependency.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.run">
 <code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.run" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1092,40 +1005,31 @@ features.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.bootstrap">
 <code class="descname">bootstrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.bootstrap" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.run">
 <code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.run" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.sdk">
 <code class="descname">sdk</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.sdk" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.sdk.Sdk" title="clipostoolkit.cosmk.sdk.Sdk"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sdk</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.sdk.Sdk" title="clipostoolkit.cosmk.sdk.Sdk"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sdk</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1166,53 +1070,41 @@ environment created from other recipe feature results.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>destroy_preexisting=False</em>, <em>spawn_virt_manager_console=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.create" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.destroy">
 <code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.destroy" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.spawn">
 <code class="descname">spawn</code><span class="sig-paren">(</span><em>destroy_preexisting=False</em>, <em>spawn_virt_manager_console=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.spawn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.spawn" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment">
 <code class="descname">virtualized_environment</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualizedEnvironment</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualizedEnvironment</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1259,57 +1151,47 @@ context manager to mount a tmpfs mountpoint.</p>
 <dt id="clipostoolkit.cosmk.fs.close_loop">
 <code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">close_loop</code><span class="sig-paren">(</span><em>device</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#close_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.close_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close a loopback device node.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.loop_devices">
 <code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">loop_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#loop_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.loop_devices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the loop devices currently set up on the system.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.fs.LoopDevice" title="clipostoolkit.cosmk.fs.LoopDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoopDevice</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.fs.LoopDevice" title="clipostoolkit.cosmk.fs.LoopDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoopDevice</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.mksquashfs">
 <code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">mksquashfs</code><span class="sig-paren">(</span><em>squashfs_file</em>, <em>source_dir</em>, <em>compressor='gzip'</em>, <em>store_xattrs=True</em>, <em>detect_sparse_files=True</em>, <em>compress_inode_table=False</em>, <em>compress_data_blocks=False</em>, <em>compress_fragment_blocks=False</em>, <em>compress_extended_attributes=False</em>, <em>find_duplicates=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#mksquashfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.mksquashfs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the command mksquashfs</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>squashfs_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the squashfs file to produce</li>
-<li><strong>source_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the directory to compress into a squashfs</li>
-<li><strong>compressor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the compression method to use</li>
-<li><strong>store_xattrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to save extended attributes or not</li>
-<li><strong>detect_sparse_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – activate sparse file detection (recommended)</li>
-<li><strong>compress_inode_table</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress the inode table</li>
-<li><strong>compress_data_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress data blocks</li>
-<li><strong>compress_fragment_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress fragment blocks</li>
-<li><strong>compress_extended_attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress extended attributes</li>
-<li><strong>find_duplicates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – perform duplicate checking</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>squashfs_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the squashfs file to produce</p></li>
+<li><p><strong>source_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the directory to compress into a squashfs</p></li>
+<li><p><strong>compressor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the compression method to use</p></li>
+<li><p><strong>store_xattrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to save extended attributes or not</p></li>
+<li><p><strong>detect_sparse_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – activate sparse file detection (recommended)</p></li>
+<li><p><strong>compress_inode_table</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress the inode table</p></li>
+<li><p><strong>compress_data_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress data blocks</p></li>
+<li><p><strong>compress_fragment_blocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress fragment blocks</p></li>
+<li><p><strong>compress_extended_attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – compress extended attributes</p></li>
+<li><p><strong>find_duplicates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – perform duplicate checking</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1317,14 +1199,11 @@ context manager to mount a tmpfs mountpoint.</p>
 <code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">open_loop</code><span class="sig-paren">(</span><em>backfile</em>, <em>device=None</em>, <em>readonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#open_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.open_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a loopback device given a back-file and eventually the device node
 to use.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1334,14 +1213,11 @@ to use.</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.healthcheck.check_system">
 <code class="descclassname">clipostoolkit.cosmk.healthcheck.</code><code class="descname">check_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/healthcheck.html#check_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.healthcheck.check_system" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1353,60 +1229,54 @@ features are , the availability of the required system utilities, the filesystem
 options of the repo root underlying mountpoint, the available free space on
 this mountpoint, etc.</p>
 <p>TODO: extend this list :)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="module-clipostoolkit.cosmk.instrumentation">
 <span id="clipostoolkit-cosmk-instrumentation-module"></span><h2><code class="docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.instrumentation</span></code> module<a class="headerlink" href="#module-clipostoolkit.cosmk.instrumentation" title="Permalink to this headline">¶</a></h2>
-<p>Module handling recipe instrumentation logic.</p>
+<p>Module handling product instrumentation logic.</p>
 <dl class="class">
-<dt id="clipostoolkit.cosmk.instrumentation.InstrumentationLevel">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.instrumentation.</code><code class="descname">InstrumentationLevel</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/instrumentation.html#InstrumentationLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.InstrumentationLevel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
-<p>Instrumentation level enumeration for the recipes</p>
+<dt id="clipostoolkit.cosmk.instrumentation.Instrumentation">
+<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.instrumentation.</code><code class="descname">Instrumentation</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/instrumentation.html#Instrumentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class describing the CLIP OS product (or derivative) instrumentation
+properties requested by the developer in the “instrumentation.toml” drop-in
+file at the root of the CLIP OS source tree.</p>
 <dl class="attribute">
-<dt id="clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEBUG">
-<code class="descname">DEBUG</code><em class="property"> = 2</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEBUG" title="Permalink to this definition">¶</a></dt>
+<dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH">
+<code class="descname">INSTRUMENTATION_FILEPATH</code><em class="property"> = '/home/tim/projects/clipos/clipos/instrumentation.toml'</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEVELOPMENT">
-<code class="descname">DEVELOPMENT</code><em class="property"> = 1</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEVELOPMENT" title="Permalink to this definition">¶</a></dt>
+<dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA">
+<code class="descname">SCHEMA</code><em class="property"> = Schema({'features': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]})</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="clipostoolkit.cosmk.instrumentation.InstrumentationLevel.PRODUCTION">
-<code class="descname">PRODUCTION</code><em class="property"> = 0</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.PRODUCTION" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.defined">
+<code class="descname">defined</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.defined" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="clipostoolkit.cosmk.instrumentation.instrumented_recipes">
-<code class="descclassname">clipostoolkit.cosmk.instrumentation.</code><code class="descname">instrumented_recipes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/instrumentation.html#instrumented_recipes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.instrumented_recipes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Probes for existence of an “instrumentation.toml” drop-in file at the
-root of the <cite>repo</cite> source tree, parses this file and return a
-<code class="xref py py-data docutils literal notranslate"><span class="pre">dict</span></code> of all the recipe identifiers (as keys) requested to be
-instrumented with their instrumentation level as value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError" title="clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError"><strong>InstrumentationSpecificationError</strong></a> – in case of an incoherence in the
-<code class="docutils literal notranslate"><span class="pre">instrumentation.toml</span></code> file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="#clipostoolkit.cosmk.instrumentation.InstrumentationLevel" title="clipostoolkit.cosmk.instrumentation.InstrumentationLevel"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentationLevel</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="attribute">
+<dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.features">
+<code class="descname">features</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.features" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1417,80 +1287,70 @@ instrumented with their instrumentation level as value.</p>
 <dt id="clipostoolkit.cosmk.log.critical">
 <code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.critical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.CRITICAL</span></code> level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.debug">
 <code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.debug" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.DEBUG</span></code> level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.error">
 <code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">error</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.ERROR</span></code> level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.info">
 <code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">info</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.INFO</span></code> level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.warn">
 <code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">warn</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.warn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.WARNING</span></code> level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the message to log</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1512,16 +1372,14 @@ contextualized mounts.</p>
 <code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">mount</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>type=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.mount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mount function with usage reflecting the traditional UNIX <code class="docutils literal notranslate"><span class="pre">mount(8)</span></code>
 command line utility.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure of the <code class="docutils literal notranslate"><span class="pre">mount</span></code> call (reason inside the exception)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure of the <code class="docutils literal notranslate"><span class="pre">mount</span></code> call (reason inside the exception)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1530,14 +1388,11 @@ command line utility.</p>
 <dd><p>Return the list of the mount points in the current mnt namespace. In
 other words, it basically wraps the contents of the pseudo-file
 <code class="docutils literal notranslate"><span class="pre">/proc/mounts</span></code> into an easily manipulable Python object.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.mount.Mountpoint" title="clipostoolkit.cosmk.mount.Mountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mountpoint</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.mount.Mountpoint" title="clipostoolkit.cosmk.mount.Mountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mountpoint</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1545,18 +1400,17 @@ other words, it basically wraps the contents of the pseudo-file
 <code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">umount</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#umount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.umount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unmount function with usage reflecting the traditional UNIX
 <code class="docutils literal notranslate"><span class="pre">umount(8)</span></code> command line utility.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the mountpoint to unmount</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure of the <code class="docutils literal notranslate"><span class="pre">umount</span></code> call (reason inside the exception)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the mountpoint to unmount</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="clipostoolkit.cosmk.exceptions.SystemCommandError"><strong>SystemCommandError</strong></a> – in case of failure of the <code class="docutils literal notranslate"><span class="pre">umount</span></code> call (reason inside the exception)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1573,14 +1427,11 @@ Python code of this cosmk module.</p>
 <em class="property">static </em><code class="descname">possible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#ElevatedPrivileges.possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.ElevatedPrivileges.possible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluates if the privileges elevation is possible by doing a
 RES{U,G}ID flip over.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1591,14 +1442,11 @@ RES{U,G}ID flip over.</p>
 <dd><p>Function to lower privileges (<em>i.e.</em> change <em>real</em> and <em>effective</em> UIDs
 and GIDs to UID/GID values given as arguments) intended to be called at
 cosmk module importation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1610,14 +1458,11 @@ cosmk module importation.</p>
 <em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.product.</code><code class="descname">Product</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/product.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.product.Product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class describing a CLIP OS (or one of its derivative) product.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name of the product (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">clipos</span></code>)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name of the product (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">clipos</span></code>)</p>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.product.Product.SCHEMA">
 <code class="descname">SCHEMA</code><em class="property"> = Schema({'version': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;, &lt;function parse&gt;), &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.SCHEMA" title="Permalink to this definition">¶</a></dt>
@@ -1626,18 +1471,15 @@ cosmk module importation.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.product.Product.tainted_version">
 <code class="descname">tainted_version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.tainted_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the version of this product as defined in its “properties.toml”
-file but “tainted” with a build flag <code class="docutils literal notranslate"><span class="pre">instrumentation</span></code> if an
-“instrumentation.toml” file is present at the root of the repo source
-tree.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dd><p>Returns the version of this product as defined in its
+“properties.toml” file but “tainted” with a build flag
+<code class="docutils literal notranslate"><span class="pre">instrumentation</span></code> if at least one instrumentation feature is
+enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1646,34 +1488,30 @@ tree.</p>
 <dd><p>Validate the data structure of the product properties file
 (“properties.toml”) and reorganize them into a “flattened”
 <code class="xref py py-data docutils literal notranslate"><span class="pre">dict</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prop_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the properties dict object to validate against the
-schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product.SCHEMA" title="clipostoolkit.cosmk.product.Product.SCHEMA"><code class="xref py py-data docutils literal notranslate"><span class="pre">SCHEMA</span></code></a>)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.ProductPropertiesError" title="clipostoolkit.cosmk.exceptions.ProductPropertiesError"><strong>ProductPropertiesError</strong></a> – in case of bad data structure</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prop_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the properties dict object to validate against the
+schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product.SCHEMA" title="clipostoolkit.cosmk.product.Product.SCHEMA"><code class="xref py py-data docutils literal notranslate"><span class="pre">SCHEMA</span></code></a>)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.ProductPropertiesError" title="clipostoolkit.cosmk.exceptions.ProductPropertiesError"><strong>ProductPropertiesError</strong></a> – in case of bad data structure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.product.Product.version">
 <code class="descname">version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the version of this product as defined in its “properties.toml”
-file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dd><p>Returns the version of this product as defined in its
+“properties.toml” file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1687,26 +1525,20 @@ file.</p>
 <em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.recipe.</code><code class="descname">Recipe</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/recipe.html#Recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A CLIP OS toolkit recipe.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the identifier of the recipe (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">clipos/core</span></code>)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the identifier of the recipe (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">clipos/core</span></code>)</p>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.cache_subpath">
 <code class="descname">cache_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.cache_subpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the cache directory sub-path within the repo root.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -1715,28 +1547,22 @@ file.</p>
 <dd><p>The schema for which the recipe configuration file (<code class="docutils literal notranslate"><span class="pre">recipe.toml</span></code>)
 needs to comply for common part (<em>i.e.</em> the part of the configuration
 common to all the recipes)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Schema</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Schema</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.out_subpath">
 <code class="descname">out_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.out_subpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the output directory sub-path within the repo root.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1745,19 +1571,18 @@ common to all the recipes)</p>
 <dd><p>Validate the data structure of the recipe configuration file
 (“recipe.toml”) which do not concern any feature implementation (<em>i.e.</em>
 the “meta” part of the recipe configuration).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the configuration dict object to validate against the
-recipe meta schema</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.RecipeConfigurationError" title="clipostoolkit.cosmk.exceptions.RecipeConfigurationError"><strong>RecipeConfigurationError</strong></a> – in case of bad data structure</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]) – the configuration dict object to validate against the
+recipe meta schema</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.RecipeConfigurationError" title="clipostoolkit.cosmk.exceptions.RecipeConfigurationError"><strong>RecipeConfigurationError</strong></a> – in case of bad data structure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutablemapping</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1779,14 +1604,11 @@ comments.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder.comment">
 <code class="descname">comment</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#CommentedTreeBuilder.comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder.comment" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1794,28 +1616,22 @@ comments.</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships">
 <code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">fix_output_nodes_ownerships</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#fix_output_nodes_ownerships"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.is_repo_root">
 <code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">is_repo_root</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#is_repo_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.is_repo_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the given path contains a “.repo” directory.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1824,14 +1640,11 @@ comments.</p>
 <dd><p>Guess the repo root directory path from the current working directory or
 (if the CWD does not seem to be a repo root) from the location of the
 cosmk module.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1839,14 +1652,11 @@ cosmk module.</p>
 <code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">snapshot_manifest</code><span class="sig-paren">(</span><em>use_branches=False</em>, <em>snapshot_groups=None</em>, <em>no_snapshot_groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#snapshot_manifest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.snapshot_manifest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Snapshot the <code class="docutils literal notranslate"><span class="pre">repo</span></code> manifest file to the current state of the CLIP OS
 source tree.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1865,14 +1675,11 @@ source tree.</p>
 configuration file with the suitable script in order to produce a
 squashfs image that can be run as a container with the <code class="docutils literal notranslate"><span class="pre">Container</span></code>
 class.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1880,14 +1687,11 @@ class.</p>
 <code class="descname">container_mountpoints</code><span class="sig-paren">(</span><em>action_name</em>, <em>action_targeted_recipe</em>, <em>writable_repo_root=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.container_mountpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.container_mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of <code class="docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code>’s corresponding to the
 mountpoints of the SDK context.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="clipostoolkit.cosmk.container.ContainerMountpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1895,14 +1699,11 @@ mountpoints of the SDK context.</p>
 <code class="descname">interactive_run</code><span class="sig-paren">(</span><em>recipe</em>, <em>command=None</em>, <em>env=None</em>, <em>shared_host_netns=True</em>, <em>writable_repo_root=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.interactive_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.interactive_run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command interactively in this SDK, in the given recipe
 context</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1914,14 +1715,11 @@ for a given <cite>recipe</cite> of the product <cite>product</cite>) and pass co
 <p>This context manager is in charge of creating the container (in the
 sense of the <code class="docutils literal notranslate"><span class="pre">Container</span></code> class) for the living time span of the
 context manager.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.sdk.SdkSession" title="clipostoolkit.cosmk.sdk.SdkSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">SdkSession</span></code></a>]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<a class="reference internal" href="#clipostoolkit.cosmk.sdk.SdkSession" title="clipostoolkit.cosmk.sdk.SdkSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">SdkSession</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1935,14 +1733,11 @@ context manager.</p>
 <dt id="clipostoolkit.cosmk.sdk.SdkSession.run">
 <code class="descname">run</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#SdkSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.SdkSession.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command in this SDK container session.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1957,27 +1752,23 @@ management of the CLIP OS virtualized environments with <cite>libvirt</cite>.</p
 <em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.virt.</code><code class="descname">VirtualizedEnvironment</code><span class="sig-paren">(</span><em>name</em>, <em>libvirt_domain_xml_template</em>, <em>libvirt_network_xml_template</em>, <em>qcow2_main_disk_image</em>, <em>ovmf_firmware_code</em>, <em>ovmf_firmware_vars_template</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A CLIP OS recipe virtualized environment.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name to give to the libvirt domain and network</li>
-<li><strong>libvirt_domain_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
-use as the XML domain definition for the libvirt domain</li>
-<li><strong>libvirt_network_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
-use as the XML network definition for the libvirt network</li>
-<li><strong>qcow2_main_disk_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the main disk image (formatted
-as QCOW2) to use for the libvirt domain to be created</li>
-<li><strong>ovmf_firmware_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the OVMF firmware code to be
-used by the libvirt domain</li>
-<li><strong>ovmf_firmware_vars_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the OVMF firmware
-UEFI vars template file to be used by the libvirt domain</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name to give to the libvirt domain and network</p></li>
+<li><p><strong>libvirt_domain_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
+use as the XML domain definition for the libvirt domain</p></li>
+<li><p><strong>libvirt_network_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
+use as the XML network definition for the libvirt network</p></li>
+<li><p><strong>qcow2_main_disk_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the main disk image (formatted
+as QCOW2) to use for the libvirt domain to be created</p></li>
+<li><p><strong>ovmf_firmware_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the OVMF firmware code to be
+used by the libvirt domain</p></li>
+<li><p><strong>ovmf_firmware_vars_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the OVMF firmware
+UEFI vars template file to be used by the libvirt domain</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH">
 <code class="descname">RUNTIME_WORKING_DIR_REPO_SUBPATH</code><em class="property"> = 'run/virtual_machines'</em><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="Permalink to this definition">¶</a></dt>
@@ -1989,14 +1780,11 @@ UEFI vars template file to be used by the libvirt domain</li>
 <dd><p>Create the virtualized environment in libvirt with its dedicated
 working directory in the sub-path in repo (defined in
 <a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">RUNTIME_WORKING_DIR_REPO_SUBPATH</span></code></a>).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -2005,28 +1793,22 @@ working directory in the sub-path in repo (defined in
 <dd><p>Destroy the virtualized environment in libvirt with its dedicated
 working directory in the sub-path in repo (defined in
 <a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">RUNTIME_WORKING_DIR_REPO_SUBPATH</span></code></a>).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.spawn_virt_manager_console">
 <code class="descname">spawn_virt_manager_console</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.spawn_virt_manager_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.spawn_virt_manager_console" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spawn a virtual machine manager console for the virtual machine.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2038,17 +1820,15 @@ working directory in the sub-path in repo (defined in
 this function select the first returned network interface whose name
 suggest to be an Ethernet or wireless interface (<code class="docutils literal notranslate"><span class="pre">en*</span></code>, <code class="docutils literal notranslate"><span class="pre">eth*</span></code> or
 <code class="docutils literal notranslate"><span class="pre">wl*</span></code>) and which appears to be connected to a full-duplex medium.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError" title="clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError"><strong>VirtualizedEnvironmentError</strong></a> – if no external network inteface could
-be guessed and no dummy value has been provided</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError" title="clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError"><strong>VirtualizedEnvironmentError</strong></a> – if no external network inteface could
+be guessed and no dummy value has been provided</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -2063,7 +1843,7 @@ be guessed and no dummy value has been provided</td>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="derive.html" class="btn btn-neutral" title="How to derive this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="derive.html" class="btn btn-neutral float-left" title="How to derive this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -2089,26 +1869,16 @@ be guessed and no dummy value has been provided</td>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

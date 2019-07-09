@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -34,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Build steps" href="build-steps.html" />
     <link rel="prev" title="Environment setup" href="setup.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -103,9 +105,9 @@
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instrumented-build-for-testing">Instrumented build for testing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
@@ -186,9 +188,9 @@
   <div class="section" id="building">
 <span id="build"></span><h1>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h1>
 <div class="important admonition">
-<p class="first admonition-title">Before going further, ensure to get a functional build
+<p class="admonition-title">Before going further, ensure to get a functional build
              environment setup</p>
-<p class="last">You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">toolkit environment setup</span></a> before
+<p>You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">toolkit environment setup</span></a> before
 executing any command from this page.</p>
 </div>
 <div class="section" id="setup-and-activate-the-toolkit-environment">
@@ -202,14 +204,33 @@ source tree (such as <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <div class="note admonition">
-<p class="first admonition-title">About the CLIP OS toolkit virtualenv setup</p>
+<p class="admonition-title">About the CLIP OS toolkit virtualenv setup</p>
 <p>The purpose of the script <code class="docutils literal notranslate"><span class="pre">toolkit/setup.sh</span></code> is to compile and store the
 CLIP OS toolkit environment under the form of a Python virtualenv in
 <code class="docutils literal notranslate"><span class="pre">run/venv</span></code> directory. You might be invited to run it again if the
 specification of the toolkit environment has changed over time.</p>
-<p class="last">This setup script can take some time (up to a couple of minutes) to complete
+<p>This setup script can take some time (up to a couple of minutes) to complete
 on the first launch as it will automatically trigger the compilation of some
 CPython packages required by the CLIP OS toolkit. Thanks for your patience.</p>
+</div>
+</div>
+<div class="section" id="instrumentation-features-for-testing">
+<h2>Instrumentation features for testing<a class="headerlink" href="#instrumentation-features-for-testing" title="Permalink to this headline">¶</a></h2>
+<p>Default builds of the project are meant to be set up with a production-ready
+configuration. There is currently no password-based local login available in
+this configuration. Thus if you want to test the project in QEMU, you will have
+to enable some <a class="reference internal" href="../clipos/development.html#development"><span class="std std-ref">instrumentation features</span></a>. A good default
+set of instrumentation features is provided in the
+<code class="docutils literal notranslate"><span class="pre">toolkit/instrumentation.toml.example</span></code> example file which can be used as is
+by copying it to the source tree root folder:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> cp toolkit/instrumentation.toml.example instrumentation.toml
+</pre></div>
+</div>
+<p>The default configuration will keep most system configuration unchanged and
+will give you local password-less <cite>root</cite> access.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any change of instrumentation features requires a full project rebuild.</p>
 </div>
 </div>
 <div class="section" id="building-the-full-project">
@@ -227,67 +248,56 @@ from the project root directory.</p>
 </pre></div>
 </div>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">As some tasks need root privileges to function properly you must pay
+<p class="admonition-title">Important</p>
+<p>As some tasks need root privileges to function properly you must pay
 attention to which <code class="docutils literal notranslate"><span class="pre">just</span></code> commands needs <code class="docutils literal notranslate"><span class="pre">root</span></code> privileges as there are
 other <code class="docutils literal notranslate"><span class="pre">just</span></code> commands (such as helpers for source repository and branch
 manipulation) which <strong>do not</strong> require <code class="docutils literal notranslate"><span class="pre">root</span></code> privileges.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>On most distributions, the default configuration will reset the
 <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable set by the CLIP OS toolkit environment to a
 fixed default value when calling <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
-<p class="last">To workaround this issue without modifying your <code class="docutils literal notranslate"><span class="pre">sudoers</span></code> configuration,
+<p>To workaround this issue without modifying your <code class="docutils literal notranslate"><span class="pre">sudoers</span></code> configuration,
 the CLIP OS toolkit environment sets an alias for the sudo command to keep
 your current <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>On some distributions (e.g., Debian), the default user <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable
 does not include the <code class="docutils literal notranslate"><span class="pre">/sbin</span></code> and <code class="docutils literal notranslate"><span class="pre">/usr/sbin</span></code> folders. Please add those
 to your user <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>. For example:</p>
-<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/sbin:/usr/sbin&quot;</span>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/sbin:/usr/sbin&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="building-a-qemu-image-and-running-using-qemu-kvm">
 <h2>Building a QEMU image and running using QEMU/KVM<a class="headerlink" href="#building-a-qemu-image-and-running-using-qemu-kvm" title="Permalink to this headline">¶</a></h2>
+<div class="important admonition">
+<p class="admonition-title">TPM emulation support</p>
+<p>TPM emulation support is required to test the project under QEMU. To enable
+it, you may install
+<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
+<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> using either instructions
+from the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their respective GitHub repositories or the AUR
+packages for Arch Linux users.</p>
+<p>Alternatively, you may enable the <code class="docutils literal notranslate"><span class="pre">initramfs-no-require-tpm</span></code>
+instrumentation feature which will allow the initramfs to ask for a
+passphrase at bootup if TPM support is not available. The default passphrase
+is <code class="docutils literal notranslate"><span class="pre">core_state_key</span></code>.</p>
+</div>
 <p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
 machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust qemu
 </pre></div>
 </div>
 <div class="important admonition">
-<p class="first admonition-title">Local login disabled by default</p>
-<p class="last">The default build configuration will create production images with root
-access disabled. See the next paragraph for instructions to create an
-instrumented build.</p>
-</div>
-<div class="important admonition">
-<p class="first admonition-title">TPM support</p>
-<p class="last">To test the TPM support, you need to install
-<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
-<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> using either instructions
-from the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their respective GitHub repositories or the AUR
-packages for Arch Linux users.</p>
-</div>
-</div>
-<div class="section" id="instrumented-build-for-testing">
-<h2>Instrumented build for testing<a class="headerlink" href="#instrumented-build-for-testing" title="Permalink to this headline">¶</a></h2>
-<p>In order to test the QEMU images, you have to select the instrumentation level
-you want by copying the <code class="docutils literal notranslate"><span class="pre">toolkit/instrumentation.toml.example</span></code> example in the
-source tree root folder:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> cp toolkit/instrumentation.toml.example instrumentation.toml
-</pre></div>
-</div>
-<p>The default instrumented configuration will enable you to log in as root
-without password. You will have to rebuild the project and the QEMU image to
-apply the change:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust all
-<span class="gp">(toolkit) $</span> sujust qemu
-</pre></div>
+<p class="admonition-title">Local login disabled by default</p>
+<p>The default build configuration will create production images with root
+access disabled. See the <a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a> paragraph
+for instructions to create an instrumented build.</p>
 </div>
 </div>
 </div>
@@ -303,7 +313,7 @@ apply the change:</p>
         <a href="build-steps.html" class="btn btn-neutral float-right" title="Build steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="setup.html" class="btn btn-neutral" title="Environment setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="setup.html" class="btn btn-neutral float-left" title="Environment setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -329,26 +339,16 @@ apply the change:</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

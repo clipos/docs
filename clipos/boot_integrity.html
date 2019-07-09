@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -34,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Roadmap" href="roadmap.html" />
     <link rel="prev" title="Kernel" href="kernel.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -110,8 +112,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-for-testing">Setup for testing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#under-qemu-with-ovmf">Under QEMU with OVMF</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">Secure Boot</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Trusted Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Secure Boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Trusted Boot</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#with-real-hardware">With real hardware</a></li>
@@ -206,54 +208,55 @@
 <div class="section" id="on-disk-layout">
 <h2>On-disk layout<a class="headerlink" href="#on-disk-layout" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
-<p class="first sidebar-title">Disk partition layout</p>
-<div class="last figure align-center" id="id3">
-<span id="clipos-disk-layout"></span><img alt="../_images/clipos-disk-layout.svg" src="../_images/clipos-disk-layout.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Disk partition layout</span></p>
+<p class="sidebar-title">Disk partition layout</p>
+<div class="figure align-center" id="id4">
+<span id="clipos-disk-layout"></span><img alt="../_images/clipos-disk-layout.svg" src="../_images/clipos-disk-layout.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Disk partition layout</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <p>The main disk GPT partition layout is as follows (<a class="reference internal" href="#clipos-disk-layout"><span class="std std-numref">Fig. 4</span></a>):</p>
 <ol class="arabic simple">
-<li>EFI system partition (ESP) which includes:<ul>
-<li>The EFI bootloader and its configuration;</li>
-<li>An EFI binary for each version currently installed (usually two, but only
+<li><p>EFI system partition (ESP) which includes:</p>
+<ul class="simple">
+<li><p>The EFI bootloader and its configuration;</p></li>
+<li><p>An EFI binary for each version currently installed (usually two, but only
 one at installation time). Each EFI binary bundles a Linux kernel, its
-command line and an initramfs.</li>
+command line and an initramfs.</p></li>
 </ul>
 </li>
-<li>LVM partition which holds all LVM Volume Groups and Logical Volumes for the
-system. The currently available ones are:</li>
+<li><p>LVM partition which holds all LVM Volume Groups and Logical Volumes for the
+system. The currently available ones are:</p></li>
 </ol>
-<table border="1" class="colwidths-given docutils">
+<table class="colwidths-given docutils align-center">
 <colgroup>
-<col width="8%" />
-<col width="8%" />
-<col width="42%" />
-<col width="42%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Volume Group</th>
-<th class="head">Logical Volume</th>
-<th class="head">Layer</th>
-<th class="head">Filesystem</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Volume Group</p></th>
+<th class="head"><p>Logical Volume</p></th>
+<th class="head"><p>Layer</p></th>
+<th class="head"><p>Filesystem</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>mainvg</td>
-<td>core_&lt;version&gt;</td>
-<td>DM-Verity block device and metadata appended at
-the end</td>
-<td>Uncompressed squashfs filesystem</td>
+<tbody>
+<tr class="row-even"><td><p>mainvg</p></td>
+<td><p>core_&lt;version&gt;</p></td>
+<td><p>DM-Verity block device and metadata appended at
+the end</p></td>
+<td><p>Uncompressed squashfs filesystem</p></td>
 </tr>
-<tr class="row-odd"><td>mainvg</td>
-<td>core_state</td>
-<td>DM-Crypt + DM-Integrity block device</td>
-<td>ext4
-filesystem</td>
+<tr class="row-odd"><td><p>mainvg</p></td>
+<td><p>core_state</p></td>
+<td><p>DM-Crypt + DM-Integrity block device</p></td>
+<td><p>ext4
+filesystem</p></td>
 </tr>
-<tr class="row-even"><td>mainvg</td>
-<td>swap</td>
-<td>DM-Crypt with a random key generated at boot time</td>
-<td>N/A</td>
+<tr class="row-even"><td><p>mainvg</p></td>
+<td><p>swap</p></td>
+<td><p>DM-Crypt with a random key generated at boot time</p></td>
+<td><p>N/A</p></td>
 </tr>
 </tbody>
 </table>
@@ -261,26 +264,26 @@ filesystem</td>
 <div class="section" id="boot-chain-order">
 <h2>Boot chain order<a class="headerlink" href="#boot-chain-order" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
-<p class="first sidebar-title">Boot chain order</p>
-<div class="last figure align-center" id="id4">
-<span id="clipos-boot-order"></span><img alt="../_images/clipos-boot-order.svg" src="../_images/clipos-boot-order.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Boot chain order</span></p>
+<p class="sidebar-title">Boot chain order</p>
+<div class="figure align-center" id="id5">
+<span id="clipos-boot-order"></span><img alt="../_images/clipos-boot-order.svg" src="../_images/clipos-boot-order.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Boot chain order</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <p>As shown in <a class="reference internal" href="#clipos-boot-order"><span class="std std-numref">Fig. 5</span></a>, the boot steps (following hardware
 initialization) are as follows:</p>
 <ol class="arabic simple">
-<li>The UEFI Firmware executes the initial bootloader from the EFI system
-partition.</li>
-<li>Following the <a class="reference external" href="https://systemd.io/BOOT_LOADER_SPECIFICATION.html">Boot Loader Specification</a>, the bootloader
+<li><p>The UEFI Firmware executes the initial bootloader from the EFI system
+partition.</p></li>
+<li><p>Following the <a class="reference external" href="https://systemd.io/BOOT_LOADER_SPECIFICATION.html">Boot Loader Specification</a>, the bootloader
 (gummiboot/systemd-boot) executes the EFI binary in the <code class="docutils literal notranslate"><span class="pre">EFI/Linux</span></code> folder
 with the highest version number. The executed EFI binary is a bundle created
 by <a class="reference external" href="http://man7.org/linux/man-pages/man8/dracut.8.html">dracut</a> which
-wraps a Linux kernel, its command line and an initramfs.</li>
-<li>The initramfs opens the <code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> DM-Verity block device and mounts
+wraps a Linux kernel, its command line and an initramfs.</p></li>
+<li><p>The initramfs opens the <code class="docutils literal notranslate"><span class="pre">core-&lt;version&gt;</span></code> DM-Verity block device and mounts
 the SquashFS filesystem in <code class="docutils literal notranslate"><span class="pre">/sysroot</span></code>. Then, using the TPM, it unseals the
 key required to open the DM-Crypt/DM-Integrity <code class="docutils literal notranslate"><span class="pre">core_state</span></code> partition and
 mounts the resulting ext4 partition in <code class="docutils literal notranslate"><span class="pre">/sysroot/mnt/state</span></code>. Finally, it
-performs a pivot_root to switch to the final root.</li>
+performs a pivot_root to switch to the final root.</p></li>
 </ol>
 </div>
 <div class="section" id="boot-chain-and-rootfs-integrity">
@@ -294,16 +297,16 @@ signed in order to protect their integrity <em>via</em> Secure Boot. Their
 confidentiality however is not assured. Currently, two EFI binaries are
 necessary:</p>
 <ul class="simple">
-<li>The <strong>systemd-boot EFI bootloader</strong>. Its only purpose is to execute the
+<li><p>The <strong>systemd-boot EFI bootloader</strong>. Its only purpose is to execute the
 latest CLIP OS EFI binary. This bootloader is minimal and only acts as a
 switch between the available CLIP OS versions. This enables recovery in case
-of update failure or temporary rollback due to bugs in a new version.</li>
-<li>The <strong>main CLIP OS EFI binary</strong>. It contains the initial kernel image, the
+of update failure or temporary rollback due to bugs in a new version.</p></li>
+<li><p>The <strong>main CLIP OS EFI binary</strong>. It contains the initial kernel image, the
 initramfs and the kernel command line. Signing this binary guarantees the
 integrity of its three components. Note that the kernel command line also
 includes the DM-Verity root hash for the CLIP OS Core partition. This binary
 is chosen by the bootloader and the Secure Boot signature verification is
-performed by the UEFI Firmware.</li>
+performed by the UEFI Firmware.</p></li>
 </ul>
 <p>No default keys are supported (e.g., Microsoft keys) thus you will need to
 generate you own Secure Boot signing keys and use them during the build
@@ -321,7 +324,7 @@ forward error correction (FEC) is also enabled thus increasing resistance to
 disk read errors or failures.</p>
 </div>
 <div class="section" id="trusted-boot">
-<h3>Trusted Boot<a class="headerlink" href="#trusted-boot" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>Trusted Boot<a class="headerlink" href="#trusted-boot" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="objective">
 <h4>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h4>
 <p>We want to achieve full-disk encryption in a way that is both secure and
@@ -341,9 +344,9 @@ words, we already <em>assert</em> the boot of trusted code.</p>
 pointed out <a class="reference external" href="https://mjg59.dreamwidth.org/48897.html">here</a>, exists that
 combines Secure and Trusted Boot, using PCR 7, by:</p>
 <ul class="simple">
-<li>recording whether Secure Boot is turned on;</li>
-<li>recording the key database;</li>
-<li>recording which keys were used.</li>
+<li><p>recording whether Secure Boot is turned on;</p></li>
+<li><p>recording the key database;</p></li>
+<li><p>recording which keys were used.</p></li>
 </ul>
 <p>By sealing the disk-encryption key according to the PCR 7 value, we ensure that
 the disk is decrypted if and only if our Secure Boot policy has not been
@@ -361,11 +364,11 @@ does with PCR 12.</p>
 <h5>TPM specification<a class="headerlink" href="#tpm-specification" title="Permalink to this headline">¶</a></h5>
 <p>We rely on TPM 2.0, for various reasons including:</p>
 <ul class="simple">
-<li>TPM 1.2 only supports deprecated cryptographic algorithms and TrouSerS is
-hard to deal with and not satisfying (partly due to tcsd);</li>
-<li>TPM 2.0 is already replacing TPM 1.2 in new machines;</li>
-<li>TPM 2.0 offers several new interesting functionalities, such as multiple
-hierarchies.</li>
+<li><p>TPM 1.2 only supports deprecated cryptographic algorithms and TrouSerS is
+hard to deal with and not satisfying (partly due to tcsd);</p></li>
+<li><p>TPM 2.0 is already replacing TPM 1.2 in new machines;</p></li>
+<li><p>TPM 2.0 offers several new interesting functionalities, such as multiple
+hierarchies.</p></li>
 </ul>
 <p>One issue with TPM 2.0 is that utilities and libraries to deal with it are
 still under heavy development. We chose to use the <a class="reference external" href="https://github.com/tpm2-software/tpm2-tools">tpm2-tools</a>, which rely on the <a class="reference external" href="https://github.com/tpm2-software/tpm2-tss">tpm2-tss</a> implementation of the TCG’s TPM2
@@ -374,32 +377,32 @@ Software Stack (TSS2).</p>
 <div class="section" id="initramfs-and-luks">
 <h5>Initramfs and LUKS<a class="headerlink" href="#initramfs-and-luks" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>We use a Bash script located in our initramfs.</li>
-<li>TPM-sealed LUKS keyfiles are located in the EFI System Partition.</li>
-<li>The kernel’s Resource Manager (RM) is used to ease objects management.
+<li><p>We use a Bash script located in our initramfs.</p></li>
+<li><p>TPM-sealed LUKS keyfiles are located in the EFI System Partition.</p></li>
+<li><p>The kernel’s Resource Manager (RM) is used to ease objects management.
 Basically, the RM presents each new call to a <code class="docutils literal notranslate"><span class="pre">tpm2_*</span></code> tool with an empty
 TPM (i.e. it cleans transient objects when the file handle to <code class="docutils literal notranslate"><span class="pre">/dev/tpmrm0</span></code>
-is closed).</li>
-<li>We use the Owner Hierarchy (OH) and leave the Endorsement Hierarchy (EH) for
-remote attestation.</li>
-<li>One could make the primary object persistent (with <code class="docutils literal notranslate"><span class="pre">tpm2_evictcontrol</span></code>) to
+is closed).</p></li>
+<li><p>We use the Owner Hierarchy (OH) and leave the Endorsement Hierarchy (EH) for
+remote attestation.</p></li>
+<li><p>One could make the primary object persistent (with <code class="docutils literal notranslate"><span class="pre">tpm2_evictcontrol</span></code>) to
 avoid re-derivating it from the seed each time and save some time at the
-expense of additional complexity.</li>
-<li>We do not directly make the loaded keyfile object persistent as we would not
-have enough space in the TPM for all keyfiles we are going to want to use.</li>
+expense of additional complexity.</p></li>
+<li><p>We do not directly make the loaded keyfile object persistent as we would not
+have enough space in the TPM for all keyfiles we are going to want to use.</p></li>
 </ul>
 </div>
 <div class="section" id="planned-improvements">
 <h5>Planned Improvements<a class="headerlink" href="#planned-improvements" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>We would like to use different PCR lists for a given machine’s first boots
+<li><p>We would like to use different PCR lists for a given machine’s first boots
 following/during its provisioning, as we may for instance change its BIOS
-configuration.</li>
-<li>We would like to use keyctl in order to directly store the decrypted LUKS key
+configuration.</p></li>
+<li><p>We would like to use keyctl in order to directly store the decrypted LUKS key
 in a kernel keyslot so that cryptsetup can use it without it being passed
 through userspace. Note that, currently, keyfiles are in memory and may be
 swapped to disk, but that is tolerable as we use an encrypted swap device.
-Another solution could be to use ramfs instead of tmpfs.</li>
+Another solution could be to use ramfs instead of tmpfs.</p></li>
 </ul>
 </div>
 </div>
@@ -409,8 +412,8 @@ Another solution could be to use ramfs instead of tmpfs.</li>
 <h2>Setup for testing<a class="headerlink" href="#setup-for-testing" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="under-qemu-with-ovmf">
 <h3>Under QEMU with OVMF<a class="headerlink" href="#under-qemu-with-ovmf" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id1">
-<h4>Secure Boot<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Secure Boot<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>As a short term solution, we use hard-coded dummy keys to sign the EFI binaries
 with <strong>sbsigntools</strong> and ship an OVMF VARS template file in which these keys
 have been manually enrolled.</p>
@@ -421,18 +424,18 @@ generated at build time for a given deployment using the relevant PKI.</p>
 <p>The standard CLIP OS build process includes build steps to enable Secure Boot
 testing under QEMU with OVMF.</p>
 </div>
-<div class="section" id="id2">
-<h4>Trusted Boot<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4>Trusted Boot<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>QEMU (and libvirt) support two TPM backends:</p>
 <ul class="simple">
-<li>TPM passthrough device: requires the end user to have a hardware TPM on its
+<li><p>TPM passthrough device: requires the end user to have a hardware TPM on its
 host machine, which in addition cannot be used simultaneously by anything
 else. There are also some problems due to the way the TPM is initialized by
 the host, and thus some commands used by the guest cannot work as expected,
-and so on.</li>
-<li>TPM emulator: provides TPM functionality for each VM using a TPM emulator
+and so on.</p></li>
+<li><p>TPM emulator: provides TPM functionality for each VM using a TPM emulator
 installed on the host. <a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> is
-currently the only supported emulator.</li>
+currently the only supported emulator.</p></li>
 </ul>
 <p>The second option is more adapted to our needs but requires people to install
 swtpm, which requires <a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a>.</p>
@@ -462,7 +465,7 @@ automated as possible.</p>
         <a href="roadmap.html" class="btn btn-neutral float-right" title="Roadmap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="kernel.html" class="btn btn-neutral" title="Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="kernel.html" class="btn btn-neutral float-left" title="Kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -488,26 +491,16 @@ automated as possible.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

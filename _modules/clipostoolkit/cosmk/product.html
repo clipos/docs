@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -189,7 +191,7 @@
 
 <span class="kn">from</span> <span class="nn">.commons</span> <span class="k">import</span> <span class="n">PRODUCT_NAME_RE</span><span class="p">,</span> <span class="n">line</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">ProductPropertiesError</span>
-<span class="kn">from</span> <span class="nn">.instrumentation</span> <span class="k">import</span> <span class="n">instrumented_recipes</span>
+<span class="kn">from</span> <span class="nn">.instrumentation</span> <span class="k">import</span> <span class="n">Instrumentation</span>
 <span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">critical</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">warn</span>
 <span class="kn">from</span> <span class="nn">.sourcetree</span> <span class="k">import</span> <span class="n">repo_root_path</span>
 
@@ -233,16 +235,16 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns the version of this product as defined in its &quot;properties.toml&quot;</span>
-<span class="sd">        file.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns the version of this product as defined in its</span>
+<span class="sd">        &quot;properties.toml&quot; file.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tainted_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns the version of this product as defined in its &quot;properties.toml&quot;</span>
-<span class="sd">        file but &quot;tainted&quot; with a build flag ``instrumentation`` if an</span>
-<span class="sd">        &quot;instrumentation.toml&quot; file is present at the root of the repo source</span>
-<span class="sd">        tree.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns the version of this product as defined in its</span>
+<span class="sd">        &quot;properties.toml&quot; file but &quot;tainted&quot; with a build flag</span>
+<span class="sd">        ``instrumentation`` if at least one instrumentation feature is</span>
+<span class="sd">        enabled.&quot;&quot;&quot;</span>
 
         <span class="n">version</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">taint_version</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -251,10 +253,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">version</span><span class="p">[</span><span class="s2">&quot;build&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag</span>
 
-        <span class="c1"># Yes, even if the instrumentation does not affect any recipe composing</span>
-        <span class="c1"># the product, that product version will still be tainted as</span>
-        <span class="c1"># &quot;instrumented&quot;.</span>
-        <span class="k">if</span> <span class="n">instrumented_recipes</span><span class="p">():</span>
+        <span class="n">instru</span> <span class="o">=</span> <span class="n">Instrumentation</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">instru</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
             <span class="n">taint_version</span><span class="p">(</span><span class="s2">&quot;instrumented&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="p">(</span><span class="o">**</span><span class="n">version</span><span class="p">))</span>
@@ -347,26 +347,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

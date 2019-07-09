@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -197,6 +199,7 @@
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="p">(</span><span class="n">CosmkError</span><span class="p">,</span> <span class="n">SdkBootstrapError</span><span class="p">,</span> <span class="n">SdkError</span><span class="p">,</span>
                          <span class="n">SdkNotFoundError</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.fs</span> <span class="k">import</span> <span class="n">mksquashfs</span>
+<span class="kn">from</span> <span class="nn">.instrumentation</span> <span class="k">import</span> <span class="n">Instrumentation</span>
 <span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">critical</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">warn</span>
 <span class="kn">from</span> <span class="nn">.privileges</span> <span class="k">import</span> <span class="n">ElevatedPrivileges</span>
 <span class="kn">from</span> <span class="nn">.sourcetree</span> <span class="k">import</span> <span class="n">repo_root_path</span>
@@ -264,14 +267,38 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
                                          <span class="n">cache_subpath_for_packages</span><span class="p">))</span>
 
-            <span class="c1"># Always mount output &amp; cache path for current action read-write.</span>
+            <span class="c1"># Mount a tpmfs over the action output path for the build action.</span>
+            <span class="c1"># We no do not keep build output (we keep binary packages in the</span>
+            <span class="c1"># cache) and this avoids a lot of IO for mostly unused files.</span>
+            <span class="k">if</span> <span class="n">action_name</span> <span class="o">==</span> <span class="s2">&quot;build&quot;</span><span class="p">:</span>
+                <span class="c1"># Only build and bootstrap actions need read-write access to</span>
+                <span class="c1"># the package cache.</span>
+                <span class="n">mntpoints</span> <span class="o">+=</span> <span class="p">[</span>
+                    <span class="n">ContainerMountpoint</span><span class="p">(</span>
+                        <span class="n">source</span><span class="o">=</span><span class="s2">&quot;tmpfs&quot;</span><span class="p">,</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">,</span> <span class="n">out_subpath_for_action</span><span class="p">),</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;tmpfs&quot;</span><span class="p">,</span>
+                        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nodev&quot;</span><span class="p">,</span> <span class="s2">&quot;nosuid&quot;</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="n">ContainerMountpoint</span><span class="p">(</span>
+                        <span class="n">source</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="n">cache_subpath_for_packages</span><span class="p">),</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">,</span> <span class="n">cache_subpath_for_packages</span><span class="p">),</span>
+                        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bind&quot;</span><span class="p">,</span> <span class="s2">&quot;rw&quot;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">]</span>
+            <span class="c1"># For other actions, mount action specific output path read-write.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mntpoints</span> <span class="o">+=</span> <span class="p">[</span>
+                    <span class="n">ContainerMountpoint</span><span class="p">(</span>
+                        <span class="n">source</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
+                                            <span class="n">out_subpath_for_action</span><span class="p">),</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">,</span> <span class="n">out_subpath_for_action</span><span class="p">),</span>
+                        <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bind&quot;</span><span class="p">,</span> <span class="s2">&quot;rw&quot;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">]</span>
+
+            <span class="c1"># Always mount cache path for current action read-write.</span>
             <span class="n">mntpoints</span> <span class="o">+=</span> <span class="p">[</span>
-                <span class="n">ContainerMountpoint</span><span class="p">(</span>
-                    <span class="n">source</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
-                                        <span class="n">out_subpath_for_action</span><span class="p">),</span>
-                    <span class="n">target</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">,</span> <span class="n">out_subpath_for_action</span><span class="p">),</span>
-                    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bind&quot;</span><span class="p">,</span> <span class="s2">&quot;rw&quot;</span><span class="p">],</span>
-                <span class="p">),</span>
                 <span class="n">ContainerMountpoint</span><span class="p">(</span>
                     <span class="n">source</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
                                         <span class="n">cache_subpath_for_action</span><span class="p">),</span>
@@ -443,8 +470,6 @@
                 <span class="s2">&quot;CURRENT_PRODUCT_TAINTED_VERSION&quot;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">tainted_version</span><span class="p">,</span>
                 <span class="s2">&quot;CURRENT_RECIPE&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="s2">&quot;CURRENT_RECIPE_INSTRUMENTATION_LEVEL&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">instrumentation_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                 <span class="s2">&quot;CURRENT_ACTION&quot;</span><span class="p">:</span> <span class="s2">&quot;bootstrap&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;CURRENT_SDK_PRODUCT&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="s2">&quot;CURRENT_SDK_RECIPE&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -548,6 +573,13 @@
             <span class="k">raise</span> <span class="n">SdkNotFoundError</span><span class="p">(</span><span class="s2">&quot;could not found rootfs squashfs image &quot;</span>
                                    <span class="s2">&quot;file for this SDK&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Serialize the instrumentation feature in a string to be passed as an</span>
+        <span class="c1"># environment variable:</span>
+        <span class="n">instrumentation</span> <span class="o">=</span> <span class="n">Instrumentation</span><span class="p">()</span>
+        <span class="n">serialized_instru_features</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">instrumentation</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+            <span class="n">serialized_instru_features</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">instrumentation</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+
         <span class="n">sdk_container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{sdkproduct}</span><span class="s2">-</span><span class="si">{sdk}</span><span class="s2">.</span><span class="si">{action}</span><span class="s2">.</span><span class="si">{product}</span><span class="s2">-</span><span class="si">{recipe}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">sdkproduct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -582,8 +614,7 @@
             <span class="s2">&quot;CURRENT_PRODUCT_TAINTED_VERSION&quot;</span><span class="p">:</span>
                 <span class="n">action_targeted_recipe</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">tainted_version</span><span class="p">,</span>
             <span class="s2">&quot;CURRENT_RECIPE&quot;</span><span class="p">:</span> <span class="n">action_targeted_recipe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s2">&quot;CURRENT_RECIPE_INSTRUMENTATION_LEVEL&quot;</span><span class="p">:</span>
-                <span class="n">action_targeted_recipe</span><span class="o">.</span><span class="n">instrumentation_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">&quot;CURRENT_INSTRUMENTATION_FEATURES&quot;</span><span class="p">:</span> <span class="n">serialized_instru_features</span><span class="p">,</span>
             <span class="s2">&quot;CURRENT_ACTION&quot;</span><span class="p">:</span> <span class="n">action_name</span><span class="p">,</span>
             <span class="s2">&quot;CURRENT_SDK_PRODUCT&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s2">&quot;CURRENT_SDK_RECIPE&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -667,26 +698,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

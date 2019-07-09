@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -180,14 +182,28 @@
 
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.6.8&#39;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Schema&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;And&#39;</span><span class="p">,</span> <span class="s1">&#39;Or&#39;</span><span class="p">,</span> <span class="s1">&#39;Regex&#39;</span><span class="p">,</span> <span class="s1">&#39;Optional&#39;</span><span class="p">,</span> <span class="s1">&#39;Use&#39;</span><span class="p">,</span> <span class="s1">&#39;Forbidden&#39;</span><span class="p">,</span> <span class="s1">&#39;Const&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SchemaError&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SchemaWrongKeyError&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SchemaMissingKeyError&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SchemaForbiddenKeyError&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SchemaUnexpectedTypeError&#39;</span><span class="p">]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">ExitStack</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">contextlib2</span> <span class="k">import</span> <span class="n">ExitStack</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.7.0&#39;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;And&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Or&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Regex&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Optional&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Use&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Forbidden&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Const&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaWrongKeyError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaMissingKeyError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaForbiddenKeyError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaUnexpectedTypeError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SchemaOnlyOneAllowedError&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <span class="k">class</span> <span class="nc">SchemaError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -204,6 +220,7 @@
 <span class="sd">        Removes duplicates values in auto and error list.</span>
 <span class="sd">        parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">def</span> <span class="nf">uniq</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Utility function that removes duplicate.</span>
@@ -212,34 +229,45 @@
             <span class="n">seen_add</span> <span class="o">=</span> <span class="n">seen</span><span class="o">.</span><span class="n">add</span>
             <span class="c1"># This way removes duplicates while preserving the order.</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">seen_add</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+
         <span class="n">data_set</span> <span class="o">=</span> <span class="n">uniq</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">autos</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">error_list</span> <span class="o">=</span> <span class="n">uniq</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error_list</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SchemaWrongKeyError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Error Should be raised when an unexpected key is detected within the</span>
 <span class="sd">    data set being.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span>
 
 
 <span class="k">class</span> <span class="nc">SchemaMissingKeyError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Error should be raised when a mandatory key is not found within the</span>
 <span class="sd">    data set being validated&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">SchemaOnlyOneAllowedError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error should be raised when an only_one Or key has multiple matching candidates&quot;&quot;&quot;</span>
+
     <span class="k">pass</span>
 
 
 <span class="k">class</span> <span class="nc">SchemaForbiddenKeyError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Error should be raised when a forbidden key is found within the</span>
 <span class="sd">    data set being validated, and its value matches the value that was specified&quot;&quot;&quot;</span>
+
     <span class="k">pass</span>
 
 
 <span class="k">class</span> <span class="nc">SchemaUnexpectedTypeError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Error should be raised when a type mismatch is detected within the</span>
 <span class="sd">    data set being validated.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span>
 
 
@@ -247,17 +275,19 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to combine validation directives in AND Boolean fashion.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
-        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">([</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;schema&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore_extra_keys&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ignore_extra_keys&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;ignore_extra_keys&quot;</span><span class="p">}):</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;ignore_extra_keys&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unknown keyword arguments </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">list</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ignore_extra_keys&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="c1"># You can pass your inherited Schema class.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;schema&#39;</span><span class="p">,</span> <span class="n">Schema</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="n">Schema</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-                           <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -266,9 +296,7 @@
 <span class="sd">        :param data: to be validated with sub defined schemas.</span>
 <span class="sd">        :return: returns validated data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span>
-                               <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span><span class="p">)</span>
-                  <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
@@ -276,6 +304,18 @@
 <span class="k">class</span> <span class="nc">Or</span><span class="p">(</span><span class="n">And</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Utility function to combine validation directives in a OR Boolean</span>
 <span class="sd">    fashion.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">only_one</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;only_one&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Or</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">failed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SchemaOnlyOneAllowedError</span><span class="p">([</span><span class="s2">&quot;There are multiple keys present &quot;</span> <span class="o">+</span> <span class="s2">&quot;from the </span><span class="si">%r</span><span class="s2"> condition&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">])</span>
+
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validate data using sub defined schema/expressions ensuring at least</span>
@@ -284,43 +324,53 @@
 <span class="sd">        :return: return validated data if not validation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">autos</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span>
-                               <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span><span class="p">)</span>
-                  <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">validation</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">match_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">return</span> <span class="n">validation</span>
             <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">_x</span><span class="p">:</span>
                 <span class="n">autos</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">_x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="n">_x</span><span class="o">.</span><span class="n">errors</span>
-        <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> did not validate </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span> <span class="o">+</span> <span class="n">autos</span><span class="p">,</span>
-                          <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span>
-                          <span class="n">errors</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> did not validate </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span> <span class="o">+</span> <span class="n">autos</span><span class="p">,</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">errors</span><span class="p">,</span>
+        <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Regex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enables schema.py to validate string using regular expressions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># Map all flags bits to a more readable description</span>
-    <span class="n">NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;re.ASCII&#39;</span><span class="p">,</span> <span class="s1">&#39;re.DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;re.VERBOSE&#39;</span><span class="p">,</span> <span class="s1">&#39;re.UNICODE&#39;</span><span class="p">,</span> <span class="s1">&#39;re.DOTALL&#39;</span><span class="p">,</span>
-             <span class="s1">&#39;re.MULTILINE&#39;</span><span class="p">,</span> <span class="s1">&#39;re.LOCALE&#39;</span><span class="p">,</span> <span class="s1">&#39;re.IGNORECASE&#39;</span><span class="p">,</span> <span class="s1">&#39;re.TEMPLATE&#39;</span><span class="p">]</span>
+    <span class="n">NAMES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;re.ASCII&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.DEBUG&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.VERBOSE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.UNICODE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.DOTALL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.MULTILINE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.LOCALE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.IGNORECASE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;re.TEMPLATE&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern_str</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pattern_str</span> <span class="o">=</span> <span class="n">pattern_str</span>
-        <span class="n">flags_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Regex</span><span class="o">.</span><span class="n">NAMES</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span>  <span class="c1"># Name for each bit</span>
-                      <span class="nb">enumerate</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0:09b}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flags</span><span class="p">))</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
+        <span class="n">flags_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Regex</span><span class="o">.</span><span class="n">NAMES</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:09b}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flags</span><span class="p">))</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">]</span>  <span class="c1"># Name for each bit</span>
 
         <span class="k">if</span> <span class="n">flags_list</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span> <span class="o">=</span> <span class="s1">&#39;, flags=&#39;</span> <span class="o">+</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">flags_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span> <span class="o">=</span> <span class="s2">&quot;, flags=&quot;</span> <span class="o">+</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">flags_list</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern_str</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="n">error</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pattern_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pattern_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags_names</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -334,9 +384,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">data</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> does not match </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> does not match </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> is not string nor buffer&#39;</span> <span class="o">%</span> <span class="n">data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> is not string nor buffer&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Use</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -344,26 +394,24 @@
 <span class="sd">    For more general use cases, you can use the Use class to transform</span>
 <span class="sd">    the data while it is being validate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callable_</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">callable_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">callable_</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Expected a callable, not </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">callable_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_callable</span> <span class="o">=</span> <span class="n">callable_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="n">error</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callable</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callable</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callable</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span>
-                              <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                               <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">_callable_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_callable</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">) raised </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-                              <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                              <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r</span><span class="s2">) raised </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 
 
 <span class="n">COMPARABLE</span><span class="p">,</span> <span class="n">CALLABLE</span><span class="p">,</span> <span class="n">VALIDATOR</span><span class="p">,</span> <span class="n">TYPE</span><span class="p">,</span> <span class="n">DICT</span><span class="p">,</span> <span class="n">ITERABLE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -377,7 +425,7 @@
         <span class="k">return</span> <span class="n">DICT</span>
     <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">type</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">TYPE</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;validate&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;validate&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">VALIDATOR</span>
     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">CALLABLE</span>
@@ -390,22 +438,29 @@
 <span class="sd">    Entry point of the library, use this class to instantiate validation</span>
 <span class="sd">    schema for the data that will be validated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">schema</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="n">error</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span> <span class="o">=</span> <span class="n">ignore_extra_keys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_dict_key_priority</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return priority for a given key object.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Forbidden</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Hook</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">_priority</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Optional</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">_priority</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
         <span class="k">return</span> <span class="n">_priority</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_optional_type</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return True if the given key is optional (does not have to be found&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">optional_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">optional_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Optional</span><span class="p">,</span> <span class="n">Hook</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return whether the given data has passed all the validations</span>
@@ -418,6 +473,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
 
+    <span class="k">def</span> <span class="nf">_prepend_schema_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If a custom schema name has been defined, prepends it to the error</span>
+<span class="sd">        message that gets raised when a schema error occurs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0!r}</span><span class="s2"> </span><span class="si">{1!s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">message</span>
+
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">Schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
@@ -429,84 +493,88 @@
             <span class="n">o</span> <span class="o">=</span> <span class="n">Or</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">Schema</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)(</span><span class="n">o</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">DICT</span><span class="p">:</span>
+            <span class="n">exitstack</span> <span class="o">=</span> <span class="n">ExitStack</span><span class="p">()</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">new</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)()</span>  <span class="c1"># new - is a dict of the validated values</span>
             <span class="n">coverage</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># matched schema keys</span>
             <span class="c1"># for each key and value find a schema entry matching them, if any</span>
             <span class="n">sorted_skeys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict_key_priority</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">for</span> <span class="n">skey</span> <span class="ow">in</span> <span class="n">sorted_skeys</span><span class="p">:</span>
-                    <span class="n">svalue</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">skey</span><span class="p">]</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">nkey</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="n">SchemaError</span><span class="p">:</span>
-                        <span class="k">pass</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="n">Forbidden</span><span class="p">):</span>
-                            <span class="c1"># As the content of the value makes little sense for</span>
-                            <span class="c1"># forbidden keys, we reverse its meaning:</span>
-                            <span class="c1"># we will only raise the SchemaErrorForbiddenKey</span>
-                            <span class="c1"># exception if the value does match, allowing for</span>
-                            <span class="c1"># excluding a key only if its value has a certain type,</span>
-                            <span class="c1"># and allowing Forbidden to work well in combination</span>
-                            <span class="c1"># with Optional.</span>
-                            <span class="k">try</span><span class="p">:</span>
-                                <span class="n">nvalue</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">svalue</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                            <span class="k">except</span> <span class="n">SchemaError</span><span class="p">:</span>
-                                <span class="k">continue</span>
-                            <span class="k">raise</span> <span class="n">SchemaForbiddenKeyError</span><span class="p">(</span>
-                                    <span class="s1">&#39;Forbidden key encountered: </span><span class="si">%r</span><span class="s1"> in </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span>
-                                    <span class="p">(</span><span class="n">nkey</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">skey</span> <span class="ow">in</span> <span class="n">sorted_skeys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">):</span>
+                    <span class="n">exitstack</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">skey</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">exitstack</span><span class="p">:</span>
+                <span class="c1"># Evaluate dictionaries last</span>
+                <span class="n">data_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">dict</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_items</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">skey</span> <span class="ow">in</span> <span class="n">sorted_skeys</span><span class="p">:</span>
+                        <span class="n">svalue</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">skey</span><span class="p">]</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">nkey</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="n">SchemaError</span><span class="p">:</span>
+                            <span class="k">pass</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="k">try</span><span class="p">:</span>
-                                <span class="n">nvalue</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">svalue</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">,</span>
-                                                <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
-                                <span class="n">k</span> <span class="o">=</span> <span class="s2">&quot;Key &#39;</span><span class="si">%s</span><span class="s2">&#39; error:&quot;</span> <span class="o">%</span> <span class="n">nkey</span>
-                                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="n">Hook</span><span class="p">):</span>
+                                <span class="c1"># As the content of the value makes little sense for</span>
+                                <span class="c1"># keys with a hook, we reverse its meaning:</span>
+                                <span class="c1"># we will only call the handler if the value does match</span>
+                                <span class="c1"># In the case of the forbidden key hook,</span>
+                                <span class="c1"># we will raise the SchemaErrorForbiddenKey exception</span>
+                                <span class="c1"># on match, allowing for excluding a key only if its</span>
+                                <span class="c1"># value has a certain type, and allowing Forbidden to</span>
+                                <span class="c1"># work well in combination with Optional.</span>
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">nvalue</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">svalue</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                                <span class="k">except</span> <span class="n">SchemaError</span><span class="p">:</span>
+                                    <span class="k">continue</span>
+                                <span class="n">skey</span><span class="o">.</span><span class="n">handler</span><span class="p">(</span><span class="n">nkey</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                             <span class="k">else</span><span class="p">:</span>
-                                <span class="n">new</span><span class="p">[</span><span class="n">nkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvalue</span>
-                                <span class="n">coverage</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">skey</span><span class="p">)</span>
-                                <span class="k">break</span>
-            <span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Optional</span><span class="p">,</span> <span class="n">Forbidden</span><span class="p">])</span>
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">nvalue</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">svalue</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                                <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
+                                    <span class="n">k</span> <span class="o">=</span> <span class="s2">&quot;Key &#39;</span><span class="si">%s</span><span class="s2">&#39; error:&quot;</span> <span class="o">%</span> <span class="n">nkey</span>
+                                    <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                                    <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="n">message</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">new</span><span class="p">[</span><span class="n">nkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvalue</span>
+                                    <span class="n">coverage</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">skey</span><span class="p">)</span>
+                                    <span class="k">break</span>
+            <span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_optional_type</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">required</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">coverage</span><span class="p">):</span>
                 <span class="n">missing_keys</span> <span class="o">=</span> <span class="n">required</span> <span class="o">-</span> <span class="n">coverage</span>
-                <span class="n">s_missing_keys</span> <span class="o">=</span> \
-                    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">))</span>
-                <span class="k">raise</span> \
-                    <span class="n">SchemaMissingKeyError</span><span class="p">(</span><span class="s1">&#39;Missing keys: &#39;</span> <span class="o">+</span> <span class="n">s_missing_keys</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">s_missing_keys</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">))</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Missing key</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_plural_s</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">),</span> <span class="n">s_missing_keys</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaMissingKeyError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
                 <span class="n">wrong_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">new</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-                <span class="n">s_wrong_keys</span> <span class="o">=</span> \
-                    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wrong_keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">))</span>
-                <span class="k">raise</span> \
-                    <span class="n">SchemaWrongKeyError</span><span class="p">(</span>
-                        <span class="s1">&#39;Wrong keys </span><span class="si">%s</span><span class="s1"> in </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s_wrong_keys</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span>
-                        <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">s_wrong_keys</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wrong_keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">))</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Wrong key</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> in </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_plural_s</span><span class="p">(</span><span class="n">wrong_keys</span><span class="p">),</span> <span class="n">s_wrong_keys</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaWrongKeyError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 
             <span class="c1"># Apply default-having optionals that haven&#39;t been used:</span>
-            <span class="n">defaults</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Optional</span> <span class="ow">and</span>
-                           <span class="nb">hasattr</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">))</span> <span class="o">-</span> <span class="n">coverage</span>
+            <span class="n">defaults</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Optional</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">))</span> <span class="o">-</span> <span class="n">coverage</span>
             <span class="k">for</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
-                <span class="n">new</span><span class="p">[</span><span class="n">default</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span><span class="o">.</span><span class="n">default</span>
+                <span class="n">new</span><span class="p">[</span><span class="n">default</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span><span class="o">.</span><span class="n">default</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">default</span><span class="o">.</span><span class="n">default</span><span class="p">)</span> <span class="k">else</span> <span class="n">default</span><span class="o">.</span><span class="n">default</span>
 
             <span class="k">return</span> <span class="n">new</span>
         <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">TYPE</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">==</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">data</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SchemaUnexpectedTypeError</span><span class="p">(</span>
-                    <span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> should be instance of </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>
-                    <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> should be instance of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaUnexpectedTypeError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">VALIDATOR</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span>
-                    <span class="s1">&#39;</span><span class="si">%r</span><span class="s1">.validate(</span><span class="si">%r</span><span class="s1">) raised </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%r</span><span class="s2">.validate(</span><span class="si">%r</span><span class="s2">) raised </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">CALLABLE</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">_callable_str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
@@ -515,31 +583,106 @@
             <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">autos</span><span class="p">,</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">x</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span>
-                    <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">) raised </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">) should evaluate to True&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r</span><span class="s2">) raised </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%r</span><span class="s2">) should evaluate to True&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> does not match </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span>
-                              <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> does not match </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_schema_name</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SchemaError</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">json_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_main_schema</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate a draft-07 JSON schema dict representing the Schema.</span>
+<span class="sd">        This method can only be called when the Schema&#39;s value is a dict.</span>
+<span class="sd">        This method must be called with a schema_id. Calling it without one</span>
+<span class="sd">        is used in a recursive context for sub schemas.&quot;&quot;&quot;</span>
+        <span class="n">Schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_extra_keys</span>
+        <span class="n">flavor</span> <span class="o">=</span> <span class="n">_priority</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">flavor</span> <span class="o">!=</span> <span class="n">DICT</span> <span class="ow">and</span> <span class="n">is_main_schema</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The main schema must be a dict.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">TYPE</span><span class="p">:</span>
+            <span class="c1"># Handle type</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="n">flavor</span> <span class="o">==</span> <span class="n">ITERABLE</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Handle arrays of a single type or dict schema</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">Schema</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">json_schema</span><span class="p">(</span><span class="n">is_main_schema</span><span class="o">=</span><span class="kc">False</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Or</span><span class="p">):</span>
+            <span class="c1"># Handle Or values</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">Schema</span><span class="p">(</span><span class="n">or_key</span><span class="p">)</span><span class="o">.</span><span class="n">json_schema</span><span class="p">(</span><span class="n">is_main_schema</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">or_key</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">_args</span><span class="p">]</span>
+            <span class="n">any_of</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">any_of</span><span class="p">:</span>
+                    <span class="n">any_of</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;anyOf&quot;</span><span class="p">:</span> <span class="n">any_of</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">flavor</span> <span class="o">!=</span> <span class="n">DICT</span><span class="p">:</span>
+            <span class="c1"># If not handled, do not check</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">is_main_schema</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">schema_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;schema_id is required.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle dict</span>
+        <span class="n">required_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">expanded_schema</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Hook</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">Schema</span><span class="p">):</span>
+                <span class="n">sub_schema</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sub_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">ignore_extra_keys</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">sub_schema_json</span> <span class="o">=</span> <span class="n">sub_schema</span><span class="o">.</span><span class="n">json_schema</span><span class="p">(</span><span class="n">is_main_schema</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">is_optional</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Optional</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">_schema</span>
+                <span class="n">is_optional</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_optional</span><span class="p">:</span>
+                    <span class="n">required_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">expanded_schema</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_schema_json</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Or</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">or_key</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">_args</span><span class="p">:</span>
+                    <span class="n">expanded_schema</span><span class="p">[</span><span class="n">or_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_schema_json</span>
+        <span class="n">schema_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="n">expanded_schema</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">required_keys</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">is_main_schema</span><span class="p">:</span>
+            <span class="n">schema_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">schema_id</span><span class="p">,</span> <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">schema_dict</span>
 
 
 <span class="k">class</span> <span class="nc">Optional</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Marker for an optional part of the validation Schema.&quot;&quot;&quot;</span>
+
     <span class="n">_MARKER</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Optional</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">:</span>
             <span class="c1"># See if I can come up with a static key to use for myself:</span>
             <span class="k">if</span> <span class="n">_priority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span> <span class="o">!=</span> <span class="n">COMPARABLE</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="s1">&#39;Optional keys with defaults must have simple, &#39;</span>
-                    <span class="s1">&#39;predictable values, like literal strings or ints. &#39;</span>
-                    <span class="s1">&#39;&quot;</span><span class="si">%r</span><span class="s1">&quot; is too complex.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,))</span>
+                    <span class="s2">&quot;Optional keys with defaults must have simple, &quot;</span>
+                    <span class="s2">&quot;predictable values, like literal strings or ints. &quot;</span>
+                    <span class="s1">&#39;&quot;</span><span class="si">%r</span><span class="s1">&quot; is too complex.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,)</span>
+                <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
 
@@ -547,16 +690,32 @@
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">and</span>
-                <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span> <span class="o">==</span>
-                <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_schema</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span>
+            <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MARKER</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_schema</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Hook</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;handler&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Hook</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span>
+
+
+<span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">Hook</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;handler&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_function</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_default_function</span><span class="p">(</span><span class="n">nkey</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">SchemaForbiddenKeyError</span><span class="p">(</span><span class="s2">&quot;Forbidden key encountered: </span><span class="si">%r</span><span class="s2"> in </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">nkey</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">error</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Const</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
@@ -566,9 +725,13 @@
 
 
 <span class="k">def</span> <span class="nf">_callable_str</span><span class="p">(</span><span class="n">callable_</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">callable_</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">callable_</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">callable_</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">callable_</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_plural_s</span><span class="p">(</span><span class="n">sized</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sized</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 </pre></div>
 
            </div>
@@ -598,26 +761,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

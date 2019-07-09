@@ -20,34 +20,36 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -315,9 +317,9 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEBUG">DEBUG (clipostoolkit.cosmk.instrumentation.InstrumentationLevel attribute)</a>
-</li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.log.debug">debug() (in module clipostoolkit.cosmk.log)</a>
+</li>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.defined">defined (clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -327,8 +329,6 @@
         <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.virt.VirtualizedEnvironment.destroy">(clipostoolkit.cosmk.virt.VirtualizedEnvironment method)</a>
 </li>
       </ul></li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.DEVELOPMENT">DEVELOPMENT (clipostoolkit.cosmk.instrumentation.InstrumentationLevel attribute)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -363,6 +363,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.features">features (clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
+</li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.completion.features_for_action">features_for_action() (in module clipostoolkit.cosmk.completion)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships">fix_output_nodes_ownerships() (in module clipostoolkit.cosmk.sourcetree)</a>
@@ -395,13 +397,13 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.privileges.init_lower_privileges">init_lower_privileges() (in module clipostoolkit.cosmk.privileges)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.InstrumentationLevel">InstrumentationLevel (class in clipostoolkit.cosmk.instrumentation)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation">Instrumentation (class in clipostoolkit.cosmk.instrumentation)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError">InstrumentationSpecificationError</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH">INSTRUMENTATION_FILEPATH (clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.instrumented_recipes">instrumented_recipes() (in module clipostoolkit.cosmk.instrumentation)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError">InstrumentationSpecificationError</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.sdk.Sdk.interactive_run">interactive_run() (clipostoolkit.cosmk.sdk.Sdk method)</a>
 </li>
@@ -495,11 +497,9 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product">Product (class in clipostoolkit.cosmk.product)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.completion.product_completer">product_completer() (in module clipostoolkit.cosmk.completion)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.InstrumentationLevel.PRODUCTION">PRODUCTION (clipostoolkit.cosmk.instrumentation.InstrumentationLevel attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.completion.product_completer">product_completer() (in module clipostoolkit.cosmk.completion)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.ProductPropertiesError">ProductPropertiesError</a>
 </li>
@@ -584,6 +584,8 @@
 </li>
         <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.SCHEMA">(clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature attribute)</a>
 </li>
+        <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA">(clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
+</li>
         <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.SCHEMA">(clipostoolkit.cosmk.product.Product attribute)</a>
 </li>
       </ul></li>
@@ -593,10 +595,10 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.SdkBootstrapError">SdkBootstrapError</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.SdkError">SdkError</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.SdkError">SdkError</a>
+</li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.SdkNotFoundError">SdkNotFoundError</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.sdk.SdkSession">SdkSession (class in clipostoolkit.cosmk.sdk)</a>
@@ -707,26 +709,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

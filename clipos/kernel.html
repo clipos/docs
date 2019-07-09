@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -34,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Boot chain and integrity guarantees" href="boot_integrity.html" />
     <link rel="prev" title="Security objectives" href="security.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -200,22 +202,22 @@
 <span id="id1"></span><h1>Kernel<a class="headerlink" href="#kernel" title="Permalink to this headline">¶</a></h1>
 <p>The CLIP OS kernel is based on Linux. It also integrates:</p>
 <ul class="simple">
-<li>existing hardening patches that are not upstream yet and that we consider
-relevant to our security model;</li>
-<li>developments made for previous CLIP OS versions that we have not upstreamed
-yet (or that cannot be);</li>
-<li>entirely new functionalities that have not been upstreamed yet (or that
-cannot be).</li>
+<li><p>existing hardening patches that are not upstream yet and that we consider
+relevant to our security model;</p></li>
+<li><p>developments made for previous CLIP OS versions that we have not upstreamed
+yet (or that cannot be);</p></li>
+<li><p>entirely new functionalities that have not been upstreamed yet (or that
+cannot be).</p></li>
 </ul>
 <div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <p>As the core of a hardened operating system, the CLIP OS kernel is particularly
 responsible for:</p>
 <ul class="simple">
-<li>providing <strong>robust security mechanisms</strong> to higher levels of the operating
-system, such as reliable isolation primitives;</li>
-<li>maintaining maximal <strong>trust in hardware resources</strong>;</li>
-<li>guaranteeing its <strong>own protection</strong> against various threats.</li>
+<li><p>providing <strong>robust security mechanisms</strong> to higher levels of the operating
+system, such as reliable isolation primitives;</p></li>
+<li><p>maintaining maximal <strong>trust in hardware resources</strong>;</p></li>
+<li><p>guaranteeing its <strong>own protection</strong> against various threats.</p></li>
 </ul>
 </div>
 <div class="section" id="configuration">
@@ -223,27 +225,23 @@ system, such as reliable isolation primitives;</li>
 <p>In this section we discuss our security-relevant configuration choices for
 the CLIP OS kernel. Before starting, it is worth mentioning that:</p>
 <ul>
-<li><p class="first">We do our best to <strong>limit the number of kernel modules</strong>.</p>
+<li><p>We do our best to <strong>limit the number of kernel modules</strong>.</p>
 <p>In other words, as many modules as possible should be built-in. Modules are
 only used when needed either for the initramfs or to ease the automation of
 the deployment of CLIP OS on multiple different machines (for the moment, we
 only target a QEMU-KVM guest). This is particularly important as module
 loading is disabled after CLIP OS startup.</p>
 </li>
-<li><p class="first">We <strong>focus on a secure configuration</strong>. The remaining of the configuration
-is minimal and it is your job to tune it for your machines and use cases.</p>
-</li>
-<li><p class="first">CLIP OS only supports the x86-64 architecture for now.</p>
-</li>
-<li><p class="first">Running 32-bit programs is voluntarily unsupported. Should you change that
+<li><p>We <strong>focus on a secure configuration</strong>. The remaining of the configuration
+is minimal and it is your job to tune it for your machines and use cases.</p></li>
+<li><p>CLIP OS only supports the x86-64 architecture for now.</p></li>
+<li><p>Running 32-bit programs is voluntarily unsupported. Should you change that
 in your custom kernel, keep in mind that it requires further attention when
-configuring it (e.g., ensure that <code class="docutils literal notranslate"><span class="pre">CONFIG_COMPAT_VDSO=n</span></code>).</p>
-</li>
-<li><p class="first">Many options that are not useful to us are disabled in order to cut attack
+configuring it (e.g., ensure that <code class="docutils literal notranslate"><span class="pre">CONFIG_COMPAT_VDSO=n</span></code>).</p></li>
+<li><p>Many options that are not useful to us are disabled in order to cut attack
 surface. As they are not all detailed below, please see
 <code class="docutils literal notranslate"><span class="pre">src/portage/clip/sys-kernel/clipos-kernel/files/config.d/blacklist</span></code> for an
-exhaustive list of the ones we <strong>explicitly</strong> disable.</p>
-</li>
+exhaustive list of the ones we <strong>explicitly</strong> disable.</p></li>
 </ul>
 <div class="section" id="general-setup">
 <h3>General setup<a class="headerlink" href="#general-setup" title="Permalink to this headline">¶</a></h3>
@@ -307,25 +305,25 @@ linux-hardened to disable their unprivileged use.</p>
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SLAB_HARDENED=y</code></dt>
-<dd><p>Add various little checks to harden the slab allocator. <a class="reference internal" href="#linux-hardened" id="id2">[linux-hardened]</a></p>
+<dd><p>Add various little checks to harden the slab allocator. <a class="reference internal" href="#linux-hardened" id="id2"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SLAB_CANARY=y</code></dt>
-<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
+<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id3"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SLAB_SANITIZE=y</code></dt>
 <dd><p>Zero-fill slab allocations on free to reduce risks of information leaks and
-help mitigate use-after-free vulnerabilities. <a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
+help mitigate use-after-free vulnerabilities. <a class="reference internal" href="#linux-hardened" id="id4"><span>[linux-hardened]</span></a></p>
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SLAB_SANITIZE_VERIFY=y</code></dt>
 <dd><p>Verify that newly allocated slab allocations are zeroed to detect
-write-after-free bugs. <a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
+write-after-free bugs. <a class="reference internal" href="#linux-hardened" id="id5"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 </dd></dl>
@@ -351,16 +349,17 @@ cryptographically secure) entropy at boot time.</p>
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_GCC_PLUGIN_STRUCTLEAK=y</code></dt>
-<dd><p>Prevent potential information leakage by forcing initialization of
-structures containing userspace addresses. This is particularly
-important to prevent trivial bypassing of KASLR.</p>
-</dd></dl>
-
-<dl class="describe">
 <dt>
 <code class="descname">CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y</code></dt>
-<dd><p>Extend forced initialization to all local structures that have their
-address taken at any point.</p>
+<dd><p>Prevent potential information leakage by forcing zero-initialization of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>structures on the stack containing userspace addresses;</p></li>
+<li><p>any stack variable (thus including structures) that may be passed by
+reference and has not already been explicitly initialized.</p></li>
+</ul>
+</div></blockquote>
+<p>This is particularly important to prevent trivial bypassing of KASLR.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -439,7 +438,7 @@ additional layer of security:</p>
 <dt>
 <code class="descname">CONFIG_LOCAL_INIT=n</code></dt>
 <dd><p>This option requires compiler support for <code class="docutils literal notranslate"><span class="pre">-fsanitize=local-init</span></code>, which
-is only available in Clang. <a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
+is only available in Clang. <a class="reference internal" href="#linux-hardened" id="id6"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 </div>
@@ -475,8 +474,11 @@ various speculative execution vulnerabilities).</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_X86_MSR=y</code></dt>
-<dd><p>See above explanation about <code class="docutils literal notranslate"><span class="pre">CONFIG_MICROCODE</span></code>.</p>
+<code class="descname">CONFIG_X86_MSR=n</code></dt>
+<dt>
+<code class="descname">CONFIG_X86_CPUID=n</code></dt>
+<dd><p>Enabling those features would only present userspace with more attack
+surface.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -564,13 +566,13 @@ execution ones. However, CLIP OS follows the <em>defense in depth</em> principle
 and an attack surface reduction approach. Thus, the following points make
 KASLR relevant in the CLIP OS kernel:</p>
 <ul class="simple">
-<li>KASLR was initially designed to counter remote attacks but the strong
+<li><p>KASLR was initially designed to counter remote attacks but the strong
 security model of CLIP OS (e.g., no sysfs mounts in most containers,
 minimal procfs, no arbitrary code execution) makes a local attack
-more complex to carry out.</li>
-<li>STRUCTLEAK, STACKLEAK, kptr_restrict and
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_DMESG_RESTRICT</span></code> are enabled in CLIP OS.</li>
-<li>The CLIP OS kernel is custom-compiled (at least for a given deployment),
+more complex to carry out.</p></li>
+<li><p>STRUCTLEAK, STACKLEAK, kptr_restrict and
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_DMESG_RESTRICT</span></code> are enabled in CLIP OS.</p></li>
+<li><p>The CLIP OS kernel is custom-compiled (at least for a given deployment),
 its image is unreadable to all users including privileged ones and updates
 are end-to-end encrypted. This makes both the content and addresses of the
 kernel image secret. Note that, however, the production kernel image is
@@ -578,13 +580,13 @@ currently part of an EFI binary and is not encrypted, causing it to be
 accessible to a physical attacker. This will change in the future as we
 will only use the kernel included in the EFI binary to boot and then
 <em>kexec</em> to the real production kernel whose image will be located on an
-encrypted disk partition.</li>
-<li>We enable <code class="docutils literal notranslate"><span class="pre">CONFIG_PANIC_ON_OOPS</span></code> by default so that the kernel
+encrypted disk partition.</p></li>
+<li><p>We enable <code class="docutils literal notranslate"><span class="pre">CONFIG_PANIC_ON_OOPS</span></code> by default so that the kernel
 cannot recover from failed exploit attempts, thus preventing any brute
-forcing.</li>
-<li>We enable Kernel Page Table Isolation, mitigating Meltdown and potential
+forcing.</p></li>
+<li><p>We enable Kernel Page Table Isolation, mitigating Meltdown and potential
 other hardware information leakage. Variante 3a (Rogue System Register
-Read) however remains an important threat to KASLR.</li>
+Read) however remains an important threat to KASLR.</p></li>
 </ul>
 </dd></dl>
 
@@ -671,8 +673,8 @@ binaries and interpreted scripts starting with a shebang are enough.</p>
 <h3>Device Drivers<a class="headerlink" href="#device-drivers" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_TCG_TPM=n</code></dt>
-<dd><p>TPM use is not supported by CLIP OS yet.</p>
+<code class="descname">CONFIG_TCG_TPM=y</code></dt>
+<dd><p>CLIP OS leverages the TPM to ensure <a class="reference internal" href="boot_integrity.html#trusted-boot"><span class="std std-ref">boot integrity</span></a>.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -681,8 +683,8 @@ binaries and interpreted scripts starting with a shebang are enough.</p>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">/dev/mem</span></code> device should not be required by any user application
 nowadays.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you must enable it, at least enable <code class="docutils literal notranslate"><span class="pre">CONFIG_STRICT_DEVMEM</span></code> and
+<p class="admonition-title">Note</p>
+<p>If you must enable it, at least enable <code class="docutils literal notranslate"><span class="pre">CONFIG_STRICT_DEVMEM</span></code> and
 <code class="docutils literal notranslate"><span class="pre">CONFIG_IO_STRICT_DEVMEM</span></code> to restrict at best access to this device.</p>
 </div>
 </dd></dl>
@@ -699,6 +701,13 @@ rootkits).</p>
 <dt>
 <code class="descname">CONFIG_LEGACY_PTYS=n</code></dt>
 <dd><p>Use the modern PTY interface only.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_LDISC_AUTOLOAD=n</code></dt>
+<dd><p>Do not automatically load any line discipline that is in a kernel module
+when an unprivileged user asks for it.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -883,7 +892,7 @@ heap overflow exploits and information leaks.</p>
 <code class="descname">CONFIG_FORTIFY_SOURCE_STRICT_STRING=n</code></dt>
 <dd><p>This extends <code class="docutils literal notranslate"><span class="pre">FORTIFY_SOURCE</span></code> to intra-object overflow checking. It is
 useful to find bugs but not recommended for a production kernel yet.
-<a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id7"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -938,9 +947,8 @@ structures such as security hooks from being marked as read-only.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">DEFAULT_SECURITY_DAC=y</code></dt>
-<dd><p>The default security module will be changed to SELinux once CLIP OS fully
-uses it.</p>
+<code class="descname">CONFIG_LSM=&quot;yama&quot;</code></dt>
+<dd><p>SELinux shall be stacked too once CLIP OS uses it.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -962,7 +970,7 @@ parts of the system containing executable programs).</p>
 <dt>
 <code class="descname">CONFIG_SECURITY_PERF_EVENTS_RESTRICT=y</code></dt>
 <dd><p>See documentation about the <code class="docutils literal notranslate"><span class="pre">kernel.perf_event_paranoid</span></code> sysctl below.
-<a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id8"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -970,21 +978,21 @@ parts of the system containing executable programs).</p>
 <code class="descname">CONFIG_PAGE_SANITIZE=y</code></dt>
 <dd><p>Zero-fill page allocations on free to reduce risks of information leaks and
 help mitigate a subset of use-after-free vulnerabilities. This is a simpler
-equivalent to upstream’s <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_POISONING_ZERO</span></code>. <a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
+equivalent to upstream’s <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_POISONING_ZERO</span></code>. <a class="reference internal" href="#linux-hardened" id="id9"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_PAGE_SANITIZE_VERIFY=y</code></dt>
 <dd><p>Verify that newly allocated pages are zeroed to detect write-after-free
-bugs. <a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
+bugs. <a class="reference internal" href="#linux-hardened" id="id10"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SECURITY_TIOCSTI_RESTRICT=y</code></dt>
 <dd><p>This prevents unprivileged users from using the TIOCSTI ioctl to inject
-commands into other processes which share a tty session. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
+commands into other processes which share a tty session. <a class="reference internal" href="#linux-hardened" id="id11"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <p>We incorporated most of the <em>Lockdown</em> patch series into the CLIP OS kernel,
@@ -1037,6 +1045,13 @@ configuration options are enabled/disabled. In other words, the following is
 tightly related to the CLIP OS kernel configuration detailed above.</p>
 <dl class="describe">
 <dt>
+<code class="descname">dev.tty.ldisc_autoload = 0</code></dt>
+<dd><p>See <code class="docutils literal notranslate"><span class="pre">CONFIG_LDISC_AUTOLOAD</span></code> above, which serves as a default value for
+this sysctl.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
 <code class="descname">kernel.kptr_restrict = 2</code></dt>
 <dd><p>Hide kernel addresses in <code class="docutils literal notranslate"><span class="pre">/proc</span></code> and other interfaces, even to privileged
 users.</p>
@@ -1052,11 +1067,12 @@ users.</p>
 <dt>
 <code class="descname">kernel.perf_event_paranoid = 3</code></dt>
 <dd><p>This completely disallows unprivileged access to the <code class="docutils literal notranslate"><span class="pre">perf_event_open()</span></code>
-system call. Note that this requires a patch included in linux-hardened (see
-<a class="reference external" href="https://lwn.net/Articles/696216/">here</a> for the reason why it is not
-upstream), otherwise it is the same as setting this sysctl to <code class="docutils literal notranslate"><span class="pre">2</span></code>. This is
-actually not needed as we already enable
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>.</p>
+system call. This is actually not needed as we already enable
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id12"><span>[linux-hardened]</span></a></p>
+<p>Note that this requires a patch included in linux-hardened (see <a class="reference external" href="https://lwn.net/Articles/696216/">here</a> for the reason why it is not upstream).
+Indeed, on a mainline kernel without such a patch, the above is equivalent
+to setting this sysctl to <code class="docutils literal notranslate"><span class="pre">2</span></code>, which would still allow the profiling of
+user processes.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1110,13 +1126,13 @@ using it:</p>
 <dt>
 <code class="descname">kernel.deny_new_usb = 0</code></dt>
 <dd><p>The management of USB devices is handled at a higher level by CLIP OS.
-<a class="reference internal" href="#linux-hardened" id="id12">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id13"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">kernel.device_sidechannel_restrict = 1</code></dt>
-<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id13">[linux-hardened]</a></p>
+<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id14"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1152,7 +1168,7 @@ separate place.</p>
 <dd><p>This parameter provided by a linux-hardened patch (based on the PaX
 implementation) enables a very simple form of latent entropy extracted
 during system start-up and added to the entropy obtained with
-<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id15"><span>[linux-hardened]</span></a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1179,6 +1195,15 @@ mitigation requires updated microcode for Intel processors.</p>
 
 <dl class="describe">
 <dt>
+<code class="descname">mds=full,nosmt</code></dt>
+<dd><p>This parameter controls optional mitigations for the MDS class of Intel CPU
+vulnerabilities. Not specifying this parameter is equivalent to setting
+<code class="docutils literal notranslate"><span class="pre">mds=full</span></code>, which leaves SMT enabled and therefore is not a complete
+mitigation. Note that this mitigation requires an Intel microcode update.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
 <code class="descname">iommu=force</code></dt>
 <dd><p>Even if we correctly enable the IOMMU in the kernel configuration, the
 kernel can still decide for various reasons to not initialize it at boot.
@@ -1194,41 +1219,45 @@ access the physical memory directly without going through the DMA Remapping.</p>
 interesting options that we considered but eventually chose to not use are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">P</span></code> option, which enables poisoning on slab cache allocations,
+<li><p>The <code class="docutils literal notranslate"><span class="pre">P</span></code> option, which enables poisoning on slab cache allocations,
 disables the <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE</span></code> and <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE_VERIFY</span></code> features from
 linux-hardened. As they respectively poison with zeroes on object freeing
 and check the zeroing on object allocations, we prefer enabling them
-instead of using <code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">Z</span></code> option enables red zoning, i.e., it adds extra areas around
+instead of using <code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Z</span></code> option enables red zoning, i.e., it adds extra areas around
 slab objects that detect when one is overwritten past its real size.
 This can help detect overflows but we already rely on <code class="docutils literal notranslate"><span class="pre">SLAB_CANARY</span></code>
 provided by linux-hardened. A canary is much better than a simple red
-zone as it is supposed to be random.</li>
+zone as it is supposed to be random.</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
 <p>Also, note that:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">slub_nomerge</span></code> is not used as we already set
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SLAB_MERGE_DEFAULT=n</span></code> in the kernel configuration.</li>
-<li><code class="docutils literal notranslate"><span class="pre">page_poison</span></code> is not needed by the page poisoning implementation provided
-by linux-hardened patches.</li>
-<li><code class="docutils literal notranslate"><span class="pre">l1tf</span></code>: The built-in PTE Inversion mitigation is sufficient to mitigate
+<li><p><code class="docutils literal notranslate"><span class="pre">slub_nomerge</span></code> is not used as we already set
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SLAB_MERGE_DEFAULT=n</span></code> in the kernel configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_poison</span></code> is not needed by the page poisoning implementation provided
+by linux-hardened patches.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l1tf</span></code>: The built-in PTE Inversion mitigation is sufficient to mitigate
 the L1TF vulnerability as long as CLIP OS is not used as an hypervisor with
 untrusted guest VMs. If it were to be someday, <code class="docutils literal notranslate"><span class="pre">l1tf=full,force</span></code> should be
 used to force-enable VMX unconditional cache flushes and force-disable SMT
 (note that an Intel microcode update is not required for this mitigation to
 work but improves performance by providing a way to invalidate caches with a
-finer granularity).</li>
+finer granularity).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mitigations</span></code>: This parameter controls optional mitigations for CPU
+vulnerabilities in an arch-independent and more coarse-grained way. For now,
+we keep using arch-specific options for the sake of explicitness. Not setting
+this parameter equals setting it to <code class="docutils literal notranslate"><span class="pre">auto</span></code>, which itself does not update
+anything.</p></li>
 </ul>
 <p class="rubric">Citations and origin of some items</p>
-<table class="docutils citation" frame="void" id="linux-hardened" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>, <a class="fn-backref" href="#id12">11</a>, <a class="fn-backref" href="#id13">12</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
-</tbody>
-</table>
+<dl class="citation">
+<dt class="label" id="linux-hardened"><span class="brackets">linux-hardened</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>,<a href="#id5">4</a>,<a href="#id6">5</a>,<a href="#id7">6</a>,<a href="#id8">7</a>,<a href="#id9">8</a>,<a href="#id10">9</a>,<a href="#id11">10</a>,<a href="#id12">11</a>,<a href="#id13">12</a>,<a href="#id14">13</a>,<a href="#id15">14</a>)</span></dt>
+<dd><p>This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</p>
+</dd>
+</dl>
 </div>
 </div>
 
@@ -1243,7 +1272,7 @@ finer granularity).</li>
         <a href="boot_integrity.html" class="btn btn-neutral float-right" title="Boot chain and integrity guarantees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="security.html" class="btn btn-neutral" title="Security objectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="security.html" class="btn btn-neutral float-left" title="Security objectives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1269,26 +1298,16 @@ finer granularity).</li>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

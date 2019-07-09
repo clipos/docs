@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -177,14 +179,14 @@
 <span></span><span class="c1"># SPDX-License-Identifier: LGPL-2.1-or-later</span>
 <span class="c1"># Copyright © 2017 ANSSI. All rights reserved.</span>
 
-<span class="sd">&quot;&quot;&quot;Module handling recipe instrumentation logic.&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Module handling product instrumentation logic.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span>
-                    <span class="n">Union</span><span class="p">)</span>
+                    <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">schema</span>
 <span class="kn">import</span> <span class="nn">toml</span>
@@ -196,71 +198,49 @@
 <span class="kn">from</span> <span class="nn">.sourcetree</span> <span class="k">import</span> <span class="n">repo_root_path</span>
 
 
-<div class="viewcode-block" id="InstrumentationLevel"><a class="viewcode-back" href="../../../toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.InstrumentationLevel">[docs]</a><span class="k">class</span> <span class="nc">InstrumentationLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Instrumentation level enumeration for the recipes&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Instrumentation"><a class="viewcode-back" href="../../../toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation">[docs]</a><span class="k">class</span> <span class="nc">Instrumentation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class describing the CLIP OS product (or derivative) instrumentation</span>
+<span class="sd">    properties requested by the developer in the &quot;instrumentation.toml&quot; drop-in</span>
+<span class="sd">    file at the root of the CLIP OS source tree.&quot;&quot;&quot;</span>
 
-    <span class="n">PRODUCTION</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">DEVELOPMENT</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">2</span></div>
-
-
-<div class="viewcode-block" id="instrumented_recipes"><a class="viewcode-back" href="../../../toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.instrumented_recipes">[docs]</a><span class="k">def</span> <span class="nf">instrumented_recipes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InstrumentationLevel</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Probes for existence of an &quot;instrumentation.toml&quot; drop-in file at the</span>
-<span class="sd">    root of the `repo` source tree, parses this file and return a</span>
-<span class="sd">    :py:data:`dict` of all the recipe identifiers (as keys) requested to be</span>
-<span class="sd">    instrumented with their instrumentation level as value.</span>
-
-<span class="sd">    :raise InstrumentationSpecificationError: in case of an incoherence in the</span>
-<span class="sd">        ``instrumentation.toml`` file</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">instru_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="s2">&quot;instrumentation.toml&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">instru_filepath</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">instru_filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">instru_fp</span><span class="p">:</span>
-            <span class="n">instru</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">instru_fp</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;Cannot open or parse as TOML the &quot;instrumentation.toml&quot; file</span>
-<span class="sd">            placed at the root of the repo source tree.&quot;&quot;&quot;</span><span class="p">))</span>
-
-    <span class="n">instru_file_schema</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
-        <span class="n">schema</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="n">level</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">default</span><span class="o">=</span><span class="p">[]):</span> <span class="p">[</span>
-            <span class="n">schema</span><span class="o">.</span><span class="n">Regex</span><span class="p">(</span><span class="n">RECIPE_IDENTIFIER_RE</span><span class="o">.</span><span class="n">pattern</span><span class="p">)</span>
-        <span class="p">]</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">InstrumentationLevel</span>
+    <span class="n">SCHEMA</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">)],</span>
     <span class="p">})</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">instru</span> <span class="o">=</span> <span class="n">instru_file_schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">instru</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">schema</span><span class="o">.</span><span class="n">SchemaError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;The &quot;instrumentation.toml&quot; file has an unexpected data</span>
-<span class="sd">            structure. Reason: {!s}&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
+    <span class="n">INSTRUMENTATION_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
+                                            <span class="s2">&quot;instrumentation.toml&quot;</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">InstrumentationLevel</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">recipe</span> <span class="ow">in</span> <span class="n">instru</span><span class="p">[</span><span class="n">level</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]:</span>
-            <span class="n">recipe_config_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span> <span class="s2">&quot;products&quot;</span><span class="p">,</span>
-                                              <span class="n">recipe</span><span class="p">,</span> <span class="s2">&quot;recipe.toml&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">recipe_config_path</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-                    <span class="sd">&quot;&quot;&quot;The recipe {!r} is not a valid recipe or has no</span>
-<span class="sd">                    configuration file in the products</span>
-<span class="sd">                    folder.&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">recipe</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__file_present</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INSTRUMENTATION_FILEPATH</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__file_present</span><span class="p">:</span>
+            <span class="k">return</span>
 
-    <span class="n">recipes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InstrumentationLevel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">InstrumentationLevel</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">recipe_id</span> <span class="ow">in</span> <span class="n">instru</span><span class="p">[</span><span class="n">level</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]:</span>
-            <span class="k">if</span> <span class="n">recipe_id</span> <span class="ow">in</span> <span class="n">recipes</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-                    <span class="sd">&quot;&quot;&quot;The recipe {!r} is specified more than once in the</span>
-<span class="sd">                    &quot;instrumentation.toml&quot; file.&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">recipe_id</span><span class="p">))</span>
-            <span class="n">recipes</span><span class="p">[</span><span class="n">recipe_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INSTRUMENTATION_FILEPATH</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">instru_fp</span><span class="p">:</span>
+                <span class="n">instru_data</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">instru_fp</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;Cannot open or parse as TOML the &quot;instrumentation.toml&quot; file</span>
+<span class="sd">                placed at the root of the repo source tree.&quot;&quot;&quot;</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">recipes</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__instru</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCHEMA</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">instru_data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">schema</span><span class="o">.</span><span class="n">SchemaError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InstrumentationSpecificationError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;The &quot;instrumentation.toml&quot; file has an unexpected data</span>
+<span class="sd">                structure. Reason: {!s}&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">defined</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__file_present</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instru</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defined</span><span class="p">:</span>
+            <span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instru</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">features</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 </pre></div>
 
            </div>
@@ -290,26 +270,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

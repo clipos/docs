@@ -19,34 +19,36 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -298,9 +300,13 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">working_dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">working_dir</span><span class="p">)</span>
 
+        <span class="n">workdir_qcow2_image_hardlink</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;main_disk_full.qcow2&quot;</span><span class="p">)</span>
         <span class="n">workdir_qcow2_image</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;main_disk.qcow2&quot;</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qcow2_main_disk_image</span><span class="p">,</span> <span class="n">workdir_qcow2_image_hardlink</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">([</span><span class="s2">&quot;qemu-img&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;qcow2&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qcow2_main_disk_image</span><span class="p">,</span> <span class="n">workdir_qcow2_image</span><span class="p">])</span>
+            <span class="n">run</span><span class="p">([</span><span class="s2">&quot;qemu-img&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;qcow2&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;main_disk_full.qcow2&quot;</span><span class="p">,</span> <span class="n">workdir_qcow2_image</span><span class="p">])</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
                 <span class="sd">&quot;&quot;&quot;The specified QCOW2 image file ({!r}) for the virtual</span>
@@ -353,8 +359,41 @@
             <span class="n">xmlfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">xmlnetwork</span><span class="p">)</span>
 
         <span class="c1"># Do we have a TPM emulator installed? (i.e. is swtpm in $PATH?)</span>
-        <span class="n">is_swtpm_usable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s1">&#39;swtpm&#39;</span><span class="p">))</span>
+        <span class="n">is_swtpm_present</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s1">&#39;swtpm&#39;</span><span class="p">))</span>
         <span class="n">tpm_support_xmlhunk</span> <span class="o">=</span> <span class="s2">&quot;&lt;tpm model=&#39;tpm-tis&#39;&gt;&lt;backend type=&#39;emulator&#39; version=&#39;2.0&#39;&gt;&lt;/backend&gt;&lt;/tpm&gt;&quot;</span>
+
+        <span class="c1"># We require libvirt &gt;= 4.5.0 to get swtpm working, check the current</span>
+        <span class="c1"># libvirt version:</span>
+        <span class="n">_int_libvirt_version</span> <span class="o">=</span> <span class="n">libvirt</span><span class="o">.</span><span class="n">getVersion</span><span class="p">()</span>
+        <span class="c1"># According to libvirt docs, getVersion() returns the libvirt version</span>
+        <span class="c1"># as an integer x where x = 1000000*major + 1000*minor + release.</span>
+        <span class="c1"># Compare versions with a more Pythonic way (tuples):</span>
+        <span class="n">libvirt_version</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">_int_libvirt_version</span> <span class="o">//</span> <span class="mi">1000000</span><span class="p">),</span>        <span class="c1"># major</span>
+            <span class="p">((</span><span class="n">_int_libvirt_version</span> <span class="o">//</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">),</span>  <span class="c1"># minor</span>
+            <span class="p">(</span><span class="n">_int_libvirt_version</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">),</span>            <span class="c1"># release</span>
+        <span class="p">)</span>
+        <span class="n">libvirt_version_supports_swtpm</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">libvirt_version</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">is_swtpm_usable</span> <span class="o">=</span> <span class="n">is_swtpm_present</span> <span class="ow">and</span> <span class="n">libvirt_version_supports_swtpm</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_swtpm_usable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_swtpm_present</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;swtpm (libtpms-based TPM emulator) could not be found in</span>
+<span class="sd">                    PATH but is required by libvirt for the TPM emulation.&quot;&quot;&quot;</span>
+                <span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">libvirt_version_supports_swtpm</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;Your libvirt version is too old to support swtpm</span>
+<span class="sd">                    (libtpms-based TPM emulator): libvirt 4.5.0 at least is</span>
+<span class="sd">                    required but your libvirt version is currently</span>
+<span class="sd">                    {libvirt_version}.&quot;&quot;&quot;</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">libvirt_version</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">libvirt_version</span><span class="p">]),</span>
+                <span class="p">))</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;TPM cannot be emulated: falling back to launch a libvirt</span>
+<span class="sd">                virtual machine without any emulated TPM.&quot;&quot;&quot;</span><span class="p">))</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">libvirt_domain_xml_template</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xmlfile</span><span class="p">:</span>
             <span class="n">xmlcontents</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -504,26 +543,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
