@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development and debug</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#effect-of-instrumentation-features">Effect of instrumentation features</a></li>
@@ -275,6 +276,9 @@ systemd-coredump to allow kernel produce core dump files.</p>
 <strong>debuggable-kernel</strong>.</p>
 </div>
 </li>
+<li><p><strong>test-update:</strong> In addition to the normal build, create everything required
+to test updates. This creates a second build with the same content but a
+higher version.</p></li>
 </ul>
 </div>
 </div>

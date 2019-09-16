@@ -156,6 +156,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development and debug</a></li>
 </ul>
@@ -805,15 +806,29 @@ session lifetime.</p>
 <ul>
 <li><p>Atomic, in-background and non-intrusive upgrade mechanism using A/B
 partitions (similar to Android or ChromeOS).</p>
-<div class="notice admonition">
+<div class="tip admonition">
 <p class="admonition-title">Status</p>
-<p>In progress (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
 <li><p>Fallback version available in case of unpredicted failure or bug.</p>
-<div class="notice admonition">
+<div class="tip admonition">
 <p class="admonition-title">Status</p>
-<p>In progress (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+</div>
+</li>
+<li><p>Update transport protection:</p>
+<p>Transport using TLS 1.2 or 1.3 only, with pinned root CA certificate.</p>
+<div class="tip admonition">
+<p class="admonition-title">Status</p>
+<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+</div>
+</li>
+<li><p>Update integrity protection and verification:</p>
+<p>Signed updates using <a class="reference external" href="https://jedisct1.github.io/minisign/">minisign</a>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Status</p>
+<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
 <li><p>Supports updating both the system and other environments.</p>
@@ -822,29 +837,13 @@ partitions (similar to Android or ChromeOS).</p>
 <p>Not started.</p>
 </div>
 </li>
-<li><p>Update transport protection:</p>
-<div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
-</div>
-</li>
-<li><p>Update integrity protection and verification:</p>
-<ul class="simple">
-<li><p>Transport using TLS 1.3 only, with pinned server or root CA certificates.</p></li>
-<li><p>Signed updates.</p></li>
-</ul>
-<div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
-</div>
-</li>
-<li><p>Detailed update signature key compromise impact.</p>
-<div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
-</div>
-</li>
 <li><p>Rollback protection.</p>
+<div class="warning admonition">
+<p class="admonition-title">Status</p>
+<p>Not started.</p>
+</div>
+</li>
+<li><p>Server-side channel and version selection for delivery to clients.</p>
 <div class="warning admonition">
 <p class="admonition-title">Status</p>
 <p>Not started.</p>
@@ -1178,7 +1177,7 @@ secret.</p>
 <div class="section" id="assets-summary">
 <h2>Assets summary<a class="headerlink" href="#assets-summary" title="Permalink to this headline">¶</a></h2>
 <p>Here is a list of all the assets to protect with their protection level:</p>
-<table class="colwidths-given docutils align-center">
+<table class="colwidths-given docutils align-default">
 <colgroup>
 <col style="width: 63%" />
 <col style="width: 13%" />
@@ -1218,7 +1217,7 @@ secret.</p>
 <td><p>✘</p></td>
 <td><p>✔</p></td>
 </tr>
-<tr class="row-odd"><td><p>Linux kernel command line <a class="footnote-reference brackets" href="#cmdline" id="id4">1</a></p></td>
+<tr class="row-odd"><td><p>Linux kernel command line <a class="footnote-reference brackets" href="#cmdline" id="id6">1</a></p></td>
 <td><p>✔</p></td>
 <td><p>✘</p></td>
 <td><p>✔</p></td>
@@ -1291,7 +1290,7 @@ secret.</p>
 </tbody>
 </table>
 <dl class="footnote brackets">
-<dt class="label" id="cmdline"><span class="brackets"><a class="fn-backref" href="#id4">1</a></span></dt>
+<dt class="label" id="cmdline"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>The Linux kernel command line holds the DM-Verity root hash of
 the system partition.</p>
 </dd>

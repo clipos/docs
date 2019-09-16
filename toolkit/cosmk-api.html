@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../clipos/security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
 </ul>
@@ -250,7 +251,7 @@ launched without super-user privileges.</p>
 <p>cosmk: The CLIP OS (and derivatives) build tool</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.__main__.main">
-<code class="descclassname">clipostoolkit.cosmk.__main__.</code><code class="descname">main</code><span class="sig-paren">(</span><em>as_module=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/__main__.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.__main__.main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.__main__.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">as_module=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/__main__.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.__main__.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function of the cosmk command-line utility.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -265,7 +266,7 @@ launched without super-user privileges.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.__main__.sudo_ourselves">
-<code class="descclassname">clipostoolkit.cosmk.__main__.</code><code class="descname">sudo_ourselves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/__main__.html#sudo_ourselves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.__main__.sudo_ourselves" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.__main__.</code><code class="sig-name descname">sudo_ourselves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/__main__.html#sudo_ourselves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.__main__.sudo_ourselves" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace the current process by recalling the same command that
 originated the current process (using <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code>) but by calling it
 through <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.
@@ -295,7 +296,7 @@ which can be overwritten by Sudo for safety reasons).</p>
 package.</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.commons.is_tty_attached">
-<code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">is_tty_attached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#is_tty_attached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.is_tty_attached" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.commons.</code><code class="sig-name descname">is_tty_attached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#is_tty_attached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.is_tty_attached" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the current process is attached to a TTY (<em>i.e.</em> if both
 <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> are TTY).</p>
 <dl class="field-list simple">
@@ -307,7 +308,7 @@ package.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.commons.line">
-<code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">line</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.commons.</code><code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rewrap a message by stripping the unneeded indentation, removing leading
 and trailing whitespaces and joining all the lines into one unique text
 line.</p>
@@ -328,7 +329,7 @@ line.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.commons.linux_version">
-<code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">linux_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#linux_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.linux_version" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.commons.</code><code class="sig-name descname">linux_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#linux_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.linux_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current Linux kernel version under the form of a 3-tuple of
 int (<em>e.g.</em> on a <code class="docutils literal notranslate"><span class="pre">4.16.12-1-ARCH</span></code> Linux kernel, this function will return
 the tuple <code class="xref py py-data docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">16,</span> <span class="pre">12)</span></code>).</p>
@@ -345,7 +346,7 @@ a Linux kernel or if the kernel version string is unparseable</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.commons.rewrap">
-<code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">rewrap</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#rewrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.rewrap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.commons.</code><code class="sig-name descname">rewrap</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#rewrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.rewrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rewrap a message by stripping the unneeded indentation and removing
 leading and trailing whitespaces.</p>
 <dl class="field-list simple">
@@ -357,7 +358,7 @@ leading and trailing whitespaces.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.commons.run">
-<code class="descclassname">clipostoolkit.cosmk.commons.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd</em>, <em>terminal=False</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>stdouterr=None</em>, <em>timeout=None</em>, <em>check=True</em>, <em>outside_of_virtualenv=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.commons.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">cmd</em>, <em class="sig-param">terminal=False</em>, <em class="sig-param">stdout=None</em>, <em class="sig-param">stderr=None</em>, <em class="sig-param">stdouterr=None</em>, <em class="sig-param">timeout=None</em>, <em class="sig-param">check=True</em>, <em class="sig-param">outside_of_virtualenv=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/commons.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.commons.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the <code class="docutils literal notranslate"><span class="pre">submodule.run</span></code> function with capture of the output
 streams (<code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code> or both streams interlaced as one).</p>
 <dl class="field-list simple">
@@ -408,7 +409,7 @@ the value of the <code class="docutils literal notranslate"><span class="pre">VI
 within <code class="xref py py-mod docutils literal notranslate"><span class="pre">cosmk.__main__</span></code>.</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.completion.features_for_action">
-<code class="descclassname">clipostoolkit.cosmk.completion.</code><code class="descname">features_for_action</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#features_for_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.features_for_action" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.completion.</code><code class="sig-name descname">features_for_action</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#features_for_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.features_for_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of recipe feature names which provide the given action
 name.</p>
 <dl class="field-list simple">
@@ -423,7 +424,7 @@ name.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.completion.product_completer">
-<code class="descclassname">clipostoolkit.cosmk.completion.</code><code class="descname">product_completer</code><span class="sig-paren">(</span><em>prefix</em>, <em>parsed_args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#product_completer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.product_completer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.completion.</code><code class="sig-name descname">product_completer</code><span class="sig-paren">(</span><em class="sig-param">prefix</em>, <em class="sig-param">parsed_args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#product_completer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.product_completer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all the products available in the current repo source
 tree.</p>
 <dl class="field-list simple">
@@ -435,7 +436,7 @@ tree.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.completion.recipe_completer">
-<code class="descclassname">clipostoolkit.cosmk.completion.</code><code class="descname">recipe_completer</code><span class="sig-paren">(</span><em>prefix</em>, <em>parsed_args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#recipe_completer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.recipe_completer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.completion.</code><code class="sig-name descname">recipe_completer</code><span class="sig-paren">(</span><em class="sig-param">prefix</em>, <em class="sig-param">parsed_args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/completion.html#recipe_completer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.completion.recipe_completer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all the recipes available in the current repo source
 tree that would be appropriate regarding the current parsed arguments from
 the <code class="xref py py-func docutils literal notranslate"><span class="pre">main()</span></code> function of <code class="docutils literal notranslate"><span class="pre">cosmk</span></code>.</p>
@@ -453,7 +454,7 @@ the <code class="xref py py-func docutils literal notranslate"><span class="pre"
 <code class="docutils literal notranslate"><span class="pre">runc</span></code>.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.container.Container">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.container.</code><code class="descname">Container</code><span class="sig-paren">(</span><em>name</em>, <em>rootfs</em>, <em>hostname=None</em>, <em>readonly_root=False</em>, <em>shared_host_netns=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.container.</code><code class="sig-name descname">Container</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">rootfs</em>, <em class="sig-param">hostname=None</em>, <em class="sig-param">readonly_root=False</em>, <em class="sig-param">shared_host_netns=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Overly-simplified Linux OCI container abstraction with wrappers around
 the <code class="docutils literal notranslate"><span class="pre">runc</span></code> runtime for the command execution methods.</p>
@@ -483,17 +484,17 @@ being snapshotted into a reusable container squashfs image).</p>
 </div>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.container.Container.OCI_SPECS_VERSION">
-<code class="descname">OCI_SPECS_VERSION</code><em class="property"> = (1, 0, 0)</em><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.OCI_SPECS_VERSION" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">OCI_SPECS_VERSION</code><em class="property"> = (1, 0, 0)</em><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.OCI_SPECS_VERSION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.container.Container.RUNTIME_WORKING_DIR_REPO_SUBPATH">
-<code class="descname">RUNTIME_WORKING_DIR_REPO_SUBPATH</code><em class="property"> = 'run/containers'</em><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RUNTIME_WORKING_DIR_REPO_SUBPATH</code><em class="property"> = 'run/containers'</em><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.container.Container.mountpoints">
-<code class="descname">mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.mountpoints" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>This list does not include the root mountpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -502,9 +503,9 @@ being snapshotted into a reusable container squashfs image).</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.container.Container.required_mountpoints">
-<code class="descname">required_mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.required_mountpoints" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">required_mountpoints</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.required_mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual required default system mountpoints (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">/proc</span></code>,
 <code class="docutils literal notranslate"><span class="pre">/dev</span></code>, etc.) for the container to run properly.</p>
 <dl class="field-list simple">
@@ -516,7 +517,7 @@ being snapshotted into a reusable container squashfs image).</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.Container.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shortcut function to run a single command in this container (a
 session will be instanciated temporarily just for this command).</p>
 <dl class="field-list simple">
@@ -528,7 +529,7 @@ session will be instanciated temporarily just for this command).</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.Container.session">
-<code class="descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.session" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#Container.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.session" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a session from this container in order to be able to call
 multiple commands on the same container instance and/or snapshotting
 the container contents into a squashfs image reusable by the
@@ -546,9 +547,9 @@ suitable directory.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.container.Container.unshared_namespaces">
-<code class="descname">unshared_namespaces</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.unshared_namespaces" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">unshared_namespaces</code><a class="headerlink" href="#clipostoolkit.cosmk.container.Container.unshared_namespaces" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
@@ -560,7 +561,7 @@ suitable directory.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.container.ContainerDeviceBinding">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.container.</code><code class="descname">ContainerDeviceBinding</code><span class="sig-paren">(</span><em>host_device</em>, <em>container_device=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.container.</code><code class="sig-name descname">ContainerDeviceBinding</code><span class="sig-paren">(</span><em class="sig-param">host_device</em>, <em class="sig-param">container_device=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Device node binding for a container that can be output as a dict for the
 runc JSON spec.</p>
@@ -574,7 +575,7 @@ See: &lt;<a class="reference external" href="https://github.com/opencontainers/r
 </div>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerDeviceBinding.as_dict">
-<code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.as_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return this container device binding as a dict ready to be
 JSON-ified for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
 <dl class="field-list simple">
@@ -586,7 +587,7 @@ JSON-ified for the runc <code class="docutils literal notranslate"><span class="
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerDeviceBinding.cgroup_authorization_dict">
-<code class="descname">cgroup_authorization_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.cgroup_authorization_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.cgroup_authorization_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cgroup_authorization_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerDeviceBinding.cgroup_authorization_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerDeviceBinding.cgroup_authorization_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the device cgroup authorization dict structure ready to be
 JSON-ified for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
 <dl class="field-list simple">
@@ -600,13 +601,13 @@ JSON-ified for the runc <code class="docutils literal notranslate"><span class="
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.container.ContainerMountpoint">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.container.</code><code class="descname">ContainerMountpoint</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>type=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerMountpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.container.</code><code class="sig-name descname">ContainerMountpoint</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">target</em>, <em class="sig-param">type=None</em>, <em class="sig-param">options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerMountpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerMountpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Mountpoint for a container (with the destination path within the
 container rootfs) that can be output as a dict for the runc JSON spec.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerMountpoint.as_dict">
-<code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerMountpoint.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerMountpoint.as_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerMountpoint.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerMountpoint.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return this container mountpoint as a dict ready to be JSON-ified
 for the runc <code class="docutils literal notranslate"><span class="pre">config.json</span></code> specification.</p>
 <dl class="field-list simple">
@@ -620,12 +621,12 @@ for the runc <code class="docutils literal notranslate"><span class="pre">config
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.container.ContainerSession">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.container.</code><code class="descname">ContainerSession</code><span class="sig-paren">(</span><em>container</em>, <em>bundle_dir</em>, <em>runc_container_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.container.</code><code class="sig-name descname">ContainerSession</code><span class="sig-paren">(</span><em class="sig-param">container</em>, <em class="sig-param">bundle_dir</em>, <em class="sig-param">runc_container_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Session of a container instance.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerSession.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>command</em>, <em>cwd='/'</em>, <em>env=None</em>, <em>terminal=False</em>, <em>user=(0</em>, <em>0)</em>, <em>stdout=None</em>, <em>stderr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">cwd='/'</em>, <em class="sig-param">env=None</em>, <em class="sig-param">terminal=False</em>, <em class="sig-param">user=(0</em>, <em class="sig-param">0)</em>, <em class="sig-param">stdout=None</em>, <em class="sig-param">stderr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command in this container session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -652,7 +653,7 @@ the standard error output of the process run in the container</p></li>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.container.ContainerSession.snapshot">
-<code class="descname">snapshot</code><span class="sig-paren">(</span><em>squashfs_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.snapshot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">snapshot</code><span class="sig-paren">(</span><em class="sig-param">squashfs_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/container.html#ContainerSession.snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.container.ContainerSession.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Snapshot the rootfs of this container</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -669,14 +670,14 @@ the standard error output of the process run in the container</p></li>
 <p>CLIP OS toolkit exceptions</p>
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.ContainerSnapshotError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">ContainerSnapshotError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ContainerSnapshotError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ContainerSnapshotError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">ContainerSnapshotError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ContainerSnapshotError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ContainerSnapshotError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a container sesssion snapshotting fails.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.CosmkEnvironmentError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">CosmkEnvironmentError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#CosmkEnvironmentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.CosmkEnvironmentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">CosmkEnvironmentError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#CosmkEnvironmentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.CosmkEnvironmentError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when the runtime environment does not meet the
 requirements to run properly (<em>e.g.</em> a system utility command is
@@ -685,7 +686,7 @@ missing).</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.CosmkError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">CosmkError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#CosmkError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">CosmkError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#CosmkError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Base exception for all the other cosmk related exceptions. This
 exception can also be raised when the error is unknown or unhandled by the
@@ -694,7 +695,7 @@ tool.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">InstrumentationSpecificationError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#InstrumentationSpecificationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">InstrumentationSpecificationError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#InstrumentationSpecificationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.InstrumentationSpecificationError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when the “instrumentation.toml” drop-in file is badly
 formatted or has unexpected content.</p>
@@ -702,7 +703,7 @@ formatted or has unexpected content.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.ProductPropertiesError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">ProductPropertiesError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ProductPropertiesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ProductPropertiesError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">ProductPropertiesError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ProductPropertiesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ProductPropertiesError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a product has a bad “properties.toml”
 definition.</p>
@@ -710,7 +711,7 @@ definition.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.ProjectInRepoSourceTreeInUncleanState">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">ProjectInRepoSourceTreeInUncleanState</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ProjectInRepoSourceTreeInUncleanState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ProjectInRepoSourceTreeInUncleanState" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">ProjectInRepoSourceTreeInUncleanState</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#ProjectInRepoSourceTreeInUncleanState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.ProjectInRepoSourceTreeInUncleanState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a project within the CLIP OS repo source tree is
 not in a clean state (<em>e.g.</em> unstaged elements).</p>
@@ -718,21 +719,21 @@ not in a clean state (<em>e.g.</em> unstaged elements).</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.RecipeActionError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">RecipeActionError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RecipeActionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RecipeActionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">RecipeActionError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RecipeActionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RecipeActionError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a recipe has a bad “recipe.toml” definition.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.RecipeConfigurationError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">RecipeConfigurationError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RecipeConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RecipeConfigurationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">RecipeConfigurationError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RecipeConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RecipeConfigurationError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a recipe has a bad “recipe.toml” definition.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.RepoSourceTreeManifestParsingError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">RepoSourceTreeManifestParsingError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RepoSourceTreeManifestParsingError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RepoSourceTreeManifestParsingError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">RepoSourceTreeManifestParsingError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#RepoSourceTreeManifestParsingError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.RepoSourceTreeManifestParsingError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a <code class="docutils literal notranslate"><span class="pre">repo</span></code> manifest file has an unexpected XML
 structure or cannot be parsed as valid XML.</p>
@@ -740,7 +741,7 @@ structure or cannot be parsed as valid XML.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.SdkBootstrapError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">SdkBootstrapError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkBootstrapError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkBootstrapError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">SdkBootstrapError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkBootstrapError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkBootstrapError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when an error occurs while bootstrapping a SDK
 image.</p>
@@ -748,14 +749,14 @@ image.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.SdkError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">SdkError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">SdkError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when an error occurs inside a SDK container.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.SdkNotFoundError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">SdkNotFoundError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkNotFoundError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">SdkNotFoundError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SdkNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SdkNotFoundError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a target requires a SDK which cannot be found
 because it has not been bootstrap (<em>i.e.</em> built) yet.</p>
@@ -763,7 +764,7 @@ because it has not been bootstrap (<em>i.e.</em> built) yet.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.SystemCommandError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">SystemCommandError</code><span class="sig-paren">(</span><em>command</em>, <em>reason=None</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>stdouterr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SystemCommandError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">SystemCommandError</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">reason=None</em>, <em class="sig-param">stdout=None</em>, <em class="sig-param">stderr=None</em>, <em class="sig-param">stdouterr=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#SystemCommandError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.SystemCommandError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when a system command (such as <code class="docutils literal notranslate"><span class="pre">mount(8)</span></code> or
 <code class="docutils literal notranslate"><span class="pre">losetup(8)</span></code>) fails. Reason should be provided as arguments to the
@@ -772,7 +773,7 @@ exception.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.UnexpectedRepoSourceTreeStructure">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">UnexpectedRepoSourceTreeStructure</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#UnexpectedRepoSourceTreeStructure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.UnexpectedRepoSourceTreeStructure" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">UnexpectedRepoSourceTreeStructure</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#UnexpectedRepoSourceTreeStructure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.UnexpectedRepoSourceTreeStructure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when the repo directory structure does not match what
 is expected or when the “.repo” directory cannot be found in the underlying
@@ -781,11 +782,10 @@ directory tree of the current working directory.</p>
 
 <dl class="exception">
 <dt id="clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError">
-<em class="property">exception </em><code class="descclassname">clipostoolkit.cosmk.exceptions.</code><code class="descname">VirtualizedEnvironmentError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#VirtualizedEnvironmentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">clipostoolkit.cosmk.exceptions.</code><code class="sig-name descname">VirtualizedEnvironmentError</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/exceptions.html#VirtualizedEnvironmentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.exceptions.CosmkError" title="clipostoolkit.cosmk.exceptions.CosmkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.exceptions.CosmkError</span></code></a></p>
 <p>Exception raised when an operation on a virtualized environment (<em>e.g.</em>
-a <cite>libvirt</cite> “domain”, a network configuration made by <cite>libvirt</cite>, <em>etc.</em>)
-cannot be pursued or has failed.</p>
+a <cite>libvirt</cite> “domain”) cannot be pursued or has failed.</p>
 </dd></dl>
 
 </div>
@@ -795,29 +795,29 @@ cannot be pursued or has failed.</p>
 <p>These recipe features act like traits for <code class="docutils literal notranslate"><span class="pre">recipe.Recipe</span></code>’s.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeBundleFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeBundleFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeBundleFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeBundleFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for bundling (<em>e.g.</em> making a tar archive or a squashfs
 image from any previous result of another recipe) whole or parts of the
 final recipe target.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'bundle'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'bundle'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'bundle'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'bundle'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'bundle': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'bundle': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeBundleFeature.bundle">
-<code class="descname">bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeBundleFeature.bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.bundle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeBundleFeature.bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeBundleFeature.bundle" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -829,28 +829,28 @@ final recipe target.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeConfigureFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeConfigureFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeConfigureFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeConfigureFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for configuring root trees built during a recipe root
 feature</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'configure'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'configure'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'configure'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'configure'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'configure': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'root': Regex('^[^\\s/]+/[^\\s/]+$'), 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'configure': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'root': Regex('^[^\\s/]+/[^\\s/]+$'), 'steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeConfigureFeature.configure">
-<code class="descname">configure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeConfigureFeature.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.configure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">configure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeConfigureFeature.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeConfigureFeature.configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>TODO</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -863,7 +863,7 @@ feature</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Recipe feature meta-class</p>
 <dl class="field-list simple">
@@ -889,22 +889,22 @@ directly. Use a subclass of this metaclass.</p>
 </div>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = '&lt;meta-feature&gt;'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = '&lt;meta-feature&gt;'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeFeature.replace_placeholders">
-<code class="descname">replace_placeholders</code><span class="sig-paren">(</span><em>s</em>, <em>sdk_context=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature.replace_placeholders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.replace_placeholders" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">replace_placeholders</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">sdk_context=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeFeature.replace_placeholders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeFeature.replace_placeholders" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace the placeholders of a given string <cite>s</cite> and return a
 copy of this string.</p>
 <dl class="field-list simple">
@@ -918,28 +918,28 @@ copy of this string.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeRootFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeRootFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for building rootfs from sources and binary packages.
 Provides the ‘run’ attribute for development and debug.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'build', 'image', 'run'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'build', 'image', 'run'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'root'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'root'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'root': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'build_steps': [&lt;class 'str'&gt;], 'image_steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'sdk': Regex('^[^\\s/]+/[^\\s/]+$'), 'root': {Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'build_steps': [&lt;class 'str'&gt;], 'image_steps': And([&lt;class 'str'&gt;], &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.build">
-<code class="descname">build</code><span class="sig-paren">(</span><em>clear_cache=False</em>, <em>clear_previous_build=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.build" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param">clear_cache=False</em>, <em class="sig-param">clear_previous_build=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a root tree for this recipe from sources and binary packages
 cache.</p>
 <dl class="field-list simple">
@@ -959,7 +959,7 @@ result has to be cleared</p></li>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.image">
-<code class="descname">image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a root tree for this recipe only from binary packages cache
 and without any build-time dependency.</p>
 <dl class="field-list simple">
@@ -971,7 +971,7 @@ and without any build-time dependency.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeRootFeature.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeRootFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeRootFeature.run" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -983,28 +983,28 @@ and without any build-time dependency.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeSdkFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeSdkFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for creating and proposing SDK objects to other
 features.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'bootstrap', 'run', 'sdk'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'bootstrap', 'run', 'sdk'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'sdk'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'sdk'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'runtime': {'additional_capabilities': [&lt;class 'str'&gt;], 'additional_device_bindings': [&lt;class 'str'&gt;], 'cwd': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'prelude_commands': [&lt;class 'str'&gt;], 'postlude_commands': [&lt;class 'str'&gt;], Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'writable_assets_dirs_at_build': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]}, 'bootstrap': {'rootfs_archive': &lt;class 'str'&gt;, Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': [&lt;class 'str'&gt;]}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'runtime': {'additional_capabilities': [&lt;class 'str'&gt;], 'additional_device_bindings': [&lt;class 'str'&gt;], 'cwd': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'prelude_commands': [&lt;class 'str'&gt;], 'postlude_commands': [&lt;class 'str'&gt;], Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'writable_assets_dirs_at_build': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]}, 'bootstrap': {'rootfs_archive': &lt;class 'str'&gt;, Optional('env'): {Regex('^[a-zA-Z\\_][a-zA-Z0-9\\_]*$'): &lt;class 'str'&gt;}, 'steps': [&lt;class 'str'&gt;]}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.bootstrap">
-<code class="descname">bootstrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.bootstrap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">bootstrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.bootstrap" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1014,7 +1014,7 @@ features.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">command=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSdkFeature.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.run" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1022,9 +1022,9 @@ features.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeSdkFeature.sdk">
-<code class="descname">sdk</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.sdk" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">sdk</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSdkFeature.sdk" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.sdk.Sdk" title="clipostoolkit.cosmk.sdk.Sdk"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sdk</span></code></a></p>
@@ -1036,40 +1036,40 @@ features.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeSignatureFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeSignatureFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSignatureFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSignatureFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeSignatureFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeSignatureFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSignatureFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for XXX</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeSignatureFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'sign'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSignatureFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'sign'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeSignatureFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.features.</code><code class="descname">RecipeVirtualizedEnvironmentFeature</code><span class="sig-paren">(</span><em>recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.features.</code><code class="sig-name descname">RecipeVirtualizedEnvironmentFeature</code><span class="sig-paren">(</span><em class="sig-param">recipe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#clipostoolkit.cosmk.features.RecipeFeature" title="clipostoolkit.cosmk.features.RecipeFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.features.RecipeFeature</span></code></a></p>
 <p>Recipe feature for creating, running and cleaning virtualized
 environment created from other recipe feature results.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES">
-<code class="descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'create', 'destroy', 'spawn'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FEATURED_ATTRIBUTES</code><em class="property"> = {'create', 'destroy', 'spawn'}</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.FEATURED_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.NAME">
-<code class="descname">NAME</code><em class="property"> = 'virt'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.NAME" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">NAME</code><em class="property"> = 'virt'</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.NAME" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'virt': {'xml_domain_template': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'xml_network_template': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'ovmf_code': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'ovmf_vars_template': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'qcow2_main_disk_image': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'virt': {'xml_domain_template': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'ovmf_code': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'ovmf_vars_template': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;), 'qcow2_main_disk_image': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)}, &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>destroy_preexisting=False</em>, <em>spawn_virt_manager_console=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">destroy_preexisting=False</em>, <em class="sig-param">spawn_virt_manager_console=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.create" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1079,7 +1079,7 @@ environment created from other recipe feature results.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.destroy">
-<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1089,7 +1089,7 @@ environment created from other recipe feature results.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.spawn">
-<code class="descname">spawn</code><span class="sig-paren">(</span><em>destroy_preexisting=False</em>, <em>spawn_virt_manager_console=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.spawn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.spawn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">spawn</code><span class="sig-paren">(</span><em class="sig-param">destroy_preexisting=False</em>, <em class="sig-param">spawn_virt_manager_console=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/features.html#RecipeVirtualizedEnvironmentFeature.spawn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.spawn" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1097,9 +1097,9 @@ environment created from other recipe feature results.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment">
-<code class="descname">virtualized_environment</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">virtualized_environment</code><a class="headerlink" href="#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">VirtualizedEnvironment</span></code></a></p>
@@ -1117,7 +1117,7 @@ environment created from other recipe feature results.</p>
 or <code class="docutils literal notranslate"><span class="pre">mksquashfs</span></code>.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.fs.LoopDevice">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">LoopDevice</code><span class="sig-paren">(</span><em>backfile</em>, <em>device=None</em>, <em>readonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#LoopDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.LoopDevice" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">LoopDevice</code><span class="sig-paren">(</span><em class="sig-param">backfile</em>, <em class="sig-param">device=None</em>, <em class="sig-param">readonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#LoopDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.LoopDevice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Simple loop device object abstraction that can be used as a context
 manager.</p>
@@ -1125,7 +1125,7 @@ manager.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.fs.OverlayfsMount">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">OverlayfsMount</code><span class="sig-paren">(</span><em>mergeddir</em>, <em>lowerdir</em>, <em>upperdir=None</em>, <em>workdir=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#OverlayfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.OverlayfsMount" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">OverlayfsMount</code><span class="sig-paren">(</span><em class="sig-param">mergeddir</em>, <em class="sig-param">lowerdir</em>, <em class="sig-param">upperdir=None</em>, <em class="sig-param">workdir=None</em>, <em class="sig-param">options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#OverlayfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.OverlayfsMount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Simple overlayfs mountpoint object abstraction that can be used as a
 context manager to mount an overlayfs onto a given mountpoint.</p>
@@ -1133,7 +1133,7 @@ context manager to mount an overlayfs onto a given mountpoint.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.fs.SquashfsMount">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">SquashfsMount</code><span class="sig-paren">(</span><em>squashfile</em>, <em>mountpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#SquashfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.SquashfsMount" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">SquashfsMount</code><span class="sig-paren">(</span><em class="sig-param">squashfile</em>, <em class="sig-param">mountpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#SquashfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.SquashfsMount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Simple squashfs mountpoint object abstraction that can be used as a
 context manager to mount squashfs files onto a given mountpoint.</p>
@@ -1141,7 +1141,7 @@ context manager to mount squashfs files onto a given mountpoint.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.fs.TmpfsMount">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">TmpfsMount</code><span class="sig-paren">(</span><em>mountpoint</em>, <em>**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#TmpfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.TmpfsMount" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">TmpfsMount</code><span class="sig-paren">(</span><em class="sig-param">mountpoint</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#TmpfsMount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.TmpfsMount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Simple tmpfs mountpoint object abstraction that can be used as a
 context manager to mount a tmpfs mountpoint.</p>
@@ -1149,7 +1149,7 @@ context manager to mount a tmpfs mountpoint.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.close_loop">
-<code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">close_loop</code><span class="sig-paren">(</span><em>device</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#close_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.close_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">close_loop</code><span class="sig-paren">(</span><em class="sig-param">device</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#close_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.close_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close a loopback device node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1160,7 +1160,7 @@ context manager to mount a tmpfs mountpoint.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.loop_devices">
-<code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">loop_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#loop_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.loop_devices" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">loop_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#loop_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.loop_devices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the loop devices currently set up on the system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1171,7 +1171,7 @@ context manager to mount a tmpfs mountpoint.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.mksquashfs">
-<code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">mksquashfs</code><span class="sig-paren">(</span><em>squashfs_file</em>, <em>source_dir</em>, <em>compressor='gzip'</em>, <em>store_xattrs=True</em>, <em>detect_sparse_files=True</em>, <em>compress_inode_table=False</em>, <em>compress_data_blocks=False</em>, <em>compress_fragment_blocks=False</em>, <em>compress_extended_attributes=False</em>, <em>find_duplicates=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#mksquashfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.mksquashfs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">mksquashfs</code><span class="sig-paren">(</span><em class="sig-param">squashfs_file</em>, <em class="sig-param">source_dir</em>, <em class="sig-param">compressor='gzip'</em>, <em class="sig-param">store_xattrs=True</em>, <em class="sig-param">detect_sparse_files=True</em>, <em class="sig-param">compress_inode_table=False</em>, <em class="sig-param">compress_data_blocks=False</em>, <em class="sig-param">compress_fragment_blocks=False</em>, <em class="sig-param">compress_extended_attributes=False</em>, <em class="sig-param">find_duplicates=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#mksquashfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.mksquashfs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the command mksquashfs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1196,7 +1196,7 @@ context manager to mount a tmpfs mountpoint.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.fs.open_loop">
-<code class="descclassname">clipostoolkit.cosmk.fs.</code><code class="descname">open_loop</code><span class="sig-paren">(</span><em>backfile</em>, <em>device=None</em>, <em>readonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#open_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.open_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.fs.</code><code class="sig-name descname">open_loop</code><span class="sig-paren">(</span><em class="sig-param">backfile</em>, <em class="sig-param">device=None</em>, <em class="sig-param">readonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/fs.html#open_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.fs.open_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a loopback device given a back-file and eventually the device node
 to use.</p>
 <dl class="field-list simple">
@@ -1212,7 +1212,7 @@ to use.</p>
 <p>CLIP OS toolkit healthcheck functions and stuff</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.healthcheck.check_system">
-<code class="descclassname">clipostoolkit.cosmk.healthcheck.</code><code class="descname">check_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/healthcheck.html#check_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.healthcheck.check_system" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.healthcheck.</code><code class="sig-name descname">check_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/healthcheck.html#check_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.healthcheck.check_system" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1222,7 +1222,7 @@ to use.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.healthcheck.healthcheck">
-<code class="descclassname">clipostoolkit.cosmk.healthcheck.</code><code class="descname">healthcheck</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/healthcheck.html#healthcheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.healthcheck.healthcheck" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.healthcheck.</code><code class="sig-name descname">healthcheck</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/healthcheck.html#healthcheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.healthcheck.healthcheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify that the current system has everything to make work properly
 cosmk. This verifies that the Linux kernel version and the available
 features are , the availability of the required system utilities, the filesystem
@@ -1242,24 +1242,24 @@ this mountpoint, etc.</p>
 <p>Module handling product instrumentation logic.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.instrumentation.Instrumentation">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.instrumentation.</code><code class="descname">Instrumentation</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/instrumentation.html#Instrumentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.instrumentation.</code><code class="sig-name descname">Instrumentation</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/instrumentation.html#Instrumentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class describing the CLIP OS product (or derivative) instrumentation
 properties requested by the developer in the “instrumentation.toml” drop-in
 file at the root of the CLIP OS source tree.</p>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH">
-<code class="descname">INSTRUMENTATION_FILEPATH</code><em class="property"> = '/home/tim/projects/clipos/clipos/instrumentation.toml'</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">INSTRUMENTATION_FILEPATH</code><em class="property"> = '/home/tim/projects/clipos/clipos/instrumentation.toml'</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.INSTRUMENTATION_FILEPATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'features': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]})</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'features': [And(&lt;class 'str'&gt;, &lt;built-in function len&gt;)]})</em><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.defined">
-<code class="descname">defined</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.defined" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">defined</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.defined" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
@@ -1267,9 +1267,9 @@ file at the root of the CLIP OS source tree.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.instrumentation.Instrumentation.features">
-<code class="descname">features</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.features" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">features</code><a class="headerlink" href="#clipostoolkit.cosmk.instrumentation.Instrumentation.features" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</p>
@@ -1285,7 +1285,7 @@ file at the root of the CLIP OS source tree.</p>
 <p>Logging utility functions and helpers.</p>
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.critical">
-<code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.critical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.log.</code><code class="sig-name descname">critical</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.critical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.CRITICAL</span></code> level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1299,7 +1299,7 @@ file at the root of the CLIP OS source tree.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.debug">
-<code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.debug" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.log.</code><code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.debug" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.DEBUG</span></code> level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1313,7 +1313,7 @@ file at the root of the CLIP OS source tree.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.error">
-<code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">error</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.log.</code><code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.ERROR</span></code> level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1327,7 +1327,7 @@ file at the root of the CLIP OS source tree.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.info">
-<code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">info</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.log.</code><code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.INFO</span></code> level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1341,7 +1341,7 @@ file at the root of the CLIP OS source tree.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.log.warn">
-<code class="descclassname">clipostoolkit.cosmk.log.</code><code class="descname">warn</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.warn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.log.</code><code class="sig-name descname">warn</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/log.html#warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.log.warn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log a message as <code class="xref py py-data docutils literal notranslate"><span class="pre">logging.WARNING</span></code> level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1361,7 +1361,7 @@ file at the root of the CLIP OS source tree.</p>
 utilities available through PATH.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.mount.Mountpoint">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">Mountpoint</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>type=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#Mountpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.Mountpoint" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.mount.</code><code class="sig-name descname">Mountpoint</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">target</em>, <em class="sig-param">type=None</em>, <em class="sig-param">options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#Mountpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.Mountpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Mountpoint object that can be used as a context manager for
 contextualized mounts.</p>
@@ -1369,7 +1369,7 @@ contextualized mounts.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.mount.mount">
-<code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">mount</code><span class="sig-paren">(</span><em>source</em>, <em>target</em>, <em>type=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.mount" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.mount.</code><code class="sig-name descname">mount</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">target</em>, <em class="sig-param">type=None</em>, <em class="sig-param">options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.mount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mount function with usage reflecting the traditional UNIX <code class="docutils literal notranslate"><span class="pre">mount(8)</span></code>
 command line utility.</p>
 <dl class="field-list simple">
@@ -1384,7 +1384,7 @@ command line utility.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.mount.mounts">
-<code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">mounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#mounts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.mounts" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.mount.</code><code class="sig-name descname">mounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#mounts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.mounts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the list of the mount points in the current mnt namespace. In
 other words, it basically wraps the contents of the pseudo-file
 <code class="docutils literal notranslate"><span class="pre">/proc/mounts</span></code> into an easily manipulable Python object.</p>
@@ -1397,7 +1397,7 @@ other words, it basically wraps the contents of the pseudo-file
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.mount.umount">
-<code class="descclassname">clipostoolkit.cosmk.mount.</code><code class="descname">umount</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#umount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.umount" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.mount.</code><code class="sig-name descname">umount</code><span class="sig-paren">(</span><em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/mount.html#umount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.mount.umount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unmount function with usage reflecting the traditional UNIX
 <code class="docutils literal notranslate"><span class="pre">umount(8)</span></code> command line utility.</p>
 <dl class="field-list simple">
@@ -1418,13 +1418,13 @@ other words, it basically wraps the contents of the pseudo-file
 <span id="clipostoolkit-cosmk-privileges-module"></span><h2><code class="docutils literal notranslate"><span class="pre">clipostoolkit.cosmk.privileges</span></code> module<a class="headerlink" href="#module-clipostoolkit.cosmk.privileges" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.privileges.ElevatedPrivileges">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.privileges.</code><code class="descname">ElevatedPrivileges</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#ElevatedPrivileges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.ElevatedPrivileges" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.privileges.</code><code class="sig-name descname">ElevatedPrivileges</code><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#ElevatedPrivileges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.ElevatedPrivileges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Context manager class to be used to elevate privileges locally within
 Python code of this cosmk module.</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.privileges.ElevatedPrivileges.possible">
-<em class="property">static </em><code class="descname">possible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#ElevatedPrivileges.possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.ElevatedPrivileges.possible" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">possible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#ElevatedPrivileges.possible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.ElevatedPrivileges.possible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluates if the privileges elevation is possible by doing a
 RES{U,G}ID flip over.</p>
 <dl class="field-list simple">
@@ -1438,7 +1438,7 @@ RES{U,G}ID flip over.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.privileges.init_lower_privileges">
-<code class="descclassname">clipostoolkit.cosmk.privileges.</code><code class="descname">init_lower_privileges</code><span class="sig-paren">(</span><em>uid</em>, <em>gid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#init_lower_privileges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.init_lower_privileges" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.privileges.</code><code class="sig-name descname">init_lower_privileges</code><span class="sig-paren">(</span><em class="sig-param">uid</em>, <em class="sig-param">gid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/privileges.html#init_lower_privileges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.privileges.init_lower_privileges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to lower privileges (<em>i.e.</em> change <em>real</em> and <em>effective</em> UIDs
 and GIDs to UID/GID values given as arguments) intended to be called at
 cosmk module importation.</p>
@@ -1455,7 +1455,7 @@ cosmk module importation.</p>
 <p>Module for products manageable with cosmk</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.product.Product">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.product.</code><code class="descname">Product</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/product.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.product.Product" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.product.</code><code class="sig-name descname">Product</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/product.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.product.Product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Class describing a CLIP OS (or one of its derivative) product.</p>
 <dl class="field-list simple">
@@ -1465,12 +1465,12 @@ cosmk module importation.</p>
 </dl>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.product.Product.SCHEMA">
-<code class="descname">SCHEMA</code><em class="property"> = Schema({'version': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;, &lt;function parse&gt;), &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.SCHEMA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SCHEMA</code><em class="property"> = Schema({'version': And(&lt;class 'str'&gt;, &lt;built-in function len&gt;, &lt;function parse&gt;), &lt;class 'str'&gt;: &lt;class 'object'&gt;})</em><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.SCHEMA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.product.Product.tainted_version">
-<code class="descname">tainted_version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.tainted_version" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">tainted_version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.tainted_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the version of this product as defined in its
 “properties.toml” file but “tainted” with a build flag
 <code class="docutils literal notranslate"><span class="pre">instrumentation</span></code> if at least one instrumentation feature is
@@ -1484,7 +1484,7 @@ enabled.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.product.Product.validate_properties">
-<code class="descname">validate_properties</code><span class="sig-paren">(</span><em>prop_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/product.html#Product.validate_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.validate_properties" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate_properties</code><span class="sig-paren">(</span><em class="sig-param">prop_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/product.html#Product.validate_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.validate_properties" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate the data structure of the product properties file
 (“properties.toml”) and reorganize them into a “flattened”
 <code class="xref py py-data docutils literal notranslate"><span class="pre">dict</span></code>.</p>
@@ -1502,9 +1502,9 @@ schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.product.Product.version">
-<code class="descname">version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.version" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">version</code><a class="headerlink" href="#clipostoolkit.cosmk.product.Product.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the version of this product as defined in its
 “properties.toml” file.</p>
 <dl class="field-list simple">
@@ -1522,7 +1522,7 @@ schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product
 <p>The CLIP OS and derivatives recipe abstraction</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.recipe.Recipe">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.recipe.</code><code class="descname">Recipe</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/recipe.html#Recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.recipe.</code><code class="sig-name descname">Recipe</code><span class="sig-paren">(</span><em class="sig-param">identifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/recipe.html#Recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A CLIP OS toolkit recipe.</p>
 <dl class="field-list simple">
@@ -1530,9 +1530,9 @@ schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product
 <dd class="field-odd"><p><strong>identifier</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the identifier of the recipe (<em>e.g.</em> <code class="docutils literal notranslate"><span class="pre">clipos/core</span></code>)</p>
 </dd>
 </dl>
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.cache_subpath">
-<code class="descname">cache_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.cache_subpath" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">cache_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.cache_subpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the cache directory sub-path within the repo root.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1541,9 +1541,9 @@ schema (<a class="reference internal" href="#clipostoolkit.cosmk.product.Product
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.meta_schema">
-<code class="descname">meta_schema</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.meta_schema" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">meta_schema</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.meta_schema" title="Permalink to this definition">¶</a></dt>
 <dd><p>The schema for which the recipe configuration file (<code class="docutils literal notranslate"><span class="pre">recipe.toml</span></code>)
 needs to comply for common part (<em>i.e.</em> the part of the configuration
 common to all the recipes)</p>
@@ -1554,9 +1554,9 @@ common to all the recipes)</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.out_subpath">
-<code class="descname">out_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.out_subpath" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">out_subpath</code><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.out_subpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the output directory sub-path within the repo root.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1567,7 +1567,7 @@ common to all the recipes)</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.recipe.Recipe.validate_metaconfig">
-<code class="descname">validate_metaconfig</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/recipe.html#Recipe.validate_metaconfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.validate_metaconfig" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate_metaconfig</code><span class="sig-paren">(</span><em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/recipe.html#Recipe.validate_metaconfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.recipe.Recipe.validate_metaconfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate the data structure of the recipe configuration file
 (“recipe.toml”) which do not concern any feature implementation (<em>i.e.</em>
 the “meta” part of the recipe configuration).</p>
@@ -1597,13 +1597,13 @@ tool but this module provide enhanced functionalities to those provided only by
 <code class="docutils literal notranslate"><span class="pre">repo</span></code>.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">CommentedTreeBuilder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#CommentedTreeBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="sig-name descname">CommentedTreeBuilder</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#CommentedTreeBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/xml.etree.elementtree.html#xml.etree.ElementTree.TreeBuilder" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xml.etree.ElementTree.TreeBuilder</span></code></a></p>
 <p>An <code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree.TreeBuilder</span></code> subclass that retains XML
 comments.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder.comment">
-<code class="descname">comment</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#CommentedTreeBuilder.comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder.comment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">comment</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#CommentedTreeBuilder.comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.CommentedTreeBuilder.comment" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1615,7 +1615,7 @@ comments.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships">
-<code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">fix_output_nodes_ownerships</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#fix_output_nodes_ownerships"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="sig-name descname">fix_output_nodes_ownerships</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#fix_output_nodes_ownerships"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -1625,7 +1625,7 @@ comments.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.is_repo_root">
-<code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">is_repo_root</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#is_repo_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.is_repo_root" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="sig-name descname">is_repo_root</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#is_repo_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.is_repo_root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the given path contains a “.repo” directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1636,7 +1636,7 @@ comments.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.repo_root_path">
-<code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">repo_root_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#repo_root_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.repo_root_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="sig-name descname">repo_root_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#repo_root_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.repo_root_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Guess the repo root directory path from the current working directory or
 (if the CWD does not seem to be a repo root) from the location of the
 cosmk module.</p>
@@ -1649,7 +1649,7 @@ cosmk module.</p>
 
 <dl class="function">
 <dt id="clipostoolkit.cosmk.sourcetree.snapshot_manifest">
-<code class="descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="descname">snapshot_manifest</code><span class="sig-paren">(</span><em>use_branches=False</em>, <em>snapshot_groups=None</em>, <em>no_snapshot_groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#snapshot_manifest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.snapshot_manifest" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clipostoolkit.cosmk.sourcetree.</code><code class="sig-name descname">snapshot_manifest</code><span class="sig-paren">(</span><em class="sig-param">use_branches=False</em>, <em class="sig-param">snapshot_groups=None</em>, <em class="sig-param">no_snapshot_groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sourcetree.html#snapshot_manifest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sourcetree.snapshot_manifest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Snapshot the <code class="docutils literal notranslate"><span class="pre">repo</span></code> manifest file to the current state of the CLIP OS
 source tree.</p>
 <dl class="field-list simple">
@@ -1665,12 +1665,12 @@ source tree.</p>
 <p>CLIP OS toolkit SDK class</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.sdk.Sdk">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.sdk.</code><code class="descname">Sdk</code><span class="sig-paren">(</span><em>recipe</em>, <em>cwd='/'</em>, <em>env=None</em>, <em>additional_capabilities=None</em>, <em>additional_device_bindings=None</em>, <em>prelude_commands=None</em>, <em>postlude_commands=None</em>, <em>writable_assets_dirs_at_build=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.sdk.</code><code class="sig-name descname">Sdk</code><span class="sig-paren">(</span><em class="sig-param">recipe</em>, <em class="sig-param">cwd='/'</em>, <em class="sig-param">env=None</em>, <em class="sig-param">additional_capabilities=None</em>, <em class="sig-param">additional_device_bindings=None</em>, <em class="sig-param">prelude_commands=None</em>, <em class="sig-param">postlude_commands=None</em>, <em class="sig-param">writable_assets_dirs_at_build=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A CLIP OS toolkit SDK</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sdk.Sdk.bootstrap">
-<code class="descname">bootstrap</code><span class="sig-paren">(</span><em>rootfs_archive</em>, <em>steps=None</em>, <em>env=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.bootstrap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">bootstrap</code><span class="sig-paren">(</span><em class="sig-param">rootfs_archive</em>, <em class="sig-param">steps=None</em>, <em class="sig-param">env=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.bootstrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bootstrap a SDK from the rootfs archive file specified in the recipe
 configuration file with the suitable script in order to produce a
 squashfs image that can be run as a container with the <code class="docutils literal notranslate"><span class="pre">Container</span></code>
@@ -1684,7 +1684,7 @@ class.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sdk.Sdk.container_mountpoints">
-<code class="descname">container_mountpoints</code><span class="sig-paren">(</span><em>action_name</em>, <em>action_targeted_recipe</em>, <em>writable_repo_root=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.container_mountpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.container_mountpoints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">container_mountpoints</code><span class="sig-paren">(</span><em class="sig-param">action_name</em>, <em class="sig-param">action_targeted_recipe</em>, <em class="sig-param">writable_repo_root=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.container_mountpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.container_mountpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of <code class="docutils literal notranslate"><span class="pre">ContainerMountpoint</span></code>’s corresponding to the
 mountpoints of the SDK context.</p>
 <dl class="field-list simple">
@@ -1696,7 +1696,7 @@ mountpoints of the SDK context.</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sdk.Sdk.interactive_run">
-<code class="descname">interactive_run</code><span class="sig-paren">(</span><em>recipe</em>, <em>command=None</em>, <em>env=None</em>, <em>shared_host_netns=True</em>, <em>writable_repo_root=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.interactive_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.interactive_run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">interactive_run</code><span class="sig-paren">(</span><em class="sig-param">recipe</em>, <em class="sig-param">command=None</em>, <em class="sig-param">env=None</em>, <em class="sig-param">shared_host_netns=True</em>, <em class="sig-param">writable_repo_root=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.interactive_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.interactive_run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command interactively in this SDK, in the given recipe
 context</p>
 <dl class="field-list simple">
@@ -1708,7 +1708,7 @@ context</p>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sdk.Sdk.session">
-<code class="descname">session</code><span class="sig-paren">(</span><em>action_name</em>, <em>action_targeted_recipe</em>, <em>writable_repo_root=False</em>, <em>terminal=False</em>, <em>env=None</em>, <em>shared_host_netns=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.session" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">session</code><span class="sig-paren">(</span><em class="sig-param">action_name</em>, <em class="sig-param">action_targeted_recipe</em>, <em class="sig-param">writable_repo_root=False</em>, <em class="sig-param">terminal=False</em>, <em class="sig-param">env=None</em>, <em class="sig-param">shared_host_netns=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#Sdk.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.Sdk.session" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an SDK session from this SDK recipe in order to be able to
 spawn the appropriate container (<em>i.e.</em> for treating a given <cite>action</cite>
 for a given <cite>recipe</cite> of the product <cite>product</cite>) and pass commands to it.</p>
@@ -1726,12 +1726,12 @@ context manager.</p>
 
 <dl class="class">
 <dt id="clipostoolkit.cosmk.sdk.SdkSession">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.sdk.</code><code class="descname">SdkSession</code><span class="sig-paren">(</span><em>container_session</em>, <em>cwd</em>, <em>env</em>, <em>terminal=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#SdkSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.SdkSession" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.sdk.</code><code class="sig-name descname">SdkSession</code><span class="sig-paren">(</span><em class="sig-param">container_session</em>, <em class="sig-param">cwd</em>, <em class="sig-param">env</em>, <em class="sig-param">terminal=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#SdkSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.SdkSession" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Session of a SDK container.</p>
 <dl class="method">
 <dt id="clipostoolkit.cosmk.sdk.SdkSession.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#SdkSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.SdkSession.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/sdk.html#SdkSession.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.sdk.SdkSession.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command in this SDK container session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1749,17 +1749,15 @@ context manager.</p>
 management of the CLIP OS virtualized environments with <cite>libvirt</cite>.</p>
 <dl class="class">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment">
-<em class="property">class </em><code class="descclassname">clipostoolkit.cosmk.virt.</code><code class="descname">VirtualizedEnvironment</code><span class="sig-paren">(</span><em>name</em>, <em>libvirt_domain_xml_template</em>, <em>libvirt_network_xml_template</em>, <em>qcow2_main_disk_image</em>, <em>ovmf_firmware_code</em>, <em>ovmf_firmware_vars_template</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clipostoolkit.cosmk.virt.</code><code class="sig-name descname">VirtualizedEnvironment</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">libvirt_domain_xml_template</em>, <em class="sig-param">qcow2_main_disk_image</em>, <em class="sig-param">ovmf_firmware_code</em>, <em class="sig-param">ovmf_firmware_vars_template</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A CLIP OS recipe virtualized environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name to give to the libvirt domain and network</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the name to give to the libvirt domain</p></li>
 <li><p><strong>libvirt_domain_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
 use as the XML domain definition for the libvirt domain</p></li>
-<li><p><strong>libvirt_network_xml_template</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the XML template file to
-use as the XML network definition for the libvirt network</p></li>
 <li><p><strong>qcow2_main_disk_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the main disk image (formatted
 as QCOW2) to use for the libvirt domain to be created</p></li>
 <li><p><strong>ovmf_firmware_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the path to the OVMF firmware code to be
@@ -1771,12 +1769,12 @@ UEFI vars template file to be used by the libvirt domain</p></li>
 </dl>
 <dl class="attribute">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH">
-<code class="descname">RUNTIME_WORKING_DIR_REPO_SUBPATH</code><em class="property"> = 'run/virtual_machines'</em><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RUNTIME_WORKING_DIR_REPO_SUBPATH</code><em class="property"> = 'run/virtual_machines'</em><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>start=False</em>, <em>destroy_preexisting=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">start=False</em>, <em class="sig-param">destroy_preexisting=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the virtualized environment in libvirt with its dedicated
 working directory in the sub-path in repo (defined in
 <a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">RUNTIME_WORKING_DIR_REPO_SUBPATH</span></code></a>).</p>
@@ -1789,7 +1787,7 @@ working directory in the sub-path in repo (defined in
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.destroy">
-<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the virtualized environment in libvirt with its dedicated
 working directory in the sub-path in repo (defined in
 <a class="reference internal" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH" title="clipostoolkit.cosmk.virt.VirtualizedEnvironment.RUNTIME_WORKING_DIR_REPO_SUBPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">RUNTIME_WORKING_DIR_REPO_SUBPATH</span></code></a>).</p>
@@ -1802,7 +1800,7 @@ working directory in the sub-path in repo (defined in
 
 <dl class="method">
 <dt id="clipostoolkit.cosmk.virt.VirtualizedEnvironment.spawn_virt_manager_console">
-<code class="descname">spawn_virt_manager_console</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.spawn_virt_manager_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.spawn_virt_manager_console" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">spawn_virt_manager_console</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#VirtualizedEnvironment.spawn_virt_manager_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.VirtualizedEnvironment.spawn_virt_manager_console" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spawn a virtual machine manager console for the virtual machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1811,24 +1809,6 @@ working directory in the sub-path in repo (defined in
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="function">
-<dt id="clipostoolkit.cosmk.virt.guess_external_netiface_name">
-<code class="descclassname">clipostoolkit.cosmk.virt.</code><code class="descname">guess_external_netiface_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clipostoolkit/cosmk/virt.html#guess_external_netiface_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clipostoolkit.cosmk.virt.guess_external_netiface_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tries to retrieve the name of the external network interface. To do so,
-this function select the first returned network interface whose name
-suggest to be an Ethernet or wireless interface (<code class="docutils literal notranslate"><span class="pre">en*</span></code>, <code class="docutils literal notranslate"><span class="pre">eth*</span></code> or
-<code class="docutils literal notranslate"><span class="pre">wl*</span></code>) and which appears to be connected to a full-duplex medium.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError" title="clipostoolkit.cosmk.exceptions.VirtualizedEnvironmentError"><strong>VirtualizedEnvironmentError</strong></a> – if no external network inteface could
-be guessed and no dummy value has been provided</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </div>

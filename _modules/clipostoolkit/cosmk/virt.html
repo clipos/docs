@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clipos/update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/development.html">Development and debug</a></li>
 </ul>
@@ -200,38 +201,12 @@
 <span class="kn">from</span> <span class="nn">.sourcetree</span> <span class="k">import</span> <span class="n">repo_root_path</span>
 
 
-<div class="viewcode-block" id="guess_external_netiface_name"><a class="viewcode-back" href="../../../toolkit/cosmk-api.html#clipostoolkit.cosmk.virt.guess_external_netiface_name">[docs]</a><span class="k">def</span> <span class="nf">guess_external_netiface_name</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Tries to retrieve the name of the external network interface. To do so,</span>
-<span class="sd">    this function select the first returned network interface whose name</span>
-<span class="sd">    suggest to be an Ethernet or wireless interface (``en*``, ``eth*`` or</span>
-<span class="sd">    ``wl*``) and which appears to be connected to a full-duplex medium.</span>
-
-<span class="sd">    :raise VirtualizedEnvironmentError: if no external network inteface could</span>
-<span class="sd">        be guessed and no dummy value has been provided</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">iface_name_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(en|eth|wl).*&#39;</span><span class="p">)</span>
-    <span class="n">if_stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">psutil</span><span class="o">.</span><span class="n">_common</span><span class="o">.</span><span class="n">snicstats</span><span class="p">]</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">net_if_stats</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">iface</span><span class="p">,</span> <span class="n">stats</span> <span class="ow">in</span> <span class="n">if_stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">iface_name_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">iface</span><span class="p">):</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">duplex</span> <span class="o">==</span> <span class="n">psutil</span><span class="o">.</span><span class="n">NIC_DUPLEX_FULL</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">iface</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;Could not guess any potential external network interface on</span>
-<span class="sd">            the current system.&quot;&quot;&quot;</span><span class="p">))</span></div>
-
-
 <div class="viewcode-block" id="VirtualizedEnvironment"><a class="viewcode-back" href="../../../toolkit/cosmk-api.html#clipostoolkit.cosmk.virt.VirtualizedEnvironment">[docs]</a><span class="k">class</span> <span class="nc">VirtualizedEnvironment</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A CLIP OS recipe virtualized environment.</span>
 
-<span class="sd">    :param name: the name to give to the libvirt domain and network</span>
+<span class="sd">    :param name: the name to give to the libvirt domain</span>
 <span class="sd">    :param libvirt_domain_xml_template: the path to the XML template file to</span>
 <span class="sd">        use as the XML domain definition for the libvirt domain</span>
-<span class="sd">    :param libvirt_network_xml_template: the path to the XML template file to</span>
-<span class="sd">        use as the XML network definition for the libvirt network</span>
 <span class="sd">    :param qcow2_main_disk_image: the path to the main disk image (formatted</span>
 <span class="sd">        as QCOW2) to use for the libvirt domain to be created</span>
 <span class="sd">    :param ovmf_firmware_code: the path to the OVMF firmware code to be</span>
@@ -249,7 +224,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">libvirt_domain_xml_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                 <span class="n">libvirt_network_xml_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">qcow2_main_disk_image</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">ovmf_firmware_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">ovmf_firmware_vars_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -272,7 +246,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">emulator_binpath</span> <span class="o">=</span> <span class="n">emulator_binpath</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qcow2_main_disk_image</span> <span class="o">=</span> <span class="n">qcow2_main_disk_image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">libvirt_domain_xml_template</span> <span class="o">=</span> <span class="n">libvirt_domain_xml_template</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">libvirt_network_xml_template</span> <span class="o">=</span> <span class="n">libvirt_network_xml_template</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ovmf_firmware_code_filepath</span> <span class="o">=</span> <span class="n">ovmf_firmware_code</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ovmf_firmware_vars_template_filepath</span> <span class="o">=</span> <span class="n">ovmf_firmware_vars_template</span>
 
@@ -341,23 +314,6 @@
         <span class="c1"># first start of the domain</span>
         <span class="n">workdir_ovmf_vars</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;OVMF_vars.fd&quot;</span><span class="p">)</span>
 
-        <span class="c1"># create the libvirt domain and network XML files for the VM definition</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">libvirt_network_xml_template</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xmlfile</span><span class="p">:</span>
-            <span class="n">xmlcontents</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">xmltpl</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">xmlcontents</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">external_iface</span> <span class="o">=</span> <span class="n">guess_external_netiface_name</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">:</span>
-            <span class="n">external_iface</span> <span class="o">=</span> <span class="s1">&#39;nonguessable&#39;</span>
-        <span class="n">network_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">xmlnetwork</span> <span class="o">=</span> <span class="n">xmltpl</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">network_name</span><span class="p">,</span>
-            <span class="n">external_iface</span><span class="o">=</span><span class="n">external_iface</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">workdir_network_xml</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;network.xml&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">workdir_network_xml</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xmlfile</span><span class="p">:</span>
-            <span class="n">xmlfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">xmlnetwork</span><span class="p">)</span>
-
         <span class="c1"># Do we have a TPM emulator installed? (i.e. is swtpm in $PATH?)</span>
         <span class="n">is_swtpm_present</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s1">&#39;swtpm&#39;</span><span class="p">))</span>
         <span class="n">tpm_support_xmlhunk</span> <span class="o">=</span> <span class="s2">&quot;&lt;tpm model=&#39;tpm-tis&#39;&gt;&lt;backend type=&#39;emulator&#39; version=&#39;2.0&#39;&gt;&lt;/backend&gt;&lt;/tpm&gt;&quot;</span>
@@ -405,7 +361,6 @@
             <span class="n">ovmf_firmware_vars_template_filepath</span><span class="o">=</span><span class="n">workdir_ovmf_vars_template</span><span class="p">,</span>
             <span class="n">qemu_x86_64_binpath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">emulator_binpath</span><span class="p">,</span>
             <span class="n">qcow2_main_disk_image_filepath</span><span class="o">=</span><span class="n">workdir_qcow2_image</span><span class="p">,</span>
-            <span class="n">network_name</span><span class="o">=</span><span class="n">network_name</span><span class="p">,</span>
             <span class="n">tpm_support</span><span class="o">=</span><span class="p">(</span><span class="n">tpm_support_xmlhunk</span> <span class="k">if</span> <span class="n">is_swtpm_usable</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">workdir_domain_xml</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;domain.xml&quot;</span><span class="p">)</span>
@@ -422,18 +377,11 @@
         <span class="k">if</span> <span class="n">destroy_preexisting</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
 
-        <span class="c1"># check for no name collision with preexisting domains or networks:</span>
+        <span class="c1"># check for no name collision with preexisting domains:</span>
         <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">listAllDomains</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
                     <span class="sd">&quot;&quot;&quot;A libvirt domain with the name {!r} already exists</span>
-<span class="sd">                    within the system libvirt daemon and cannot be removed</span>
-<span class="sd">                    (either because not requested or still active).&quot;&quot;&quot;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">listAllNetworks</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">network</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-                    <span class="sd">&quot;&quot;&quot;A libvirt network with the name {!r} already exists</span>
 <span class="sd">                    within the system libvirt daemon and cannot be removed</span>
 <span class="sd">                    (either because not requested or still active).&quot;&quot;&quot;</span><span class="p">)</span>
                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
@@ -448,17 +396,6 @@
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">working_dir</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_populate_libvirt_domain_working_dir</span><span class="p">(</span><span class="n">working_dir</span><span class="p">)</span>
-
-            <span class="n">network_xml_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;network.xml&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">network_xml_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xmlfile</span><span class="p">:</span>
-                <span class="n">libvirt_network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">networkDefineXML</span><span class="p">(</span><span class="n">xmlfile</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">libvirt_network</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">VirtualizedEnvironmentError</span><span class="p">(</span><span class="n">line</span><span class="p">(</span>
-                    <span class="sd">&quot;&quot;&quot;Could not create the libvirt network from the network</span>
-<span class="sd">                    XML file description ({!r}).&quot;&quot;&quot;</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">network_xml_file</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
-                <span class="n">libvirt_network</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>  <span class="c1"># start the network</span>
 
             <span class="n">domain_xml_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;domain.xml&quot;</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">domain_xml_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xmlfile</span><span class="p">:</span>
@@ -502,12 +439,6 @@
                     <span class="n">libvirt</span><span class="o">.</span><span class="n">VIR_DOMAIN_UNDEFINE_SNAPSHOTS_METADATA</span> <span class="o">|</span>
                     <span class="n">libvirt</span><span class="o">.</span><span class="n">VIR_DOMAIN_UNDEFINE_NVRAM</span>
                 <span class="p">)</span>
-                <span class="k">break</span>
-        <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">listAllNetworks</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">network</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">network</span><span class="o">.</span><span class="n">isActive</span><span class="p">():</span>
-                    <span class="n">network</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
-                <span class="n">network</span><span class="o">.</span><span class="n">undefine</span><span class="p">()</span>
                 <span class="k">break</span>
         <span class="n">working_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_root_path</span><span class="p">(),</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">RUNTIME_WORKING_DIR_REPO_SUBPATH</span><span class="p">,</span>

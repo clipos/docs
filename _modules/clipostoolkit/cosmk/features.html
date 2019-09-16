@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../clipos/update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../clipos/development.html">Development and debug</a></li>
 </ul>
@@ -626,7 +627,6 @@
     <span class="n">SCHEMA</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">Schema</span><span class="p">({</span>
         <span class="s2">&quot;virt&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;xml_domain_template&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">),</span>
-            <span class="s2">&quot;xml_network_template&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">),</span>
             <span class="s2">&quot;ovmf_code&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">),</span>
             <span class="s2">&quot;ovmf_vars_template&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">),</span>
             <span class="s2">&quot;qcow2_main_disk_image&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">len</span><span class="p">),</span>
@@ -646,9 +646,6 @@
             <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">libvirt_domain_xml_template</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;virt&quot;</span><span class="p">][</span><span class="s2">&quot;xml_domain_template&quot;</span><span class="p">],</span>
-                <span class="n">sdk_context</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-            <span class="n">libvirt_network_xml_template</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;virt&quot;</span><span class="p">][</span><span class="s2">&quot;xml_network_template&quot;</span><span class="p">],</span>
                 <span class="n">sdk_context</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
             <span class="n">qcow2_main_disk_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_placeholders</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;virt&quot;</span><span class="p">][</span><span class="s2">&quot;qcow2_main_disk_image&quot;</span><span class="p">],</span>
@@ -673,8 +670,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">info</span><span class="p">(</span><span class="s2">&quot;Interrupt the virtual machine with Control+C (SIGINT).</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span>
                  <span class="n">line</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Note: this will kill the virtual machine and cleanup</span>
-<span class="s2">                      the libvirt domain and its associated virtual</span>
-<span class="s2">                      network.&quot;&quot;&quot;</span><span class="p">))</span>
+<span class="s2">                      the libvirt domain.&quot;&quot;&quot;</span><span class="p">))</span>
             <span class="n">signal</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
             <span class="n">virtenv</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>

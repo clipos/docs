@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clipos/security.html">Security objectives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/kernel.html">Kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipos/update.html">System updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clipos/development.html">Development and debug</a></li>
 </ul>
@@ -186,7 +187,6 @@
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -235,7 +235,7 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.cache_subpath">cache_subpath (clipostoolkit.cosmk.recipe.Recipe attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.cache_subpath">cache_subpath() (clipostoolkit.cosmk.recipe.Recipe property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.ContainerDeviceBinding.cgroup_authorization_dict">cgroup_authorization_dict() (clipostoolkit.cosmk.container.ContainerDeviceBinding method)</a>
 </li>
@@ -319,7 +319,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.log.debug">debug() (in module clipostoolkit.cosmk.log)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.defined">defined (clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.defined">defined() (clipostoolkit.cosmk.instrumentation.Instrumentation property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -363,19 +363,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.features">features (clipostoolkit.cosmk.instrumentation.Instrumentation attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.instrumentation.Instrumentation.features">features() (clipostoolkit.cosmk.instrumentation.Instrumentation property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.completion.features_for_action">features_for_action() (in module clipostoolkit.cosmk.completion)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.sourcetree.fix_output_nodes_ownerships">fix_output_nodes_ownerships() (in module clipostoolkit.cosmk.sourcetree)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.virt.guess_external_netiface_name">guess_external_netiface_name() (in module clipostoolkit.cosmk.virt)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -435,7 +427,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.__main__.main">main() (in module clipostoolkit.cosmk.__main__)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.meta_schema">meta_schema (clipostoolkit.cosmk.recipe.Recipe attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.meta_schema">meta_schema() (clipostoolkit.cosmk.recipe.Recipe property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.fs.mksquashfs">mksquashfs() (in module clipostoolkit.cosmk.fs)</a>
 </li>
@@ -445,7 +437,7 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.mount.Mountpoint">Mountpoint (class in clipostoolkit.cosmk.mount)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.mountpoints">mountpoints (clipostoolkit.cosmk.container.Container attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.mountpoints">mountpoints() (clipostoolkit.cosmk.container.Container property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.mount.mounts">mounts() (in module clipostoolkit.cosmk.mount)</a>
 </li>
@@ -483,7 +475,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.out_subpath">out_subpath (clipostoolkit.cosmk.recipe.Recipe attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.recipe.Recipe.out_subpath">out_subpath() (clipostoolkit.cosmk.recipe.Recipe property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.fs.OverlayfsMount">OverlayfsMount (class in clipostoolkit.cosmk.fs)</a>
 </li>
@@ -541,7 +533,7 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.RepoSourceTreeManifestParsingError">RepoSourceTreeManifestParsingError</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.required_mountpoints">required_mountpoints (clipostoolkit.cosmk.container.Container attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.required_mountpoints">required_mountpoints() (clipostoolkit.cosmk.container.Container property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.commons.rewrap">rewrap() (in module clipostoolkit.cosmk.commons)</a>
 </li>
@@ -591,7 +583,7 @@
       </ul></li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.sdk.Sdk">Sdk (class in clipostoolkit.cosmk.sdk)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.features.RecipeSdkFeature.sdk">sdk (clipostoolkit.cosmk.features.RecipeSdkFeature attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.features.RecipeSdkFeature.sdk">sdk() (clipostoolkit.cosmk.features.RecipeSdkFeature property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.SdkBootstrapError">SdkBootstrapError</a>
 </li>
@@ -629,7 +621,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.tainted_version">tainted_version (clipostoolkit.cosmk.product.Product attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.tainted_version">tainted_version() (clipostoolkit.cosmk.product.Product property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -647,7 +639,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.exceptions.UnexpectedRepoSourceTreeStructure">UnexpectedRepoSourceTreeStructure</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.unshared_namespaces">unshared_namespaces (clipostoolkit.cosmk.container.Container attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.container.Container.unshared_namespaces">unshared_namespaces() (clipostoolkit.cosmk.container.Container property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -659,11 +651,11 @@
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.validate_properties">validate_properties() (clipostoolkit.cosmk.product.Product method)</a>
 </li>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.version">version (clipostoolkit.cosmk.product.Product attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.product.Product.version">version() (clipostoolkit.cosmk.product.Product property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment">virtualized_environment (clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature attribute)</a>
+      <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature.virtualized_environment">virtualized_environment() (clipostoolkit.cosmk.features.RecipeVirtualizedEnvironmentFeature property)</a>
 </li>
       <li><a href="toolkit/cosmk-api.html#clipostoolkit.cosmk.virt.VirtualizedEnvironment">VirtualizedEnvironment (class in clipostoolkit.cosmk.virt)</a>
 </li>
