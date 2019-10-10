@@ -116,10 +116,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Toolkit API references</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
-</ul>
 
             
           
@@ -190,30 +186,30 @@
 <p>A CLIP OS system is split into several logically separated entities:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>A <strong>bootloader</strong> and an <strong>initial EFI binary</strong> responsible for the system
-start-up.</p></li>
-<li><p>A <strong>Core</strong> responsible for system service hosting and sub environments
+<li>A <strong>bootloader</strong> and an <strong>initial EFI binary</strong> responsible for the system
+start-up.</li>
+<li>A <strong>Core</strong> responsible for system service hosting and sub environments
 (called <em>Cages</em> from now on) start-up. The <em>Core</em> is also responsible for
-the isolation and control of all interactions between those <em>Cages</em>.</p></li>
-<li><p>One or several <strong>Cages</strong> usually available as graphical sessions for users.
+the isolation and control of all interactions between those <em>Cages</em>.</li>
+<li>One or several <strong>Cages</strong> usually available as graphical sessions for users.
 Each <em>Cage</em> may host applications and documents from a specific
-confidentiality level.</p></li>
+confidentiality level.</li>
 </ul>
 </div></blockquote>
 <div class="figure align-center" id="id1" style="width: 90%">
-<span id="clipos-high-level-architecture"></span><img alt="../_images/clipos-high-level-architecture.svg" src="../_images/clipos-high-level-architecture.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">High level overview of CLIP OS components</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<span id="clipos-high-level-architecture"></span><img alt="../_images/clipos-high-level-architecture.svg" src="../_images/clipos-high-level-architecture.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">High level overview of CLIP OS components</span></p>
 </div>
 <p>The execution environment of each Cage is logically isolated from the Core and
 from all the other Cages. Interactions between a Cage and the Core is carefully
 controlled and goes through confined and unprivileged services as shown in
 <a class="reference internal" href="#clipos-cage-and-service-isolation"><span class="std std-numref">Fig. 2</span></a>.</p>
 <div class="figure align-center" id="id2" style="width: 90%">
-<span id="clipos-cage-and-service-isolation"></span><img alt="../_images/clipos-cage-and-service-isolation.svg" src="../_images/clipos-cage-and-service-isolation.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Communication channels between a Cage, the Core and the hardware</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<span id="clipos-cage-and-service-isolation"></span><img alt="../_images/clipos-cage-and-service-isolation.svg" src="../_images/clipos-cage-and-service-isolation.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Communication channels between a Cage, the Core and the hardware</span></p>
 </div>
 <p>Direct communication between Cages is forbidden. All inter-Cage interaction is
 mediated by services running in the Core.</p>
 <div class="figure align-center" id="id3" style="width: 90%">
-<span id="clipos-inter-level-interactions"></span><img alt="../_images/clipos-inter-level-interactions.svg" src="../_images/clipos-inter-level-interactions.svg" /><p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Flow of interaction required for inter-level communications</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<span id="clipos-inter-level-interactions"></span><img alt="../_images/clipos-inter-level-interactions.svg" src="../_images/clipos-inter-level-interactions.svg" /><p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Flow of interaction required for inter-level communications</span></p>
 </div>
 </div>
 </div>

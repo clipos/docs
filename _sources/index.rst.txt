@@ -28,12 +28,6 @@ architecture.
    * If you wish to adapt this project to your specific use case, please check
      out the :ref:`derive` guide.
 
-.. vim: set tw=79 ts=2 sts=2 sw=2 et:
-.. Copyright © 2018 ANSSI.
-   CLIP OS is a trademark of the French Republic.
-   Content licensed under the Open License version 2.0 as published by Etalab
-   (French task force for Open Data).
-
 .. toctree::
    :caption: CLIP OS
    :maxdepth: 2
@@ -45,12 +39,6 @@ architecture.
    clipos/update
    clipos/roadmap
    clipos/development
-
-.. vim: set tw=79 ts=2 sts=2 sw=2 et:
-.. Copyright © 2018 ANSSI.
-   CLIP OS is a trademark of the French Republic.
-   Content licensed under the Open License version 2.0 as published by Etalab
-   (French task force for Open Data).
 
 .. toctree::
    :caption: Development environment
@@ -67,11 +55,5 @@ architecture.
 
    toolkit/contribute
    toolkit/derive
-
-.. toctree::
-   :caption: Toolkit API references
-   :maxdepth: 1
-
-   toolkit/cosmk-api
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

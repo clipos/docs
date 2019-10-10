@@ -132,10 +132,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Toolkit API references</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
-</ul>
 
             
           
@@ -203,22 +199,22 @@
 <span id="id1"></span><h1>Kernel<a class="headerlink" href="#kernel" title="Permalink to this headline">¶</a></h1>
 <p>The CLIP OS kernel is based on Linux. It also integrates:</p>
 <ul class="simple">
-<li><p>existing hardening patches that are not upstream yet and that we consider
-relevant to our security model;</p></li>
-<li><p>developments made for previous CLIP OS versions that we have not upstreamed
-yet (or that cannot be);</p></li>
-<li><p>entirely new functionalities that have not been upstreamed yet (or that
-cannot be).</p></li>
+<li>existing hardening patches that are not upstream yet and that we consider
+relevant to our security model;</li>
+<li>developments made for previous CLIP OS versions that we have not upstreamed
+yet (or that cannot be);</li>
+<li>entirely new functionalities that have not been upstreamed yet (or that
+cannot be).</li>
 </ul>
 <div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <p>As the core of a hardened operating system, the CLIP OS kernel is particularly
 responsible for:</p>
 <ul class="simple">
-<li><p>providing <strong>robust security mechanisms</strong> to higher levels of the operating
-system, such as reliable isolation primitives;</p></li>
-<li><p>maintaining maximal <strong>trust in hardware resources</strong>;</p></li>
-<li><p>guaranteeing its <strong>own protection</strong> against various threats.</p></li>
+<li>providing <strong>robust security mechanisms</strong> to higher levels of the operating
+system, such as reliable isolation primitives;</li>
+<li>maintaining maximal <strong>trust in hardware resources</strong>;</li>
+<li>guaranteeing its <strong>own protection</strong> against various threats.</li>
 </ul>
 </div>
 <div class="section" id="configuration">
@@ -226,53 +222,69 @@ system, such as reliable isolation primitives;</p></li>
 <p>In this section we discuss our security-relevant configuration choices for
 the CLIP OS kernel. Before starting, it is worth mentioning that:</p>
 <ul>
-<li><p>We do our best to <strong>limit the number of kernel modules</strong>.</p>
+<li><p class="first">We do our best to <strong>limit the number of kernel modules</strong>.</p>
 <p>In other words, as many modules as possible should be built-in. Modules are
 only used when needed either for the initramfs or to ease the automation of
 the deployment of CLIP OS on multiple different machines (for the moment, we
 only target a QEMU-KVM guest). This is particularly important as module
 loading is disabled after CLIP OS startup.</p>
 </li>
-<li><p>We <strong>focus on a secure configuration</strong>. The remaining of the configuration
-is minimal and it is your job to tune it for your machines and use cases.</p></li>
-<li><p>CLIP OS only supports the x86-64 architecture for now.</p></li>
-<li><p>Running 32-bit programs is voluntarily unsupported. Should you change that
+<li><p class="first">We <strong>focus on a secure configuration</strong>. The remaining of the configuration
+is minimal and it is your job to tune it for your machines and use cases.</p>
+</li>
+<li><p class="first">CLIP OS only supports the x86-64 architecture for now.</p>
+</li>
+<li><p class="first">Running 32-bit programs is voluntarily unsupported. Should you change that
 in your custom kernel, keep in mind that it requires further attention when
-configuring it (e.g., ensure that <code class="docutils literal notranslate"><span class="pre">CONFIG_COMPAT_VDSO=n</span></code>).</p></li>
-<li><p>Many options that are not useful to us are disabled in order to cut attack
+configuring it (e.g., ensure that <code class="docutils literal notranslate"><span class="pre">CONFIG_COMPAT_VDSO=n</span></code>).</p>
+</li>
+<li><p class="first">Many options that are not useful to us are disabled in order to cut attack
 surface. As they are not all detailed below, please see
 <code class="docutils literal notranslate"><span class="pre">src/portage/clip/sys-kernel/clipos-kernel/files/config.d/blacklist</span></code> for an
-exhaustive list of the ones we <strong>explicitly</strong> disable.</p></li>
+exhaustive list of the ones we <strong>explicitly</strong> disable.</p>
+</li>
 </ul>
 <div class="section" id="general-setup">
 <h3>General setup<a class="headerlink" href="#general-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_AUDIT=y</code></dt>
+<code class="descname">CONFIG_AUDIT=y</code></dt>
 <dd><p>CLIP OS will need the auditing infrastructure.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_IKCONFIG=n</code></dt>
-<dd><p>We do not need <code class="docutils literal notranslate"><span class="pre">.config</span></code> to be available at runtime.</p>
+<code class="descname">CONFIG_IKCONFIG=n</code></dt>
+<dt>
+<code class="descname">CONFIG_IKHEADERS=n</code></dt>
+<dd><p>We do not need <code class="docutils literal notranslate"><span class="pre">.config</span></code> to be available at runtime, neither do we need
+access to kernel headers through <em>sysfs</em>.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_KALLSYMS=n</code></dt>
+<code class="descname">CONFIG_KALLSYMS=n</code></dt>
 <dd><p>Symbols are only useful for debug and attack purposes.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_EXPERT=y</code></dt>
+<code class="descname">CONFIG_USERFAULTFD=n</code></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">userfaultfd()</span></code> system call adds attack surface and can <a class="reference external" href="https://duasynt.com/blog/linux-kernel-heap-spray">make heap
+sprays easier</a>. Note
+that the <code class="docutils literal notranslate"><span class="pre">vm.unprivileged_userfaultfd</span></code> sysctl can also be used to restrict
+the use of this system call to privileged users.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_EXPERT=y</code></dt>
 <dd><p>This unlocks additional configuration options we need.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_USER_NS=n</code></dt>
+<code class="descname">CONFIG_USER_NS=n</code></dt>
 <dd><p>User namespaces can be useful for some use cases but even more to an
 attacker. We choose to disable them for the moment, but we could also enable
 them and use the <code class="docutils literal notranslate"><span class="pre">kernel.unprivileged_userns_clone</span></code> sysctl provided by
@@ -281,83 +293,93 @@ linux-hardened to disable their unprivileged use.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLUB_DEBUG=y</code></dt>
+<code class="descname">CONFIG_SLUB_DEBUG=y</code></dt>
 <dd><p>Allow allocator validation checking to be enabled.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_MERGE_DEFAULT=n</code></dt>
+<code class="descname">CONFIG_SLAB_MERGE_DEFAULT=n</code></dt>
 <dd><p>Merging SLAB caches can make heap exploitation easier.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_FREELIST_RANDOM=y</code></dt>
+<code class="descname">CONFIG_SLAB_FREELIST_RANDOM=y</code></dt>
 <dd><p>Randomize allocator freelists</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_FREELIST_HARDENED=y</code></dt>
+<code class="descname">CONFIG_SLAB_FREELIST_HARDENED=y</code></dt>
 <dd><p>Harden slab metadata</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_HARDENED=y</code></dt>
-<dd><p>Add various little checks to harden the slab allocator. <a class="reference internal" href="#linux-hardened" id="id2"><span>[linux-hardened]</span></a></p>
+<code class="descname">CONFIG_SLAB_HARDENED=y</code></dt>
+<dd><p>Add various little checks to harden the slab allocator. <a class="reference internal" href="#linux-hardened" id="id2">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_CANARY=y</code></dt>
-<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id3"><span>[linux-hardened]</span></a></p>
+<code class="descname">CONFIG_SLAB_CANARY=y</code></dt>
+<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_SANITIZE=y</code></dt>
+<code class="descname">CONFIG_SLAB_SANITIZE=y</code></dt>
 <dd><p>Zero-fill slab allocations on free to reduce risks of information leaks and
-help mitigate use-after-free vulnerabilities. <a class="reference internal" href="#linux-hardened" id="id4"><span>[linux-hardened]</span></a></p>
+help mitigate use-after-free vulnerabilities. <a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLAB_SANITIZE_VERIFY=y</code></dt>
+<code class="descname">CONFIG_SLAB_SANITIZE_VERIFY=y</code></dt>
 <dd><p>Verify that newly allocated slab allocations are zeroed to detect
-write-after-free bugs. <a class="reference internal" href="#linux-hardened" id="id5"><span>[linux-hardened]</span></a></p>
+write-after-free bugs. <a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_COMPAT_BRK=n</code></dt>
+<code class="descname">CONFIG_SHUFFLE_PAGE_ALLOCATOR=y</code></dt>
+<dd><p>Page allocator randomization is primarily a performance improvement for
+direct-mapped memory-side-cache utilization, but it does reduce the
+predictability of page allocations and thus complements
+<code class="docutils literal notranslate"><span class="pre">SLAB_FREELIST_RANDOM</span></code>. The <code class="docutils literal notranslate"><span class="pre">page_alloc.shuffle=1</span></code> parameter needs to be
+added to the kernel command line.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_COMPAT_BRK=n</code></dt>
 <dd><p>Enabling this would disable brk ASLR.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGINS=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGINS=y</code></dt>
 <dd><p>Enable GCC plugins, some of which are security-relevant; GCC 4.7 at least is
 required.</p>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y</code></dt>
 <dd><p>Instrument some kernel code to gather additional (but not
 cryptographically secure) entropy at boot time.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_STRUCTLEAK=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_STRUCTLEAK=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y</code></dt>
 <dd><p>Prevent potential information leakage by forcing zero-initialization of:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>structures on the stack containing userspace addresses;</p></li>
-<li><p>any stack variable (thus including structures) that may be passed by
-reference and has not already been explicitly initialized.</p></li>
+<li>structures on the stack containing userspace addresses;</li>
+<li>any stack variable (thus including structures) that may be passed by
+reference and has not already been explicitly initialized.</li>
 </ul>
 </div></blockquote>
 <p>This is particularly important to prevent trivial bypassing of KASLR.</p>
@@ -365,14 +387,14 @@ reference and has not already been explicitly initialized.</p></li>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_RANDSTRUCT=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_RANDSTRUCT=y</code></dt>
 <dd><p>Randomize layout of sensitive kernel structures. Exploits targeting such
 structures then require an additional information leak vulnerability.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_RANDSTRUCT_PERFORMANCE=n</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_RANDSTRUCT_PERFORMANCE=n</code></dt>
 <dd><p>Do not weaken structure randomization</p>
 </dd></dl>
 
@@ -380,7 +402,7 @@ structures then require an additional information leak vulnerability.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_ARCH_MMAP_RND_BITS=32</code></dt>
+<code class="descname">CONFIG_ARCH_MMAP_RND_BITS=32</code></dt>
 <dd><p>Use maximum number of randomized bits for the mmap base address on x86_64.
 Note that thanks to a linux-hardened patch, this also impacts the number of
 randomized bits for the stack base address.</p>
@@ -388,23 +410,23 @@ randomized bits for the stack base address.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_STACKPROTECTOR=y</code></dt>
+<code class="descname">CONFIG_STACKPROTECTOR=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_STACKPROTECTOR_STRONG=y</code></dt>
+<code class="descname">CONFIG_STACKPROTECTOR_STRONG=y</code></dt>
 <dd><p>Use <code class="docutils literal notranslate"><span class="pre">-fstack-protector-strong</span></code> for best stack canary coverage; GCC 4.9 at
 least is required.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_VMAP_STACK=y</code></dt>
+<code class="descname">CONFIG_VMAP_STACK=y</code></dt>
 <dd><p>Virtually-mapped stacks benefit from guard pages, thus making kernel stack
 overflows harder to exploit.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_REFCOUNT_FULL=y</code></dt>
+<code class="descname">CONFIG_REFCOUNT_FULL=y</code></dt>
 <dd><p>Do extensive checks on reference counting to prevent use-after-free
 conditions. Without this option, on x86, there already is a fast
 assembly-based protection based on the PaX implementation but it does not
@@ -413,7 +435,7 @@ cover all cases.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_STRICT_MODULE_RWX=y</code></dt>
+<code class="descname">CONFIG_STRICT_MODULE_RWX=y</code></dt>
 <dd><p>Enforce strict memory mappings permissions for loadable kernel modules.</p>
 </dd></dl>
 
@@ -423,23 +445,23 @@ additional layer of security:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_MODULE_SIG=y</code></dt>
+<code class="descname">CONFIG_MODULE_SIG=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_MODULE_SIG_FORCE=y</code></dt>
+<code class="descname">CONFIG_MODULE_SIG_FORCE=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_MODULE_SIG_ALL=y</code></dt>
+<code class="descname">CONFIG_MODULE_SIG_ALL=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_MODULE_SIG_SHA512=y</code></dt>
+<code class="descname">CONFIG_MODULE_SIG_SHA512=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_MODULE_SIG_HASH=&quot;sha512&quot;</code></dt>
+<code class="descname">CONFIG_MODULE_SIG_HASH=&quot;sha512&quot;</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LOCAL_INIT=n</code></dt>
-<dd><p>This option requires compiler support for <code class="docutils literal notranslate"><span class="pre">-fsanitize=local-init</span></code>, which
-is only available in Clang. <a class="reference internal" href="#linux-hardened" id="id6"><span>[linux-hardened]</span></a></p>
+<code class="descname">CONFIG_INIT_STACK_ALL=n</code></dt>
+<dd><p>This option requires compiler support that is currently only available in
+Clang.</p>
 </dd></dl>
 
 </div>
@@ -447,27 +469,27 @@ is only available in Clang. <a class="reference internal" href="#linux-hardened"
 <h3>Processor type and features<a class="headerlink" href="#processor-type-and-features" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_RETPOLINE=y</code></dt>
+<code class="descname">CONFIG_RETPOLINE=y</code></dt>
 <dd><p>Retpolines are needed to protect against Spectre v2. GCC 7.3.0 or higher is
 required.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LEGACY_VSYSCALL_NONE=y</code></dt>
+<code class="descname">CONFIG_LEGACY_VSYSCALL_NONE=y</code></dt>
 <dd><p>The vsyscall table is not required anymore by libc and is a fixed-position
 potential source of ROP gadgets.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_VSYSCALL_EMULATION=n</code></dt>
+<code class="descname">CONFIG_X86_VSYSCALL_EMULATION=n</code></dt>
 <dd><p>See above.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_MICROCODE=y</code></dt>
+<code class="descname">CONFIG_MICROCODE=y</code></dt>
 <dd><p>Needed to benefit from microcode updates and thus security fixes (e.g.,
 additional Intel pseudo-MSRs to be used by the kernel as a mitigation for
 various speculative execution vulnerabilities).</p>
@@ -475,65 +497,65 @@ various speculative execution vulnerabilities).</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_MSR=n</code></dt>
+<code class="descname">CONFIG_X86_MSR=n</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_X86_CPUID=n</code></dt>
+<code class="descname">CONFIG_X86_CPUID=n</code></dt>
 <dd><p>Enabling those features would only present userspace with more attack
 surface.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_KSM=n</code></dt>
+<code class="descname">CONFIG_KSM=n</code></dt>
 <dd><p>Enabling this feature can make cache side-channel attacks such as
 FLUSH+RELOAD much easier to carry out.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEFAULT_MMAP_MIN_ADDR=65536</code></dt>
+<code class="descname">CONFIG_DEFAULT_MMAP_MIN_ADDR=65536</code></dt>
 <dd><p>This should in particular be non-zero to prevent the exploitation of kernel
 NULL pointer bugs.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_MTRR=y</code></dt>
+<code class="descname">CONFIG_MTRR=y</code></dt>
 <dd><p>Memory Type Range Registers can make speculative execution bugs a bit harder
 to exploit.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_PAT=y</code></dt>
+<code class="descname">CONFIG_X86_PAT=y</code></dt>
 <dd><p>Page Attribute Tables are the modern equivalents of MTRRs, which we
 described above.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_ARCH_RANDOM=y</code></dt>
+<code class="descname">CONFIG_ARCH_RANDOM=y</code></dt>
 <dd><p>Enable the RDRAND instruction to benefit from a secure hardware RNG if
 supported. See <code class="docutils literal notranslate"><span class="pre">CONFIG_RANDOM_TRUST_CPU</span></code> for warnings about that.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_SMAP=y</code></dt>
+<code class="descname">CONFIG_X86_SMAP=y</code></dt>
 <dd><p>Enable Supervisor Mode Access Prevention to prevent ret2usr exploitation
 techniques.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_INTEL_UMIP=y</code></dt>
+<code class="descname">CONFIG_X86_INTEL_UMIP=y</code></dt>
 <dd><p>Enable User Mode Instruction Prevention. Note that hardware supporting this
 feature is not common yet.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_INTEL_MPX=n</code></dt>
+<code class="descname">CONFIG_X86_INTEL_MPX=n</code></dt>
 <dd><p>Intel Memory Protection Extensions add hardware assistance to memory
 protection. Compiler support is required but is deprecated in GCC 8 and will
 probably be dropped in GCC 9.</p>
@@ -541,7 +563,7 @@ probably be dropped in GCC 9.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS=n</code></dt>
+<code class="descname">CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS=n</code></dt>
 <dd><p>Memory Protection Keys are a promising feature but they are still not
 supported on current hardware.</p>
 </dd></dl>
@@ -550,15 +572,15 @@ supported on current hardware.</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECCOMP=y</code></dt>
+<code class="descname">CONFIG_SECCOMP=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_SECCOMP_FILTER=y</code></dt>
+<code class="descname">CONFIG_SECCOMP_FILTER=y</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_RANDOMIZE_BASE=y</code></dt>
+<code class="descname">CONFIG_RANDOMIZE_BASE=y</code></dt>
 <dd><p>While this may be seen as a <a class="reference external" href="https://grsecurity.net/kaslr_an_exercise_in_cargo_cult_security.php">controversial</a>
 feature, it makes sense for CLIP OS. Indeed, KASLR may be defeated thanks to
 the kernel interfaces that are available to an attacker, or through attacks
@@ -567,13 +589,13 @@ execution ones. However, CLIP OS follows the <em>defense in depth</em> principle
 and an attack surface reduction approach. Thus, the following points make
 KASLR relevant in the CLIP OS kernel:</p>
 <ul class="simple">
-<li><p>KASLR was initially designed to counter remote attacks but the strong
+<li>KASLR was initially designed to counter remote attacks but the strong
 security model of CLIP OS (e.g., no sysfs mounts in most containers,
 minimal procfs, no arbitrary code execution) makes a local attack
-more complex to carry out.</p></li>
-<li><p>STRUCTLEAK, STACKLEAK, kptr_restrict and
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_DMESG_RESTRICT</span></code> are enabled in CLIP OS.</p></li>
-<li><p>The CLIP OS kernel is custom-compiled (at least for a given deployment),
+more complex to carry out.</li>
+<li>STRUCTLEAK, STACKLEAK, kptr_restrict and
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_DMESG_RESTRICT</span></code> are enabled in CLIP OS.</li>
+<li>The CLIP OS kernel is custom-compiled (at least for a given deployment),
 its image is unreadable to all users including privileged ones and updates
 are end-to-end encrypted. This makes both the content and addresses of the
 kernel image secret. Note that, however, the production kernel image is
@@ -581,34 +603,34 @@ currently part of an EFI binary and is not encrypted, causing it to be
 accessible to a physical attacker. This will change in the future as we
 will only use the kernel included in the EFI binary to boot and then
 <em>kexec</em> to the real production kernel whose image will be located on an
-encrypted disk partition.</p></li>
-<li><p>We enable <code class="docutils literal notranslate"><span class="pre">CONFIG_PANIC_ON_OOPS</span></code> by default so that the kernel
+encrypted disk partition.</li>
+<li>We enable <code class="docutils literal notranslate"><span class="pre">CONFIG_PANIC_ON_OOPS</span></code> by default so that the kernel
 cannot recover from failed exploit attempts, thus preventing any brute
-forcing.</p></li>
-<li><p>We enable Kernel Page Table Isolation, mitigating Meltdown and potential
+forcing.</li>
+<li>We enable Kernel Page Table Isolation, mitigating Meltdown and potential
 other hardware information leakage. Variante 3a (Rogue System Register
-Read) however remains an important threat to KASLR.</p></li>
+Read) however remains an important threat to KASLR.</li>
 </ul>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_RANDOMIZE_MEMORY=y</code></dt>
+<code class="descname">CONFIG_RANDOMIZE_MEMORY=y</code></dt>
 <dd><p>Most of the above explanations stand for that feature.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_KEXEC=n</code></dt>
+<code class="descname">CONFIG_KEXEC=n</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_KEXEC_FILE=n</code></dt>
+<code class="descname">CONFIG_KEXEC_FILE=n</code></dt>
 <dd><p>Disable the <code class="docutils literal notranslate"><span class="pre">kexec()</span></code> system call to prevent an already-root attacker from
 rebooting on an untrusted kernel.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_CRASH_DUMP=n</code></dt>
+<code class="descname">CONFIG_CRASH_DUMP=n</code></dt>
 <dd><p>A crash dump can potentially provide an attacker with useful information.
 However we disabled <code class="docutils literal notranslate"><span class="pre">kexec()</span></code> syscalls above thus this configuration
 option should have no impact anyway.</p>
@@ -616,7 +638,7 @@ option should have no impact anyway.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_MODIFY_LDT_SYSCALL=n</code></dt>
+<code class="descname">CONFIG_MODIFY_LDT_SYSCALL=n</code></dt>
 <dd><p>This is not supposed to be needed by userspace applications and only
 increases the kernel attack surface.</p>
 </dd></dl>
@@ -626,7 +648,7 @@ increases the kernel attack surface.</p>
 <h3>Power management and ACPI options<a class="headerlink" href="#power-management-and-acpi-options" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_HIBERNATION=n</code></dt>
+<code class="descname">CONFIG_HIBERNATION=n</code></dt>
 <dd><p>The CLIP OS swap partition is encrypted with an ephemeral key and thus
 cannot support suspend to disk.</p>
 </dd></dl>
@@ -636,7 +658,7 @@ cannot support suspend to disk.</p>
 <h3>Firmware Drivers<a class="headerlink" href="#firmware-drivers" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_RESET_ATTACK_MITIGATION=n</code></dt>
+<code class="descname">CONFIG_RESET_ATTACK_MITIGATION=n</code></dt>
 <dd><p>In order to work properly, this mitigation requires userspace support that
 is currently not available in CLIP OS. Moreover, due to our use of Secure
 Boot, Trusted Boot and the fact that machines running CLIP OS are expected
@@ -649,14 +671,14 @@ mitigation is supposed to thwart should not be an issue.</p>
 <h3>Executable file formats / Emulations<a class="headerlink" href="#executable-file-formats-emulations" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_BINFMT_MISC=n</code></dt>
+<code class="descname">CONFIG_BINFMT_MISC=n</code></dt>
 <dd><p>We do not want our kernel to support miscellaneous binary classes. ELF
 binaries and interpreted scripts starting with a shebang are enough.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_COREDUMP=n</code></dt>
+<code class="descname">CONFIG_COREDUMP=n</code></dt>
 <dd><p>Core dumps can provide an attacker with useful information.</p>
 </dd></dl>
 
@@ -665,7 +687,7 @@ binaries and interpreted scripts starting with a shebang are enough.</p>
 <h3>Networking support<a class="headerlink" href="#networking-support" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SYN_COOKIES=y</code></dt>
+<code class="descname">CONFIG_SYN_COOKIES=y</code></dt>
 <dd><p>Enable TCP syncookies.</p>
 </dd></dl>
 
@@ -674,25 +696,25 @@ binaries and interpreted scripts starting with a shebang are enough.</p>
 <h3>Device Drivers<a class="headerlink" href="#device-drivers" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_TCG_TPM=y</code></dt>
+<code class="descname">CONFIG_TCG_TPM=y</code></dt>
 <dd><p>CLIP OS leverages the TPM to ensure <a class="reference internal" href="boot_integrity.html#trusted-boot"><span class="std std-ref">boot integrity</span></a>.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEVMEM=n</code></dt>
+<code class="descname">CONFIG_DEVMEM=n</code></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">/dev/mem</span></code> device should not be required by any user application
 nowadays.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you must enable it, at least enable <code class="docutils literal notranslate"><span class="pre">CONFIG_STRICT_DEVMEM</span></code> and
+<p class="first admonition-title">Note</p>
+<p class="last">If you must enable it, at least enable <code class="docutils literal notranslate"><span class="pre">CONFIG_STRICT_DEVMEM</span></code> and
 <code class="docutils literal notranslate"><span class="pre">CONFIG_IO_STRICT_DEVMEM</span></code> to restrict at best access to this device.</p>
 </div>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEVKMEM=n</code></dt>
+<code class="descname">CONFIG_DEVKMEM=n</code></dt>
 <dd><p>This virtual device is only useful for debug purposes and is very dangerous
 as it allows direct kernel memory writing (particularly useful for
 rootkits).</p>
@@ -700,27 +722,27 @@ rootkits).</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LEGACY_PTYS=n</code></dt>
+<code class="descname">CONFIG_LEGACY_PTYS=n</code></dt>
 <dd><p>Use the modern PTY interface only.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LDISC_AUTOLOAD=n</code></dt>
+<code class="descname">CONFIG_LDISC_AUTOLOAD=n</code></dt>
 <dd><p>Do not automatically load any line discipline that is in a kernel module
 when an unprivileged user asks for it.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEVPORT=n</code></dt>
+<code class="descname">CONFIG_DEVPORT=n</code></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">/dev/port</span></code> device should not be used anymore by userspace, and it
 could increase the kernel attack surface.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_RANDOM_TRUST_CPU=n</code></dt>
+<code class="descname">CONFIG_RANDOM_TRUST_CPU=n</code></dt>
 <dd><p>Do not rely exclusively on the hardware RNG provided by the CPU manufacturer
 to initialize Linux’s CRNG, as we do not mind blocking a bit more at boot
 time while additional entropy sources are mixed in.</p>
@@ -732,13 +754,13 @@ hardware features. On a recent Intel machine, we enable the following:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_IOMMU_SUPPORT=y</code></dt>
+<code class="descname">CONFIG_IOMMU_SUPPORT=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_INTEL_IOMMU=y</code></dt>
+<code class="descname">CONFIG_INTEL_IOMMU=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_INTEL_IOMMU_SVM=y</code></dt>
+<code class="descname">CONFIG_INTEL_IOMMU_SVM=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_INTEL_IOMMU_DEFAULT_ON=y</code></dt>
+<code class="descname">CONFIG_INTEL_IOMMU_DEFAULT_ON=y</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -747,7 +769,7 @@ hardware features. On a recent Intel machine, we enable the following:</p>
 <h3>File systems<a class="headerlink" href="#file-systems" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PROC_KCORE=n</code></dt>
+<code class="descname">CONFIG_PROC_KCORE=n</code></dt>
 <dd><p>Enabling this would provide an attacker with precious information on the
 running kernel.</p>
 </dd></dl>
@@ -757,55 +779,55 @@ running kernel.</p>
 <h3>Kernel hacking<a class="headerlink" href="#kernel-hacking" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_MAGIC_SYSRQ=n</code></dt>
+<code class="descname">CONFIG_MAGIC_SYSRQ=n</code></dt>
 <dd><p>This should only be needed for debugging.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_KERNEL=y</code></dt>
+<code class="descname">CONFIG_DEBUG_KERNEL=y</code></dt>
 <dd><p>This is useful even in a production kernel to enable further configuration
 options that have security benefits.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_VIRTUAL=y</code></dt>
+<code class="descname">CONFIG_DEBUG_VIRTUAL=y</code></dt>
 <dd><p>Enable sanity checks in virtual to page code.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_STRICT_KERNEL_RWX=y</code></dt>
+<code class="descname">CONFIG_STRICT_KERNEL_RWX=y</code></dt>
 <dd><p>Ensure kernel page tables have strict permissions.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_WX=y</code></dt>
+<code class="descname">CONFIG_DEBUG_WX=y</code></dt>
 <dd><p>Check and report any dangerous memory mapping permissions, i.e., both
 writable and executable kernel pages.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_FS=n</code></dt>
+<code class="descname">CONFIG_DEBUG_FS=n</code></dt>
 <dd><p>The debugfs virtual file system is only useful for debugging and protecting
 it would require additional work.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SLUB_DEBUG_ON=n</code></dt>
+<code class="descname">CONFIG_SLUB_DEBUG_ON=n</code></dt>
 <dd><p>Using the <code class="docutils literal notranslate"><span class="pre">slub_debug</span></code> command line parameter provides more fine grained
 control.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PANIC_ON_OOPS=y</code></dt>
+<code class="descname">CONFIG_PANIC_ON_OOPS=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_PANIC_TIMEOUT=-1</code></dt>
+<code class="descname">CONFIG_PANIC_TIMEOUT=-1</code></dt>
 <dd><p>Prevent potential further exploitation of a bug by immediately panicking the
 kernel.</p>
 </dd></dl>
@@ -815,30 +837,30 @@ commonly targeted kernel structures:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_CREDENTIALS=y</code></dt>
+<code class="descname">CONFIG_DEBUG_CREDENTIALS=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_NOTIFIERS=y</code></dt>
+<code class="descname">CONFIG_DEBUG_NOTIFIERS=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_LIST=y</code></dt>
+<code class="descname">CONFIG_DEBUG_LIST=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_DEBUG_SG=y</code></dt>
+<code class="descname">CONFIG_DEBUG_SG=y</code></dt>
 <dd></dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_BUG_ON_DATA_CORRUPTION=y</code></dt>
+<code class="descname">CONFIG_BUG_ON_DATA_CORRUPTION=y</code></dt>
 <dd><p>Note that linux-hardened patches add more places where this configuration
 option has an impact.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SCHED_STACK_END_CHECK=y</code></dt>
+<code class="descname">CONFIG_SCHED_STACK_END_CHECK=y</code></dt>
 <dd></dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PAGE_POISONING=n</code></dt>
+<code class="descname">CONFIG_PAGE_POISONING=n</code></dt>
 <dd><p>We choose to poison pages with zeroes and thus prefer using the simpler
 PaX-based implementation provided by linux-hardened (see
 <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_SANITIZE</span></code> below).</p>
@@ -850,7 +872,7 @@ PaX-based implementation provided by linux-hardened (see
 <h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_DMESG_RESTRICT=y</code></dt>
+<code class="descname">CONFIG_SECURITY_DMESG_RESTRICT=y</code></dt>
 <dd><p>Prevent unprivileged users from gathering information from the kernel log
 buffer via <code class="docutils literal notranslate"><span class="pre">dmesg(8)</span></code>. Note that this still can be overridden through the
 <code class="docutils literal notranslate"><span class="pre">kernel.dmesg_restrict</span></code> sysctl.</p>
@@ -858,47 +880,47 @@ buffer via <code class="docutils literal notranslate"><span class="pre">dmesg(8)
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PAGE_TABLE_ISOLATION=y</code></dt>
+<code class="descname">CONFIG_PAGE_TABLE_ISOLATION=y</code></dt>
 <dd><p>Enable KPTI to prevent Meltdown attacks and, more generally, reduce the
 number of hardware side channels.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_INTEL_TXT=n</code></dt>
+<code class="descname">CONFIG_INTEL_TXT=n</code></dt>
 <dd><p>CLIP OS does not use Intel Trusted Execution Technology.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_HARDENED_USERCOPY=y</code></dt>
+<code class="descname">CONFIG_HARDENED_USERCOPY=y</code></dt>
 <dd><p>Harden data copies between kernel and user spaces, preventing classes of
 heap overflow exploits and information leaks.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_HARDENED_USERCOPY_FALLBACK=n</code></dt>
+<code class="descname">CONFIG_HARDENED_USERCOPY_FALLBACK=n</code></dt>
 <dd><p>Use strict whitelisting mode, i.e., do not <code class="docutils literal notranslate"><span class="pre">WARN()</span></code>.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_FORTIFY_SOURCE=y</code></dt>
+<code class="descname">CONFIG_FORTIFY_SOURCE=y</code></dt>
 <dd><p>Leverage compiler to detect buffer overflows.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_FORTIFY_SOURCE_STRICT_STRING=n</code></dt>
+<code class="descname">CONFIG_FORTIFY_SOURCE_STRICT_STRING=n</code></dt>
 <dd><p>This extends <code class="docutils literal notranslate"><span class="pre">FORTIFY_SOURCE</span></code> to intra-object overflow checking. It is
 useful to find bugs but not recommended for a production kernel yet.
-<a class="reference internal" href="#linux-hardened" id="id7"><span>[linux-hardened]</span></a></p>
+<a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_STATIC_USERMODEHELPER=y</code></dt>
+<code class="descname">CONFIG_STATIC_USERMODEHELPER=y</code></dt>
 <dd><p>This makes the kernel route all usermode helper calls to a single binary
 that cannot have its name changed. Without this, the kernel can be tricked
 into calling an attacker-controlled binary (e.g. to bypass SMAP, cf.
@@ -906,7 +928,7 @@ into calling an attacker-controlled binary (e.g. to bypass SMAP, cf.
 CVE-2016-8655).</p>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_STATIC_USERMODEHELPER_PATH=&quot;&quot;</code></dt>
+<code class="descname">CONFIG_STATIC_USERMODEHELPER_PATH=&quot;&quot;</code></dt>
 <dd><p>Currently, we have no need for usermode helpers therefore we simply
 disable them. If we ever need some, this path will need to be set to a
 custom trusted binary in charge of filtering and choosing what real
@@ -917,51 +939,51 @@ helpers should then be called.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY=y</code></dt>
+<code class="descname">CONFIG_SECURITY=y</code></dt>
 <dd><p>Enable us to choose different security modules.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_SELINUX=y</code></dt>
+<code class="descname">CONFIG_SECURITY_SELINUX=y</code></dt>
 <dd><p>CLIP OS intends to leverage SELinux in its security model.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_SELINUX_BOOTPARAM=n</code></dt>
+<code class="descname">CONFIG_SECURITY_SELINUX_BOOTPARAM=n</code></dt>
 <dd><p>We do not need SELinux to be disableable.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_SELINUX_DISABLE=n</code></dt>
+<code class="descname">CONFIG_SECURITY_SELINUX_DISABLE=n</code></dt>
 <dd><p>We do not want SELinux to be disabled. In addition, this would prevent LSM
 structures such as security hooks from being marked as read-only.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_SELINUX_DEVELOP=y</code></dt>
+<code class="descname">CONFIG_SECURITY_SELINUX_DEVELOP=y</code></dt>
 <dd><p>For now, but will eventually be <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LSM=&quot;yama&quot;</code></dt>
+<code class="descname">CONFIG_LSM=&quot;yama&quot;</code></dt>
 <dd><p>SELinux shall be stacked too once CLIP OS uses it.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_YAMA=y</code></dt>
+<code class="descname">CONFIG_SECURITY_YAMA=y</code></dt>
 <dd><p>The Yama LSM currently provides ptrace scope restriction (which might be
 redundant with CLIP-LSM in the future).</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_INTEGRITY=n</code></dt>
+<code class="descname">CONFIG_INTEGRITY=n</code></dt>
 <dd><p>The integrity subsystem provides several components, the security benefits
 of which are already enforced by CLIP OS (e.g., read-only mounts for all
 parts of the system containing executable programs).</p>
@@ -969,31 +991,31 @@ parts of the system containing executable programs).</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_PERF_EVENTS_RESTRICT=y</code></dt>
+<code class="descname">CONFIG_SECURITY_PERF_EVENTS_RESTRICT=y</code></dt>
 <dd><p>See documentation about the <code class="docutils literal notranslate"><span class="pre">kernel.perf_event_paranoid</span></code> sysctl below.
-<a class="reference internal" href="#linux-hardened" id="id8"><span>[linux-hardened]</span></a></p>
+<a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PAGE_SANITIZE=y</code></dt>
+<code class="descname">CONFIG_PAGE_SANITIZE=y</code></dt>
 <dd><p>Zero-fill page allocations on free to reduce risks of information leaks and
 help mitigate a subset of use-after-free vulnerabilities. This is a simpler
-equivalent to upstream’s <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_POISONING_ZERO</span></code>. <a class="reference internal" href="#linux-hardened" id="id9"><span>[linux-hardened]</span></a></p>
+equivalent to upstream’s <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_POISONING_ZERO</span></code>. <a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_PAGE_SANITIZE_VERIFY=y</code></dt>
+<code class="descname">CONFIG_PAGE_SANITIZE_VERIFY=y</code></dt>
 <dd><p>Verify that newly allocated pages are zeroed to detect write-after-free
-bugs. <a class="reference internal" href="#linux-hardened" id="id10"><span>[linux-hardened]</span></a></p>
+bugs. <a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_SECURITY_TIOCSTI_RESTRICT=y</code></dt>
+<code class="descname">CONFIG_SECURITY_TIOCSTI_RESTRICT=y</code></dt>
 <dd><p>This prevents unprivileged users from using the TIOCSTI ioctl to inject
-commands into other processes which share a tty session. <a class="reference internal" href="#linux-hardened" id="id11"><span>[linux-hardened]</span></a></p>
+commands into other processes which share a tty session. <a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
 </dd></dl>
 
 <p>We incorporated most of the <em>Lockdown</em> patch series into the CLIP OS kernel,
@@ -1008,9 +1030,9 @@ already-root attacker. Among the several configuration options brought by
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_LOCK_DOWN_KERNEL=y</code></dt>
+<code class="descname">CONFIG_LOCK_DOWN_KERNEL=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_LOCK_DOWN_MANDATORY=y</code></dt>
+<code class="descname">CONFIG_LOCK_DOWN_MANDATORY=y</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -1022,13 +1044,13 @@ stack depth overflows caused by <code class="docutils literal notranslate"><span
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">CONFIG_GCC_PLUGIN_STACKLEAK=y</code></dt>
+<code class="descname">CONFIG_GCC_PLUGIN_STACKLEAK=y</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_STACKLEAK_TRACK_MIN_SIZE=100</code></dt>
+<code class="descname">CONFIG_STACKLEAK_TRACK_MIN_SIZE=100</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_STACKLEAK_METRICS=n</code></dt>
+<code class="descname">CONFIG_STACKLEAK_METRICS=n</code></dt>
 <dt>
-<code class="sig-name descname">CONFIG_STACKLEAK_RUNTIME_DISABLE=n</code></dt>
+<code class="descname">CONFIG_STACKLEAK_RUNTIME_DISABLE=n</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -1046,30 +1068,30 @@ configuration options are enabled/disabled. In other words, the following is
 tightly related to the CLIP OS kernel configuration detailed above.</p>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">dev.tty.ldisc_autoload = 0</code></dt>
+<code class="descname">dev.tty.ldisc_autoload = 0</code></dt>
 <dd><p>See <code class="docutils literal notranslate"><span class="pre">CONFIG_LDISC_AUTOLOAD</span></code> above, which serves as a default value for
 this sysctl.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.kptr_restrict = 2</code></dt>
+<code class="descname">kernel.kptr_restrict = 2</code></dt>
 <dd><p>Hide kernel addresses in <code class="docutils literal notranslate"><span class="pre">/proc</span></code> and other interfaces, even to privileged
 users.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.yama.ptrace_scope = 3</code></dt>
+<code class="descname">kernel.yama.ptrace_scope = 3</code></dt>
 <dd><p>Enable the strictest ptrace scope restriction provided by the Yama LSM.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.perf_event_paranoid = 3</code></dt>
+<code class="descname">kernel.perf_event_paranoid = 3</code></dt>
 <dd><p>This completely disallows unprivileged access to the <code class="docutils literal notranslate"><span class="pre">perf_event_open()</span></code>
 system call. This is actually not needed as we already enable
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id12"><span>[linux-hardened]</span></a></p>
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
 <p>Note that this requires a patch included in linux-hardened (see <a class="reference external" href="https://lwn.net/Articles/696216/">here</a> for the reason why it is not upstream).
 Indeed, on a mainline kernel without such a patch, the above is equivalent
 to setting this sysctl to <code class="docutils literal notranslate"><span class="pre">2</span></code>, which would still allow the profiling of
@@ -1078,9 +1100,9 @@ user processes.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.tiocsti_restrict = 1</code></dt>
+<code class="descname">kernel.tiocsti_restrict = 1</code></dt>
 <dd><p>This is already forced by the <code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_TIOCSTI_RESTRICT</span></code> kernel
-configuration option that we enable.</p>
+configuration option that we enable. <a class="reference internal" href="#linux-hardened" id="id12">[linux-hardened]</a></p>
 </dd></dl>
 
 <p>The following two sysctls help mitigating TOCTOU vulnerabilities by preventing
@@ -1089,9 +1111,9 @@ read/write access to:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">fs.protected_symlinks = 1</code></dt>
+<code class="descname">fs.protected_symlinks = 1</code></dt>
 <dt>
-<code class="sig-name descname">fs.protected_hardlinks = 1</code></dt>
+<code class="descname">fs.protected_hardlinks = 1</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -1101,9 +1123,9 @@ harder:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">fs.protected_fifos = 2</code></dt>
+<code class="descname">fs.protected_fifos = 2</code></dt>
 <dt>
-<code class="sig-name descname">fs.protected_regular = 2</code></dt>
+<code class="descname">fs.protected_regular = 2</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -1112,46 +1134,46 @@ using it:</p>
 <blockquote>
 <div><dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.unprivileged_bpf_disabled = 1</code></dt>
+<code class="descname">kernel.unprivileged_bpf_disabled = 1</code></dt>
 <dd><p>Prevent unprivileged users from using BPF.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">net.core.bpf_jit_harden = 2</code></dt>
+<code class="descname">net.core.bpf_jit_harden = 2</code></dt>
 <dd><p>Trades off performance but helps mitigate JIT spraying.</p>
 </dd></dl>
 
 </div></blockquote>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.deny_new_usb = 0</code></dt>
+<code class="descname">kernel.deny_new_usb = 0</code></dt>
 <dd><p>The management of USB devices is handled at a higher level by CLIP OS.
-<a class="reference internal" href="#linux-hardened" id="id13"><span>[linux-hardened]</span></a></p>
+<a class="reference internal" href="#linux-hardened" id="id13">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.device_sidechannel_restrict = 1</code></dt>
-<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id14"><span>[linux-hardened]</span></a></p>
+<code class="descname">kernel.device_sidechannel_restrict = 1</code></dt>
+<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id14">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">fs.suid_dumpable = 0</code></dt>
+<code class="descname">fs.suid_dumpable = 0</code></dt>
 <dd><p>Do not create core dumps of setuid executables.  Note that we already
 disable all core dumps by setting <code class="docutils literal notranslate"><span class="pre">CONFIG_COREDUMP=n</span></code>.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.pid_max = 65536</code></dt>
+<code class="descname">kernel.pid_max = 65536</code></dt>
 <dd><p>Increase the space for PID values.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">kernel.modules_disabled = 1</code></dt>
+<code class="descname">kernel.modules_disabled = 1</code></dt>
 <dd><p>Disable module loading once systemd has loaded the ones required for the
 running machine according to a profile (i.e., a predefined and
 hardware-specific list of modules).</p>
@@ -1165,22 +1187,22 @@ separate place.</p>
 <p>We pass the following command line parameters to the kernel:</p>
 <dl class="describe">
 <dt>
-<code class="sig-name descname">extra_latent_entropy</code></dt>
+<code class="descname">extra_latent_entropy</code></dt>
 <dd><p>This parameter provided by a linux-hardened patch (based on the PaX
 implementation) enables a very simple form of latent entropy extracted
 during system start-up and added to the entropy obtained with
-<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id15"><span>[linux-hardened]</span></a></p>
+<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id15">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">pti=on</code></dt>
+<code class="descname">pti=on</code></dt>
 <dd><p>This force-enables KPTI even on CPUs claiming to be safe from Meltdown.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">spectre_v2=on</code></dt>
+<code class="descname">spectre_v2=on</code></dt>
 <dd><p>Same reasoning as above but for the Spectre v2 vulnerability. Note that this
 implies <code class="docutils literal notranslate"><span class="pre">spectre_v2_user=on</span></code>, which enables the mitigation against user
 space to user space task attacks (namely IBPB and STIBP when available and
@@ -1189,14 +1211,14 @@ relevant).</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">spec_store_bypass_disable=seccomp</code></dt>
+<code class="descname">spec_store_bypass_disable=seccomp</code></dt>
 <dd><p>Same reasoning as above but for the Spectre v4 vulnerability. Note that this
 mitigation requires updated microcode for Intel processors.</p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">mds=full,nosmt</code></dt>
+<code class="descname">mds=full,nosmt</code></dt>
 <dd><p>This parameter controls optional mitigations for the MDS class of Intel CPU
 vulnerabilities. Not specifying this parameter is equivalent to setting
 <code class="docutils literal notranslate"><span class="pre">mds=full</span></code>, which leaves SMT enabled and therefore is not a complete
@@ -1205,7 +1227,7 @@ mitigation. Note that this mitigation requires an Intel microcode update.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">iommu=force</code></dt>
+<code class="descname">iommu=force</code></dt>
 <dd><p>Even if we correctly enable the IOMMU in the kernel configuration, the
 kernel can still decide for various reasons to not initialize it at boot.
 Therefore, we force it with this parameter. Note that with some Intel
@@ -1215,50 +1237,57 @@ access the physical memory directly without going through the DMA Remapping.</p>
 
 <dl class="describe">
 <dt>
-<code class="sig-name descname">slub_debug=F</code></dt>
+<code class="descname">slub_debug=F</code></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">F</span></code> option adds many sanity checks to various slab operations. Other
 interesting options that we considered but eventually chose to not use are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">P</span></code> option, which enables poisoning on slab cache allocations,
+<li>The <code class="docutils literal notranslate"><span class="pre">P</span></code> option, which enables poisoning on slab cache allocations,
 disables the <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE</span></code> and <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE_VERIFY</span></code> features from
 linux-hardened. As they respectively poison with zeroes on object freeing
 and check the zeroing on object allocations, we prefer enabling them
-instead of using <code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Z</span></code> option enables red zoning, i.e., it adds extra areas around
+instead of using <code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Z</span></code> option enables red zoning, i.e., it adds extra areas around
 slab objects that detect when one is overwritten past its real size.
 This can help detect overflows but we already rely on <code class="docutils literal notranslate"><span class="pre">SLAB_CANARY</span></code>
 provided by linux-hardened. A canary is much better than a simple red
-zone as it is supposed to be random.</p></li>
+zone as it is supposed to be random.</li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">page_alloc.shuffle=1</code></dt>
+<dd><p>See <code class="docutils literal notranslate"><span class="pre">CONFIG_SHUFFLE_PAGE_ALLOCATOR</span></code>.</p>
+</dd></dl>
+
 <p>Also, note that:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">slub_nomerge</span></code> is not used as we already set
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SLAB_MERGE_DEFAULT=n</span></code> in the kernel configuration.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">page_poison</span></code> is not needed by the page poisoning implementation provided
-by linux-hardened patches.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">l1tf</span></code>: The built-in PTE Inversion mitigation is sufficient to mitigate
+<li><code class="docutils literal notranslate"><span class="pre">slub_nomerge</span></code> is not used as we already set
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SLAB_MERGE_DEFAULT=n</span></code> in the kernel configuration.</li>
+<li><code class="docutils literal notranslate"><span class="pre">page_poison</span></code> is not needed by the page poisoning implementation provided
+by linux-hardened patches.</li>
+<li><code class="docutils literal notranslate"><span class="pre">l1tf</span></code>: The built-in PTE Inversion mitigation is sufficient to mitigate
 the L1TF vulnerability as long as CLIP OS is not used as an hypervisor with
 untrusted guest VMs. If it were to be someday, <code class="docutils literal notranslate"><span class="pre">l1tf=full,force</span></code> should be
 used to force-enable VMX unconditional cache flushes and force-disable SMT
 (note that an Intel microcode update is not required for this mitigation to
 work but improves performance by providing a way to invalidate caches with a
-finer granularity).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mitigations</span></code>: This parameter controls optional mitigations for CPU
+finer granularity).</li>
+<li><code class="docutils literal notranslate"><span class="pre">mitigations</span></code>: This parameter controls optional mitigations for CPU
 vulnerabilities in an arch-independent and more coarse-grained way. For now,
 we keep using arch-specific options for the sake of explicitness. Not setting
 this parameter equals setting it to <code class="docutils literal notranslate"><span class="pre">auto</span></code>, which itself does not update
-anything.</p></li>
+anything.</li>
 </ul>
 <p class="rubric">Citations and origin of some items</p>
-<dl class="citation">
-<dt class="label" id="linux-hardened"><span class="brackets">linux-hardened</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>,<a href="#id5">4</a>,<a href="#id6">5</a>,<a href="#id7">6</a>,<a href="#id8">7</a>,<a href="#id9">8</a>,<a href="#id10">9</a>,<a href="#id11">10</a>,<a href="#id12">11</a>,<a href="#id13">12</a>,<a href="#id14">13</a>,<a href="#id15">14</a>)</span></dt>
-<dd><p>This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</p>
-</dd>
-</dl>
+<table class="docutils citation" frame="void" id="linux-hardened" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>, <a class="fn-backref" href="#id12">11</a>, <a class="fn-backref" href="#id13">12</a>, <a class="fn-backref" href="#id14">13</a>, <a class="fn-backref" href="#id15">14</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

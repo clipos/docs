@@ -156,10 +156,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Toolkit API references</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
-</ul>
 
             
           
@@ -227,51 +223,50 @@
 <span id="id1"></span><h1>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h1>
 <p>This roadmap lists CLIP OS features planned for integration into each release.</p>
 <div class="warning admonition">
-<p class="admonition-title">Work in progress</p>
-<p><strong>This roadmap is still a work in progress and will evolve with the project
+<p class="first admonition-title">Work in progress</p>
+<p class="last"><strong>This roadmap is still a work in progress and will evolve with the project
 as features are added.</strong></p>
 </div>
 <div class="section" id="alpha-initial-open-source-preview-release">
 <h2>5.0 Alpha: Initial open source preview release<a class="headerlink" href="#alpha-initial-open-source-preview-release" title="Permalink to this headline">¶</a></h2>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Released on <strong>2018-09-20</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Released on <strong>2018-09-20</strong>.</p>
 </div>
 <div class="section" id="features">
 <h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="security-aware-system-architecture-and-partition-layout">
 <h4>Security aware system architecture and partition layout<a class="headerlink" href="#security-aware-system-architecture-and-partition-layout" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Root partition mounted read-only</p></li>
-<li><p>Restricted set of state partitions bind-mounted at pre-determined
-emplacements (listed in the read only root partition)</p></li>
+<li>Root partition mounted read-only</li>
+<li>Restricted set of state partitions bind-mounted at pre-determined
+emplacements (listed in the read only root partition)</li>
 </ul>
 </div>
 <div class="section" id="initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity">
 <h4>Initial boot chain integrity with UEFI Secure Boot support and DM-Verity<a class="headerlink" href="#initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Signed EFI bootloader</p></li>
-<li><p>Signed EFI binaries (includes Linux kernel, initramfs and kernel command
-line)</p></li>
-<li><p>Root partition integrity enforced by DM-Verity</p></li>
+<li>Signed EFI bootloader</li>
+<li>Signed EFI binaries (includes Linux kernel, initramfs and kernel command
+line)</li>
+<li>Root partition integrity enforced by DM-Verity</li>
 </ul>
 </div>
 <div class="section" id="development-model-and-secure-by-default-software-compilation">
 <h4>Development model and secure by default software compilation<a class="headerlink" href="#development-model-and-secure-by-default-software-compilation" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Everything is rebuilt from source (excepted proprietary firmware required for
-hardware support).</p></li>
-<li><p>Gentoo Hardened based binary executable compilation</p></li>
-<li><p>Most of the Portage compilation security features are enabled.</p></li>
+<li>Everything is rebuilt from source (excepted proprietary firmware required for
+hardware support).</li>
+<li>Gentoo Hardened based binary executable compilation</li>
+<li>Most of the Portage compilation security features are enabled.</li>
 </ul>
 </div>
 <div class="section" id="linux-kernel">
 <h4>Linux kernel<a class="headerlink" href="#linux-kernel" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Latest stable kernel:</p>
-<ul>
-<li><p>is properly configured,</p></li>
-<li><p>and includes additional security features imported from public patches.</p></li>
+<li>Latest stable kernel:<ul>
+<li>is properly configured,</li>
+<li>and includes additional security features imported from public patches.</li>
 </ul>
 </li>
 </ul>
@@ -279,8 +274,8 @@ hardware support).</p></li>
 <div class="section" id="hardware-support">
 <h4>Hardware support<a class="headerlink" href="#hardware-support" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>QEMU/KVM with virtio devices on Linux</p></li>
-<li><p>Boot with Secure Boot enabled UEFI firmware</p></li>
+<li>QEMU/KVM with virtio devices on Linux</li>
+<li>Boot with Secure Boot enabled UEFI firmware</li>
 </ul>
 </div>
 </div>
@@ -288,41 +283,40 @@ hardware support).</p></li>
 <div class="section" id="beta-main-security-service-enabling-release">
 <h2>5.0 Beta: Main security &amp; service enabling release<a class="headerlink" href="#beta-main-security-service-enabling-release" title="Permalink to this headline">¶</a></h2>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. See the <a class="reference external" href="https://github.com/clipos/bugs/milestone/1">5.0 Beta milestone</a>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. See the <a class="reference external" href="https://github.com/clipos/bugs/milestone/1">5.0 Beta milestone</a>.</p>
 </div>
 <div class="section" id="id2">
 <h3>Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="robust-update-system">
 <h4>Robust update system<a class="headerlink" href="#robust-update-system" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Atomic system update using A/B partitions (similar to Android or ChromeOS)</p></li>
-<li><p>Fallback system version available in case of unexpected failure or bug</p></li>
-<li><p>Supports updating both the system and other environments</p></li>
+<li>Atomic system update using A/B partitions (similar to Android or ChromeOS)</li>
+<li>Fallback system version available in case of unexpected failure or bug</li>
+<li>Supports updating both the system and other environments</li>
 </ul>
 </div>
 <div class="section" id="system-partition-integrity-and-confidentiality">
 <h4>System partition integrity and confidentiality<a class="headerlink" href="#system-partition-integrity-and-confidentiality" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>LUKS2/DM-Crypt/DM-Integrity support</p></li>
-<li><p>Optional system read only partition encryption</p></li>
-<li><p>Mandatory system read/write partition encryption (journal logs,
-configuration, etc.)</p></li>
-<li><p>TPM backed secret sealing and unsealing for unattended system partition
-decryption</p></li>
-<li><p>Support for install time escrow keys setup for administrator enabled recovery</p></li>
+<li>LUKS2/DM-Crypt/DM-Integrity support</li>
+<li>Optional system read only partition encryption</li>
+<li>Mandatory system read/write partition encryption (journal logs,
+configuration, etc.)</li>
+<li>TPM backed secret sealing and unsealing for unattended system partition
+decryption</li>
+<li>Support for install time escrow keys setup for administrator enabled recovery</li>
 </ul>
 </div>
 <div class="section" id="confined-system-services">
 <h4>Confined system services<a class="headerlink" href="#confined-system-services" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Confinement using Linux security features supported in systemd:</p>
-<ul>
-<li><p>namespaces</p></li>
-<li><p>cgroups</p></li>
-<li><p>seccomp-bpf</p></li>
-<li><p>capability bounding set</p></li>
-<li><p>etc.</p></li>
+<li>Confinement using Linux security features supported in systemd:<ul>
+<li>namespaces</li>
+<li>cgroups</li>
+<li>seccomp-bpf</li>
+<li>capability bounding set</li>
+<li>etc.</li>
 </ul>
 </li>
 </ul>
@@ -330,38 +324,36 @@ decryption</p></li>
 <div class="section" id="services-available">
 <h4>Services available<a class="headerlink" href="#services-available" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>IPsec client</p></li>
-<li><p>Update daemon</p></li>
-<li><p>SSH daemon</p></li>
+<li>IPsec client</li>
+<li>Update daemon</li>
+<li>SSH daemon</li>
 </ul>
 </div>
 <div class="section" id="firewall-rules">
 <h4>Firewall rules<a class="headerlink" href="#firewall-rules" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Static firewall rules for system services</p></li>
+<li>Static firewall rules for system services</li>
 </ul>
 </div>
 <div class="section" id="confined-non-root-administration-roles">
 <h4>Confined (non-root) administration roles<a class="headerlink" href="#confined-non-root-administration-roles" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Admin role: can edit files in the state configuration folder</p></li>
-<li><p>Audit role: can read all system logs</p></li>
-<li><p>Administration roles are accessible:</p>
-<ul>
-<li><p>through the IPsec tunnel, over SSH with key based authentication;</p></li>
-<li><p>locally on a console, using a password.</p></li>
+<li>Admin role: can edit files in the state configuration folder</li>
+<li>Audit role: can read all system logs</li>
+<li>Administration roles are accessible:<ul>
+<li>through the IPsec tunnel, over SSH with key based authentication;</li>
+<li>locally on a console, using a password.</li>
 </ul>
 </li>
-<li><p>Split credential management for password based authentication (<code class="docutils literal notranslate"><span class="pre">pam-tcb</span></code>)</p></li>
+<li>Split credential management for password based authentication (<code class="docutils literal notranslate"><span class="pre">pam-tcb</span></code>)</li>
 </ul>
 </div>
 <div class="section" id="id3">
 <h4>Linux kernel<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Latest stable kernel:</p>
-<ul>
-<li><p>Inclusion of additional security features, some expected to be merged
-upstream</p></li>
+<li>Latest stable kernel:<ul>
+<li>Inclusion of additional security features, some expected to be merged
+upstream</li>
 </ul>
 </li>
 </ul>
@@ -369,7 +361,7 @@ upstream</p></li>
 <div class="section" id="id4">
 <h4>Hardware support<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Initial laptop, desktop and server platforms support</p></li>
+<li>Initial laptop, desktop and server platforms support</li>
 </ul>
 </div>
 </div>
@@ -377,90 +369,86 @@ upstream</p></li>
 <div class="section" id="first-stable-release-with-multi-level-support">
 <h2>5.0: First stable release with multi-level support<a class="headerlink" href="#first-stable-release-with-multi-level-support" title="Permalink to this headline">¶</a></h2>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started yet.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started yet.</p>
 </div>
 <div class="section" id="id5">
 <h3>Features<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="user-data-integrity-and-confidentiality">
 <h4>User data integrity and confidentiality<a class="headerlink" href="#user-data-integrity-and-confidentiality" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Fixed size LUKS2/DM-Crypt/DM-Integrity based user partition support</p></li>
-<li><p>Encryption based on user-only known secret</p></li>
-<li><p>User credentials managed independently from system roles credentials</p></li>
-<li><p>User credentials supported:</p>
-<ul>
-<li><p>Password</p></li>
-<li><p>Smartcard</p></li>
+<li>Fixed size LUKS2/DM-Crypt/DM-Integrity based user partition support</li>
+<li>Encryption based on user-only known secret</li>
+<li>User credentials managed independently from system roles credentials</li>
+<li>User credentials supported:<ul>
+<li>Password</li>
+<li>Smartcard</li>
 </ul>
 </li>
-<li><p>Smartcard daemon isolation using Caml Crush.</p></li>
+<li>Smartcard daemon isolation using Caml Crush.</li>
 </ul>
 </div>
 <div class="section" id="multi-level-environment-support">
 <h4>Multi-level environment support<a class="headerlink" href="#multi-level-environment-support" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Multiple isolated environment available with different security settings:</p>
-<ul>
-<li><p>Environments confined using a kernel LSM inspired from Vserver</p></li>
-<li><p>Controlled communication between environments (UNIX sockets or encrypted
-connections)</p></li>
+<li>Multiple isolated environment available with different security settings:<ul>
+<li>Environments confined using a kernel LSM inspired from Vserver</li>
+<li>Controlled communication between environments (UNIX sockets or encrypted
+connections)</li>
 </ul>
 </li>
-<li><p>Host and inter-levels interaction enabled through trusted services on the
-host:</p>
-<ul>
-<li><p>File transfer, encryption and decryption using diodes</p></li>
+<li>Host and inter-levels interaction enabled through trusted services on the
+host:<ul>
+<li>File transfer, encryption and decryption using diodes</li>
 </ul>
 </li>
-<li><p>Intra-level application isolation using Flatpak</p></li>
+<li>Intra-level application isolation using Flatpak</li>
 </ul>
 </div>
 <div class="section" id="multi-level-aware-device-assignment">
 <h4>Multi-level aware device assignment<a class="headerlink" href="#multi-level-aware-device-assignment" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Printers, scanners</p></li>
-<li><p>USB flash drives</p></li>
-<li><p>Smartcards</p></li>
-<li><p>Webcam</p></li>
-<li><p>Sound cards</p></li>
-<li><p>Microphone</p></li>
+<li>Printers, scanners</li>
+<li>USB flash drives</li>
+<li>Smartcards</li>
+<li>Webcam</li>
+<li>Sound cards</li>
+<li>Microphone</li>
 </ul>
 </div>
 <div class="section" id="virtualized-environments-support">
 <h4>Virtualized environments support<a class="headerlink" href="#virtualized-environments-support" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Linux only</p></li>
-<li><p>virtio based peripherals only</p></li>
-<li><p>UEFI Secure Boot optional</p></li>
+<li>Linux only</li>
+<li>virtio based peripherals only</li>
+<li>UEFI Secure Boot optional</li>
 </ul>
 </div>
 <div class="section" id="id6">
 <h4>Firewall rules<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Dynamic firewall rules for user environments</p></li>
+<li>Dynamic firewall rules for user environments</li>
 </ul>
 </div>
 <div class="section" id="trusted-graphical-environment">
 <h4>Trusted graphical environment<a class="headerlink" href="#trusted-graphical-environment" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Wayland based system compositor and lock screen</p></li>
-<li><p>Permanently displayed and trusted panel for interaction with system
-services and configuration</p></li>
+<li>Wayland based system compositor and lock screen</li>
+<li>Permanently displayed and trusted panel for interaction with system
+services and configuration</li>
 </ul>
 </div>
 <div class="section" id="arbitrary-code-execution-restrictions-in-user-environments">
 <h4>Arbitrary code execution restrictions in user environments<a class="headerlink" href="#arbitrary-code-execution-restrictions-in-user-environments" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Applied to interpreters (e.g. Bash, Python, Perl): <code class="docutils literal notranslate"><span class="pre">O_MAYEXEC</span></code></p></li>
+<li>Applied to interpreters (e.g. Bash, Python, Perl): <code class="docutils literal notranslate"><span class="pre">O_MAYEXEC</span></code></li>
 </ul>
 </div>
 <div class="section" id="id7">
 <h4>Linux kernel<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Additional kernel version supported: latest LTS kernel:</p>
-<ul>
-<li><p>Supported until the next upstream LTS kernel release</p></li>
+<li>Additional kernel version supported: latest LTS kernel:<ul>
+<li>Supported until the next upstream LTS kernel release</li>
 </ul>
 </li>
 </ul>
@@ -469,8 +457,8 @@ services and configuration</p></li>
 <h4>Hardware support<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><ul class="simple">
-<li><p>List of validated laptop, desktop and server platforms supported</p></li>
-<li><p>Generic laptop, desktop and server platforms support</p></li>
+<li>List of validated laptop, desktop and server platforms supported</li>
+<li>Generic laptop, desktop and server platforms support</li>
 </ul>
 </div></blockquote>
 </div>
@@ -479,30 +467,26 @@ services and configuration</p></li>
 <div class="section" id="milestone-features-whose-integration-planning-are-yet-to-be-determined">
 <h2>Milestone features whose integration planning are yet to be determined<a class="headerlink" href="#milestone-features-whose-integration-planning-are-yet-to-be-determined" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Remote integrity and version attestation using TPM backed signatures.</p></li>
-<li><p>Port remaining security features from CLIP OS version 4:</p>
-<ul>
-<li><p>Ignored SUID binaries</p></li>
-<li><p>System entropy and RNG improvements: timer_entropyd, kernel patch</p></li>
-<li><p>Remaining kernel features from CLIP LSM patches:</p>
-<ul>
-<li><p>Veriexec: additional integrity measurements and capability granting tool</p></li>
+<li>Remote integrity and version attestation using TPM backed signatures.</li>
+<li>Port remaining security features from CLIP OS version 4:<ul>
+<li>Ignored SUID binaries</li>
+<li>System entropy and RNG improvements: timer_entropyd, kernel patch</li>
+<li>Remaining kernel features from CLIP LSM patches:<ul>
+<li>Veriexec: additional integrity measurements and capability granting tool</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>Mandatory Access Control support:</p>
-<ul>
-<li><p>SELinux</p></li>
+<li>Mandatory Access Control support:<ul>
+<li>SELinux</li>
 </ul>
 </li>
-<li><p>Reproducible builds</p></li>
-<li><p>Additional user credential support:</p>
-<ul>
-<li><p>U2F based user session unlocking</p></li>
+<li>Reproducible builds</li>
+<li>Additional user credential support:<ul>
+<li>U2F based user session unlocking</li>
 </ul>
 </li>
-<li><p>Append-only log storage and automatic log rotation support</p></li>
+<li>Append-only log storage and automatic log rotation support</li>
 </ul>
 </div>
 </div>

@@ -172,10 +172,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Toolkit API references</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
-</ul>
 
             
           
@@ -248,18 +244,16 @@ please check out the <a class="reference internal" href="roadmap.html#roadmap"><
 <div class="section" id="hardware-requirements">
 <h2>Hardware requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>x86-64 architecture (AMD64 / Intel 64)</p></li>
-<li><p>UEFI Secure Boot:</p>
-<ul>
-<li><p>Removable default keys</p></li>
-<li><p>Custom key enrollment available</p></li>
+<li>x86-64 architecture (AMD64 / Intel 64)</li>
+<li>UEFI Secure Boot:<ul>
+<li>Removable default keys</li>
+<li>Custom key enrollment available</li>
 </ul>
 </li>
-<li><p>Trusted Platform Module (TPM):</p>
-<ul>
-<li><p>Discrete TPM preferred, firmware TPM not recommended</p></li>
-<li><p>Certified TPM preferred</p></li>
-<li><p>Version 2.0 preferred, 1.2 accepted</p></li>
+<li>Trusted Platform Module (TPM):<ul>
+<li>Discrete TPM preferred, firmware TPM not recommended</li>
+<li>Certified TPM preferred</li>
+<li>Version 2.0 preferred, 1.2 accepted</li>
 </ul>
 </li>
 </ul>
@@ -267,19 +261,18 @@ please check out the <a class="reference internal" href="roadmap.html#roadmap"><
 <div class="section" id="hypotheses">
 <h2>Hypotheses<a class="headerlink" href="#hypotheses" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Hardware-based mechanisms and isolation are assumed trusted, properly
+<li>Hardware-based mechanisms and isolation are assumed trusted, properly
 functional and configured. Here is a non-exhaustive list of hardware-based
-security and isolation mechanisms:</p>
-<ul>
-<li><p>UEFI firmware</p></li>
-<li><p>Secure Boot</p></li>
-<li><p>TPM</p></li>
-<li><p>MMU</p></li>
-<li><p>IOMMU</p></li>
-<li><p>Hardware assisted virtualization</p></li>
+security and isolation mechanisms:<ul>
+<li>UEFI firmware</li>
+<li>Secure Boot</li>
+<li>TPM</li>
+<li>MMU</li>
+<li>IOMMU</li>
+<li>Hardware assisted virtualization</li>
 </ul>
 </li>
-<li><p>Chosen cryptographic primitives are assumed robust.</p></li>
+<li>Chosen cryptographic primitives are assumed robust.</li>
 </ul>
 </div>
 <div class="section" id="threat-scenarios">
@@ -287,50 +280,43 @@ security and isolation mechanisms:</p>
 <p>Here is a list of threat scenario properties we consider and for which we would
 like to protect the system from:</p>
 <ol class="arabic simple">
-<li><p>The remote attacker:</p>
-<ul class="simple">
-<li><p>has full control over the external network on which is connected the
-workstation.</p></li>
-<li><p>has no direct physical access to the system.</p></li>
+<li>The remote attacker:<ul>
+<li>has full control over the external network on which is connected the
+workstation.</li>
+<li>has no direct physical access to the system.</li>
 </ul>
 </li>
-<li><p>An untrusted user:</p>
-<ul class="simple">
-<li><p>has full control over the external network.</p></li>
-<li><p>owns valid credentials to access to a user session.</p></li>
+<li>An untrusted user:<ul>
+<li>has full control over the external network.</li>
+<li>owns valid credentials to access to a user session.</li>
 </ul>
 </li>
-<li><p>An untrusted administrator (i.e., with an <em>Administrator</em> role access):</p>
-<ul class="simple">
-<li><p>has full control over the external network as well as the workstation
-network configuration (in whole or in parts).</p></li>
-<li><p>owns valid credentials to access an administrator session.</p></li>
+<li>An untrusted administrator (i.e., with an <em>Administrator</em> role access):<ul>
+<li>has full control over the external network as well as the workstation
+network configuration (in whole or in parts).</li>
+<li>owns valid credentials to access an administrator session.</li>
 </ul>
 </li>
-<li><p>Local attacker:</p>
-<ul class="simple">
-<li><p>has full control over the external network.</p></li>
-<li><p>has full access to the hardware (storage, TPM, firmware, etc.).</p></li>
+<li>Local attacker:<ul>
+<li>has full control over the external network.</li>
+<li>has full access to the hardware (storage, TPM, firmware, etc.).</li>
 </ul>
 </li>
 </ol>
 <p>In more concrete and somewhat realistic terms, the above threat properties
 would coincide with those types of threats:</p>
 <ul class="simple">
-<li><p>Theft of the workstation:</p>
-<ul>
-<li><p>Confidentiality of the data stored is then guaranteed.</p></li>
+<li>Theft of the workstation:<ul>
+<li>Confidentiality of the data stored is then guaranteed.</li>
 </ul>
 </li>
-<li><p>“Evil maid” attacks:</p>
-<ul>
-<li><p>The system integrity is guaranteed.</p></li>
+<li>“Evil maid” attacks:<ul>
+<li>The system integrity is guaranteed.</li>
 </ul>
 </li>
-<li><p>Untrusted Web browsing or untrusted document opening:</p>
-<ul>
-<li><p>The system integrity cannot be affected by any untrusted document or unsafe
-remote content.</p></li>
+<li>Untrusted Web browsing or untrusted document opening:<ul>
+<li>The system integrity cannot be affected by any untrusted document or unsafe
+remote content.</li>
 </ul>
 </li>
 </ul>
@@ -343,14 +329,14 @@ remote content.</p></li>
 <h4>Source code availability<a class="headerlink" href="#source-code-availability" title="Permalink to this headline">¶</a></h4>
 <p>The entire project source tree is publicly hosted on GitHub and GitLab.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </div>
 <div class="section" id="built-from-source">
 <h4>Built from source<a class="headerlink" href="#built-from-source" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>All-in-one source tree: the project source tree includes all the
+<li><p class="first">All-in-one source tree: the project source tree includes all the
 third-parties assets which are vendored within the source tree and versioned
 through Git and Git LFS.</p>
 <p>This property allows a developer to build any specific version of CLIP OS
@@ -363,18 +349,18 @@ availability of the source tree and its complete build ability is not
 affected by the availability of a third-party project on which the CLIP OS
 project depends.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>The project is entirely built from source. This property is guaranteed by
+<li><p class="first">The project is entirely built from source. This property is guaranteed by
 nightly clean builds of the entire project.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
+<p class="first admonition-title">Status</p>
 <p>In progress:</p>
-<ul class="simple">
-<li><p>Basic CI infrastrucure is operational.</p></li>
-<li><p>Build results are not yet publicly available.</p></li>
+<ul class="last simple">
+<li>Basic CI infrastrucure is operational.</li>
+<li>Build results are not yet publicly available.</li>
 </ul>
 </div>
 </li>
@@ -390,8 +376,8 @@ that a given image (in whole or in part, e.g., for a specific recipe) has not
 been tampered with and actually correspond to the build result of the claimed
 version specification of the said image.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="source-code-integrity">
@@ -407,7 +393,7 @@ files under one of the directories below <code class="docutils literal notransla
 verification of cryptographic hashes against known-good values from trusted
 sources.</p>
 <div class="note admonition">
-<p class="admonition-title">Case of the Gentoo’s <em>distfiles</em> and other Git LFS assets</p>
+<p class="first admonition-title">Case of the Gentoo’s <em>distfiles</em> and other Git LFS assets</p>
 <p>The source code tarballs, a.k.a. <em>distfiles</em>, referenced in the Gentoo
 <code class="docutils literal notranslate"><span class="pre">ebuild</span></code> files are used to build the application packages by Portage.</p>
 <p>The checksum values of those <em>distfiles</em> are provided by the <code class="docutils literal notranslate"><span class="pre">Manifest</span></code>
@@ -415,7 +401,7 @@ files within the Gentoo Portage tree. Since this tree is built with
 cryptographically signed Git commits from the Gentoo project developers, we
 can then assess both integrity and authenticity (by transitivity) of those
 <em>distfiles</em>.</p>
-<p>The same mechanism is true for the Gentoo <em>stage3</em> image and other vendored
+<p class="last">The same mechanism is true for the Gentoo <em>stage3</em> image and other vendored
 binary assets found under the <code class="docutils literal notranslate"><span class="pre">assets/</span></code> directory and which are stored
 through Git LFS. Since the Git LFS <em>pointer files</em> hold the SHA256 hash of
 the said files and since those <em>pointer files</em> are brought by PGP-signed Git
@@ -423,43 +409,43 @@ commits from one of the CLIP OS project maintainers, we can therefore assess
 both the integrity and authenticity of those assets files.</p>
 </div>
 <div class="warning admonition">
-<p class="admonition-title">Exceptions to this principle</p>
+<p class="first admonition-title">Exceptions to this principle</p>
 <p>The exceptions of this principle concerns the closed-source firmwares for
 specific hardware, such as:</p>
-<ul class="simple">
-<li><p>graphics adapters,</p></li>
-<li><p>wireless network interface controllers,</p></li>
-<li><p>Bluetooth controllers,</p></li>
-<li><p>etc.</p></li>
+<ul class="last simple">
+<li>graphics adapters,</li>
+<li>wireless network interface controllers,</li>
+<li>Bluetooth controllers,</li>
+<li>etc.</li>
 </ul>
 </div>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </div>
 <div class="section" id="affordable-customization">
 <h4>Affordable customization<a class="headerlink" href="#affordable-customization" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Efforts have been made to ensure the project can be customized and adapted to
+<li><p class="first">Efforts have been made to ensure the project can be customized and adapted to
 meet specific infrastructure or deployment requirements. As a consequence,
 creating a project based on CLIP OS should not require extensive changes to
 the project source files.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>First functional draft of the derivation mechanism completed in version
+<p class="first admonition-title">Status</p>
+<p class="last">First functional draft of the derivation mechanism completed in version
 <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>Documentation and maintenance instructions are made available to allow
+<li><p class="first">Documentation and maintenance instructions are made available to allow
 third-parties to derive the CLIP OS project and guide them into maintaining
 their own version of CLIP OS derivatives.</p>
 <p>Please note though that these derivative projects cannot be named “CLIP OS”
 as “CLIP OS” is a trademark of the French Republic and its usage is exclusively
 reserved to the ANSSI.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -467,30 +453,30 @@ reserved to the ANSSI.</p>
 <div class="section" id="build-environment-isolation">
 <h4>Build environment isolation<a class="headerlink" href="#build-environment-isolation" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>The SDK environment used to build all software from source is logically
+<li><p class="first">The SDK environment used to build all software from source is logically
 isolated from the developer’s system using Linux standard containers
 technologies (mainly namespaces). All recipes steps all executed in the SDK
 environment which is based on an immutable image with a statefull overlay
 that is discarded upon each steps completion.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>Build steps isolation is enforced by the following Portage security features
+<li><p class="first">Build steps isolation is enforced by the following Portage security features
 that are enabled in the Gentoo Hardened SDK used to compile the CLIP OS Core
 and EFIboot recipes:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">sandbox</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">userfetch</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">userpriv</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">usersandbox</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">sandbox</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">userfetch</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">userpriv</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">usersandbox</span></code></li>
 </ul>
 <p>See Portage’s <code class="docutils literal notranslate"><span class="pre">make.conf(5)</span></code> man page on a Gentoo environment for details
 about each option.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
 </ul>
@@ -502,49 +488,49 @@ about each option.</p>
 Alternatives should be thought for software currently included in the project
 but written in a memory-unsafe language.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress.</p>
 </div>
 </div>
 <div class="section" id="limit-impact-of-security-issues-inherent-to-memory-unsafe-languages">
 <h4>Limit impact of security issues inherent to memory-unsafe languages<a class="headerlink" href="#limit-impact-of-security-issues-inherent-to-memory-unsafe-languages" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>The Portage profiles used to build all software inside the CLIP OS <em>core</em> and
+<li><p class="first">The Portage profiles used to build all software inside the CLIP OS <em>core</em> and
 <em>EFI boot</em> recipes are based on the Gentoo Hardened no-multilib profile. This
 guarantee that all executable are hardened at compile time.</p>
 <p>To reduce the attack surface, a custom set of USE flags are applied to limit
 the amount of features included by default.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>The following Portage QA checks and features are enabled:</p>
+<li><p class="first">The following Portage QA checks and features are enabled:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">strict</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_EXECSTACK=&quot;set&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_FLAGS_IGNORED=&quot;set&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_MULTILIB_PATHS=&quot;set&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_PRESTRIPPED=&quot;set&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_TEXTRELS=&quot;set&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">QA_STRICT_WX_LOAD=&quot;set&quot;</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">strict</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_EXECSTACK=&quot;set&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_FLAGS_IGNORED=&quot;set&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_MULTILIB_PATHS=&quot;set&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_PRESTRIPPED=&quot;set&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_TEXTRELS=&quot;set&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">QA_STRICT_WX_LOAD=&quot;set&quot;</span></code></li>
 </ul>
 <p>See <code class="docutils literal notranslate"><span class="pre">make.conf(5)</span></code> man page on a Gentoo environment setup for details about
 each option.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>The following Portage features should be enabled:</p>
+<li><p class="first">The following Portage features should be enabled:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">stricter</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">stricter</span></code></li>
 </ul>
 </div></blockquote>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -559,8 +545,8 @@ or linked back to a change made by a configuration step by examinating the
 operate fine tuning operations to recipe result files and which are found to be
 tedious or impossible to integrate into <code class="docutils literal notranslate"><span class="pre">ebuild</span></code> packages).</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </div>
 </div>
@@ -569,30 +555,30 @@ tedious or impossible to integrate into <code class="docutils literal notranslat
 <div class="section" id="boot-chain-integrity">
 <h4>Boot chain integrity<a class="headerlink" href="#boot-chain-integrity" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>The integrity of the system boot chain is guaranteed by the combination of
+<li><p class="first">The integrity of the system boot chain is guaranteed by the combination of
 several security mechanisms:</p>
 <p>The initial bootloader is signed using UEFI Secure Boot.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>The Linux kernel, initramfs and command line are packaged in a single file as
+<li><p class="first">The Linux kernel, initramfs and command line are packaged in a single file as
 an EFI binary signed using UEFI Secure Boot.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>Firmware integrity, configuration, bootloader and kernel bundle binary
+<li><p class="first">Firmware integrity, configuration, bootloader and kernel bundle binary
 integrity measurements are included in TPM based secret sealing operations.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
+<p class="first admonition-title">Status</p>
 <p>In progress:</p>
-<ul class="simple">
-<li><p>Firmware integrity and configuration (includes Secure Boot setup)
-measurements are included in TPM based secret sealing operations.</p></li>
-<li><p>Bootloader and kernel bundle binary measurements are currently ignored.</p></li>
+<ul class="last simple">
+<li>Firmware integrity and configuration (includes Secure Boot setup)
+measurements are included in TPM based secret sealing operations.</li>
+<li>Bootloader and kernel bundle binary measurements are currently ignored.</li>
 </ul>
 </div>
 </li>
@@ -601,46 +587,45 @@ measurements are included in TPM based secret sealing operations.</p></li>
 <div class="section" id="unattended-system-bootup">
 <h4>Unattended system bootup<a class="headerlink" href="#unattended-system-bootup" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>TPM secret sealing and unsealing for unattended system partition encryption
-and decryption on bootup.</p></li>
+<li>TPM secret sealing and unsealing for unattended system partition encryption
+and decryption on bootup.</li>
 </ul>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/8">clipos/bugs#8</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/8">clipos/bugs#8</a>).</p>
 </div>
 <ul class="simple">
-<li><p>Additional enhancements:</p>
-<ul>
-<li><p>Additional tests with real hardware.</p></li>
-<li><p>Kernel keyring (<code class="docutils literal notranslate"><span class="pre">keyctl</span></code>) support.</p></li>
-<li><p>Improved installation and initial setup support.</p></li>
+<li>Additional enhancements:<ul>
+<li>Additional tests with real hardware.</li>
+<li>Kernel keyring (<code class="docutils literal notranslate"><span class="pre">keyctl</span></code>) support.</li>
+<li>Improved installation and initial setup support.</li>
 </ul>
 </li>
 </ul>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started (<a class="reference external" href="https://github.com/clipos/bugs/issues/22">clipos/bugs#22</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started (<a class="reference external" href="https://github.com/clipos/bugs/issues/22">clipos/bugs#22</a>).</p>
 </div>
 </div>
 <div class="section" id="system-on-disk-data-integrity">
 <h4>System on disk data integrity<a class="headerlink" href="#system-on-disk-data-integrity" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Read only system program data and configuration is separated from writable
+<li><p class="first">Read only system program data and configuration is separated from writable
 system state and configuration using two distinct logical volumes partitions.</p>
 <p>The system root partition is a squashfs file system image mounted as read
 only. The squashfs image integrity is ensured by DM-Verity. The DM-Verity
 root hash is included in the kernel command line, which is protected by
 Secure Boot.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>The writable system state partition integrity is ensured by DM-Integrity. The
+<li><p class="first">The writable system state partition integrity is ensured by DM-Integrity. The
 secret used to unlock the DM-Integrity partition is sealed using the TPM.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -648,26 +633,26 @@ secret used to unlock the DM-Integrity partition is sealed using the TPM.</p>
 <div class="section" id="system-on-disk-data-confidentiality">
 <h4>System on disk data confidentiality<a class="headerlink" href="#system-on-disk-data-confidentiality" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>The writable system state partition confidentiality is insured by DM-Crypt.
+<li><p class="first">The writable system state partition confidentiality is insured by DM-Crypt.
 The secret used to unlock the DM-Crypt partition is sealed using the TPM.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/8">clipos/bugs#8</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/8">clipos/bugs#8</a>).</p>
 </div>
 </li>
-<li><p>The system root partition confidentiality may be insured by DM-Crypt. The
+<li><p class="first">The system root partition confidentiality may be insured by DM-Crypt. The
 secret used to unlock the DM-Crypt partition is sealed using the TPM.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>In order to allow recovery of the encrypted system partitions by an
+<li><p class="first">In order to allow recovery of the encrypted system partitions by an
 administrator, an additional LUKS key slot is provisioned. This allows
 offline secret escrow during system install phase.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -675,33 +660,33 @@ offline secret escrow during system install phase.</p>
 <div class="section" id="arbitrary-code-execution-restrictions-w-x-a-k-a-write-xor-execute">
 <h4>Arbitrary code execution restrictions (W^X, a.k.a. Write XOR Execute)<a class="headerlink" href="#arbitrary-code-execution-restrictions-w-x-a-k-a-write-xor-execute" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Hardware and kernel level enforcement of the exclusion of write and execute
+<li><p class="first">Hardware and kernel level enforcement of the exclusion of write and execute
 permissions on memory regions.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
 </div>
 </li>
-<li><p>System-wide enforcement of the write and execute permissions exclusion
+<li><p class="first">System-wide enforcement of the write and execute permissions exclusion
 principle:</p>
 <ul class="simple">
-<li><p>Applications code is stored in a read only partition.</p></li>
-<li><p>Execution of code from writable partitions is denied.</p></li>
+<li>Applications code is stored in a read only partition.</li>
+<li>Execution of code from writable partitions is denied.</li>
 </ul>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
+<p class="first admonition-title">Status</p>
 <p>In progress. Status as of version <strong>5.0 beta</strong>:</p>
-<ul class="simple">
-<li><p>System root partition is read-only (Squashfs and DM-Verity).</p></li>
-<li><p>All writable partitions are mounted with the <code class="docutils literal notranslate"><span class="pre">noexec</span></code> option.</p></li>
+<ul class="last simple">
+<li>System root partition is read-only (Squashfs and DM-Verity).</li>
+<li>All writable partitions are mounted with the <code class="docutils literal notranslate"><span class="pre">noexec</span></code> option.</li>
 </ul>
 </div>
 </li>
-<li><p>Interactive interpreters (Bash, Python, etc.) shall refuse to execute code
+<li><p class="first">Interactive interpreters (Bash, Python, etc.) shall refuse to execute code
 from writable filesystems.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -709,39 +694,39 @@ from writable filesystems.</p>
 <div class="section" id="system-administration-roles-separation">
 <h4>System administration roles separation<a class="headerlink" href="#system-administration-roles-separation" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Limited trust in <code class="docutils literal notranslate"><span class="pre">root</span></code> user.</p>
+<li><p class="first">Limited trust in <code class="docutils literal notranslate"><span class="pre">root</span></code> user.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Constrained administrator (admin) role.</p>
+<li><p class="first">Constrained administrator (admin) role.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. Initial support available in versions <strong>5.0 beta</strong>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. Initial support available in versions <strong>5.0 beta</strong>
 (<a class="reference external" href="https://github.com/clipos/bugs/issues/17">clipos/bugs#17</a>).</p>
 </div>
 </li>
-<li><p>Auditor (audit) role.</p>
+<li><p class="first">Auditor (audit) role.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. Initial support available in versions <strong>5.0 beta</strong>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. Initial support available in versions <strong>5.0 beta</strong>
 (<a class="reference external" href="https://github.com/clipos/bugs/issues/17">clipos/bugs#17</a>).</p>
 </div>
 </li>
-<li><p>No privilege elevation mechanism support:</p>
+<li><p class="first">No privilege elevation mechanism support:</p>
 <ul class="simple">
-<li><p>No SUID binaries, SUID binaries disabled, all partitions mounted with the
-<code class="docutils literal notranslate"><span class="pre">nosuid</span></code> mount option.</p></li>
-<li><p>Capability bounding sets</p></li>
-<li><p>No new privileges flag (<code class="docutils literal notranslate"><span class="pre">no_new_privs</span></code>) set for the PID 1 process.</p></li>
+<li>No SUID binaries, SUID binaries disabled, all partitions mounted with the
+<code class="docutils literal notranslate"><span class="pre">nosuid</span></code> mount option.</li>
+<li>Capability bounding sets</li>
+<li>No new privileges flag (<code class="docutils literal notranslate"><span class="pre">no_new_privs</span></code>) set for the PID 1 process.</li>
 </ul>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
+<p class="first admonition-title">Status</p>
 <p>In progress. Status as of version <strong>5.0 beta</strong>:</p>
-<ul class="simple">
-<li><p>All SetUID bits are stripped from the system.</p></li>
-<li><p>All partitions are mounted with the <code class="docutils literal notranslate"><span class="pre">nosuid</span></code> mount option.</p></li>
+<ul class="last simple">
+<li>All SetUID bits are stripped from the system.</li>
+<li>All partitions are mounted with the <code class="docutils literal notranslate"><span class="pre">nosuid</span></code> mount option.</li>
 </ul>
 </div>
 </li>
@@ -751,28 +736,28 @@ from writable filesystems.</p>
 <h4>System and user authentication separation<a class="headerlink" href="#system-and-user-authentication-separation" title="Permalink to this headline">¶</a></h4>
 <p>Storage space for system and user authentication secrets are separated.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="non-persistency-of-potential-system-or-user-session-compromise">
 <h4>Non-persistency of potential system or user session compromise<a class="headerlink" href="#non-persistency-of-potential-system-or-user-session-compromise" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Privileged user (i.e., <code class="docutils literal notranslate"><span class="pre">root</span></code>) level compromises are mitigated against
+<li><p class="first">Privileged user (i.e., <code class="docutils literal notranslate"><span class="pre">root</span></code>) level compromises are mitigated against
 persistency methods which make use of the filesystem. Such compromises would
 have their lifecycles limited to system boot lifetime (uptime).</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress.</p>
 </div>
 </li>
-<li><p>Unprivileged user level (i.e., the current user) compromises are mitigated
+<li><p class="first">Unprivileged user level (i.e., the current user) compromises are mitigated
 against persistency methods which make use of the filesystem. Such
 compromises would have their lifecycles limited to the compromised user
 session lifetime.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -780,23 +765,23 @@ session lifetime.</p>
 <div class="section" id="journaling">
 <h4>Journaling<a class="headerlink" href="#journaling" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>“Append-mostly” log storage and automatic rotation using
+<li><p class="first">“Append-mostly” log storage and automatic rotation using
 <code class="docutils literal notranslate"><span class="pre">systemd-journald</span></code>.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 alpha</strong>.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 alpha</strong>.</p>
 </div>
 </li>
-<li><p>Append-only log storage and automatic log rotation.</p>
+<li><p class="first">Append-only log storage and automatic log rotation.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Log forwarding to remote storage.</p>
+<li><p class="first">Log forwarding to remote storage.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -804,49 +789,49 @@ session lifetime.</p>
 <div class="section" id="robust-update-system">
 <h4>Robust update system<a class="headerlink" href="#robust-update-system" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Atomic, in-background and non-intrusive upgrade mechanism using A/B
+<li><p class="first">Atomic, in-background and non-intrusive upgrade mechanism using A/B
 partitions (similar to Android or ChromeOS).</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
-<li><p>Fallback version available in case of unpredicted failure or bug.</p>
+<li><p class="first">Fallback version available in case of unpredicted failure or bug.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
-<li><p>Update transport protection:</p>
+<li><p class="first">Update transport protection:</p>
 <p>Transport using TLS 1.2 or 1.3 only, with pinned root CA certificate.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
-<li><p>Update integrity protection and verification:</p>
+<li><p class="first">Update integrity protection and verification:</p>
 <p>Signed updates using <a class="reference external" href="https://jedisct1.github.io/minisign/">minisign</a>.</p>
 <div class="tip admonition">
-<p class="admonition-title">Status</p>
-<p>Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/9">clipos/bugs#9</a>).</p>
 </div>
 </li>
-<li><p>Supports updating both the system and other environments.</p>
+<li><p class="first">Supports updating both the system and other environments.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Rollback protection.</p>
+<li><p class="first">Rollback protection.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Server-side channel and version selection for delivery to clients.</p>
+<li><p class="first">Server-side channel and version selection for delivery to clients.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -855,8 +840,8 @@ partitions (similar to Android or ChromeOS).</p>
 <h4>Remote attestation<a class="headerlink" href="#remote-attestation" title="Permalink to this headline">¶</a></h4>
 <p>Remote version, configuration and system state attestation using the TPM.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="linux-kernel-confidentiality">
@@ -867,21 +852,21 @@ required, an additional kernel image and initramfs will be stored inside the
 encrypted system partition. The initial initramfs will thus kexec the new
 kernel and initramfs during boot time.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="linux-kernel-provided-security">
 <h4>Linux kernel provided security<a class="headerlink" href="#linux-kernel-provided-security" title="Permalink to this headline">¶</a></h4>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
 </div>
 </div>
 <div class="section" id="linux-kernel-hardening">
 <h4>Linux kernel hardening<a class="headerlink" href="#linux-kernel-hardening" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>The kernel is carefully configured and only strictly required options are
+<li><p class="first">The kernel is carefully configured and only strictly required options are
 enabled. Each rationale behind those options is documented.</p>
 <p>Hardware support uses kernel modules which are loaded following tailored
 profiles (per hardware platform). Kernel modules loading is disabled at a
@@ -890,8 +875,8 @@ and shall not require any additional kernel module later on.</p>
 <p>The kernel protects itself from attacks originating from userspace (<code class="docutils literal notranslate"><span class="pre">root</span></code>
 user included).</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress. Please refer to the <a class="reference internal" href="kernel.html#kernel"><span class="std std-ref">Kernel</span></a> page for details.</p>
 </div>
 </li>
 </ul>
@@ -899,30 +884,30 @@ user included).</p>
 <div class="section" id="full-sub-environment-isolation-using-hardware-assisted-virtualization">
 <h4>Full sub-environment isolation using hardware-assisted virtualization<a class="headerlink" href="#full-sub-environment-isolation-using-hardware-assisted-virtualization" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Support for KVM based virtualization and paravirtualized drivers only
+<li><p class="first">Support for KVM based virtualization and paravirtualized drivers only
 (i.e., <code class="docutils literal notranslate"><span class="pre">virtio</span></code> drivers).</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Minimal QEMU configuration.</p>
+<li><p class="first">Minimal QEMU configuration.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>QEMU process instances are confined.</p>
+<li><p class="first">QEMU process instances are confined.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Alternative system virtualizer as a replacement for QEMU (nemu, crosvm,
+<li><p class="first">Alternative system virtualizer as a replacement for QEMU (nemu, crosvm,
 etc.).</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -930,17 +915,17 @@ etc.).</p>
 <div class="section" id="safe-operation-of-untrusted-filesystem">
 <h4>Safe operation of untrusted filesystem<a class="headerlink" href="#safe-operation-of-untrusted-filesystem" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>FUSE-based userspace mount of untrusted file systems.</p>
+<li><p class="first">FUSE-based userspace mount of untrusted file systems.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Virtual machine-based in-kernel mounting and sharing using NFS, CIFS, 9P,
+<li><p class="first">Virtual machine-based in-kernel mounting and sharing using NFS, CIFS, 9P,
 VirtFS, etc.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -948,23 +933,23 @@ VirtFS, etc.</p>
 <div class="section" id="network-setup-isolation-and-access-control">
 <h4>Network setup, isolation and access control<a class="headerlink" href="#network-setup-isolation-and-access-control" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Automatic and manual network configuration.</p>
+<li><p class="first">Automatic and manual network configuration.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Automatic IPsec tunnel setup once network access is configured.</p>
+<li><p class="first">Automatic IPsec tunnel setup once network access is configured.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Access control, isolation and IPSec usage enforcement for host and
+<li><p class="first">Access control, isolation and IPSec usage enforcement for host and
 environments.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -972,50 +957,50 @@ environments.</p>
 <div class="section" id="multi-level-environment">
 <h4>Multi-level environment<a class="headerlink" href="#multi-level-environment" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Host and sub-environment service and application isolation using Linux
+<li><p class="first">Host and sub-environment service and application isolation using Linux
 namespaces, cgroups, seccomp-bpf filters, etc.</p>
 <div class="notice admonition">
-<p class="admonition-title">Status</p>
-<p>In progress.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">In progress.</p>
 </div>
 </li>
-<li><p>Multi-level enforcement using an LSM inspired from Vserver.</p>
+<li><p class="first">Multi-level enforcement using an LSM inspired from Vserver.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Configurable sub environments restrictions and network access.</p>
+<li><p class="first">Configurable sub environments restrictions and network access.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Safe and controlled communication to the host:</p>
+<li><p class="first">Safe and controlled communication to the host:</p>
 <ul class="simple">
-<li><p>Unix sockets or encrypted TCP sockets (SSH)</p></li>
-<li><p>vsocks (virtio)</p></li>
+<li>Unix sockets or encrypted TCP sockets (SSH)</li>
+<li>vsocks (virtio)</li>
 </ul>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Host controlled inter-level communication:</p>
+<li><p class="first">Host controlled inter-level communication:</p>
 <ul class="simple">
-<li><p>File passing diode</p></li>
-<li><p>Encrypting / decryption diode</p></li>
-<li><p>Smartcard proxy and command filtering (see <em>Caml Crush</em> project)</p></li>
+<li>File passing diode</li>
+<li>Encrypting / decryption diode</li>
+<li>Smartcard proxy and command filtering (see <em>Caml Crush</em> project)</li>
 </ul>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Intra-level application isolation using Flatpak.</p>
+<li><p class="first">Intra-level application isolation using Flatpak.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -1023,36 +1008,36 @@ namespaces, cgroups, seccomp-bpf filters, etc.</p>
 <div class="section" id="remote-administration-and-fleet-management">
 <h4>Remote administration and fleet management<a class="headerlink" href="#remote-administration-and-fleet-management" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="automatic-provisioning-and-installation">
 <h4>Automatic provisioning and installation<a class="headerlink" href="#automatic-provisioning-and-installation" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="safe-recovery-mode-for-backup-and-administration-performed-recovery">
 <h4>Safe recovery mode for backup and administration performed recovery<a class="headerlink" href="#safe-recovery-mode-for-backup-and-administration-performed-recovery" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="mandatory-access-control">
 <h4>Mandatory Access Control<a class="headerlink" href="#mandatory-access-control" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="certification-and-common-criteria-evaluation">
 <h4>Certification and Common Criteria Evaluation<a class="headerlink" href="#certification-and-common-criteria-evaluation" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 </div>
@@ -1061,29 +1046,29 @@ namespaces, cgroups, seccomp-bpf filters, etc.</p>
 <div class="section" id="user-data-confidentiality-and-integrity">
 <h4>User data confidentiality and integrity<a class="headerlink" href="#user-data-confidentiality-and-integrity" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>User data partition protected by DM-Crypt + DM-Integrity with a user provided
+<li><p class="first">User data partition protected by DM-Crypt + DM-Integrity with a user provided
 secret.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>User storage partition unlocking with password.</p>
+<li><p class="first">User storage partition unlocking with password.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>User storage partition unlocking with smartcard.</p>
+<li><p class="first">User storage partition unlocking with smartcard.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>User storage partition unlocking with a security token (e.g., U2F/FIDO).</p>
+<li><p class="first">User storage partition unlocking with a security token (e.g., U2F/FIDO).</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -1091,22 +1076,22 @@ secret.</p>
 <div class="section" id="device-access-control">
 <h4>Device access control<a class="headerlink" href="#device-access-control" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Device whitelisting.</p>
+<li><p class="first">Device whitelisting.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Multi-level aware device assignation.</p>
+<li><p class="first">Multi-level aware device assignation.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>USB device management (e.g., USBGuard).</p>
+<li><p class="first">USB device management (e.g., USBGuard).</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -1117,34 +1102,34 @@ secret.</p>
 <div class="section" id="trusted-graphical-interface">
 <h4>Trusted graphical interface<a class="headerlink" href="#trusted-graphical-interface" title="Permalink to this headline">¶</a></h4>
 <ul>
-<li><p>Root compositor.</p>
+<li><p class="first">Root compositor.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Wayland protocol based environment.</p>
+<li><p class="first">Wayland protocol based environment.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Trusted graphical components and display (trusted panel).</p>
+<li><p class="first">Trusted graphical components and display (trusted panel).</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Protected lock-screen.</p>
+<li><p class="first">Protected lock-screen.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
-<li><p>Protected input.</p>
+<li><p class="first">Protected input.</p>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </li>
 </ul>
@@ -1152,15 +1137,15 @@ secret.</p>
 <div class="section" id="restricted-users">
 <h4>Restricted users<a class="headerlink" href="#restricted-users" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 <div class="section" id="application-access-control">
 <h4>Application access control<a class="headerlink" href="#application-access-control" title="Permalink to this headline">¶</a></h4>
 <div class="warning admonition">
-<p class="admonition-title">Status</p>
-<p>Not started.</p>
+<p class="first admonition-title">Status</p>
+<p class="last">Not started.</p>
 </div>
 </div>
 </div>
@@ -1168,133 +1153,134 @@ secret.</p>
 <h3>Deployment profiles<a class="headerlink" href="#deployment-profiles" title="Permalink to this headline">¶</a></h3>
 <p>Here is the list of the considered deployment profiles for the CLIP OS images:</p>
 <ul class="simple">
-<li><p>Desktop environment</p></li>
-<li><p>Administrator dedicated environment</p></li>
-<li><p>Server environment</p></li>
+<li>Desktop environment</li>
+<li>Administrator dedicated environment</li>
+<li>Server environment</li>
 </ul>
 </div>
 </div>
 <div class="section" id="assets-summary">
 <h2>Assets summary<a class="headerlink" href="#assets-summary" title="Permalink to this headline">¶</a></h2>
 <p>Here is a list of all the assets to protect with their protection level:</p>
-<table class="colwidths-given docutils align-default">
+<table border="1" class="colwidths-given docutils">
 <colgroup>
-<col style="width: 63%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
+<col width="63%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Asset</p></th>
-<th class="head"><p>Integrity</p></th>
-<th class="head"><p>Confidentiality</p></th>
-<th class="head"><p>Availability</p></th>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Asset</th>
+<th class="head">Integrity</th>
+<th class="head">Confidentiality</th>
+<th class="head">Availability</th>
 </tr>
 </thead>
-<tbody>
-<tr class="row-even"><td><p>Bootloader code</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tbody valign="top">
+<tr class="row-even"><td>Bootloader code</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-odd"><td><p>Bootloader configuration</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>Bootloader configuration</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td></td>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td><p>Linux kernel binary</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>Linux kernel binary</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td><p>Initramfs</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-even"><td>Initramfs</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-odd"><td><p>Linux kernel command line <a class="footnote-reference brackets" href="#cmdline" id="id6">1</a></p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>Linux kernel command line <a class="footnote-reference" href="#cmdline" id="id6">[1]</a></td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td></td>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td><p>Linux kernel in-memory code and data</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>Linux kernel in-memory code and data</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td><p>Applications in-memory code and data</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
+<tr class="row-even"><td>Applications in-memory code and data</td>
+<td>✔</td>
+<td>✔</td>
+<td>✘</td>
 </tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td></td>
-<td></td>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-even"><td><p>System application binaries</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-even"><td>System application binaries</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-odd"><td><p>System application resources</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>System application resources</td>
+<td>✔</td>
+<td>✘</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td><p>System application configuration</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
+<tr class="row-even"><td>System application configuration</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
 </tr>
-<tr class="row-odd"><td><p>System authentication secrets</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
+<tr class="row-odd"><td>System authentication secrets</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
 </tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td></td>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
 </tr>
-<tr class="row-odd"><td><p>User application binaries</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✘</p></td>
+<tr class="row-odd"><td>User application binaries</td>
+<td>✔</td>
+<td>✘</td>
+<td>✘</td>
 </tr>
-<tr class="row-even"><td><p>User application resources</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
-<td><p>✘</p></td>
+<tr class="row-even"><td>User application resources</td>
+<td>✔</td>
+<td>✘</td>
+<td>✘</td>
 </tr>
-<tr class="row-odd"><td><p>User application configuration</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✘</p></td>
+<tr class="row-odd"><td>User application configuration</td>
+<td>✔</td>
+<td>✔</td>
+<td>✘</td>
 </tr>
-<tr class="row-even"><td><p>User authentication secrets</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
-<td><p>✔</p></td>
+<tr class="row-even"><td>User authentication secrets</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
 </tr>
 </tbody>
 </table>
-<dl class="footnote brackets">
-<dt class="label" id="cmdline"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
-<dd><p>The Linux kernel command line holds the DM-Verity root hash of
-the system partition.</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="cmdline" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[1]</a></td><td>The Linux kernel command line holds the DM-Verity root hash of
+the system partition.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

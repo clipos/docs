@@ -116,10 +116,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/contribute.html">How to contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../toolkit/derive.html">How to derive this project</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Toolkit API references</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../toolkit/cosmk-api.html"><code class="docutils literal notranslate"><span class="pre">cosmk</span></code> Python API</a></li>
-</ul>
 
             
           
@@ -196,89 +192,99 @@ only. Instrumentation features must be configured before project builds in
 directory. See <code class="docutils literal notranslate"><span class="pre">toolkit/instrumentation.toml.example</span></code> to get good default
 values for development.</p>
 <ul>
-<li><p><strong>instrumented-core:</strong> Install additional software development tools in the
+<li><p class="first"><strong>instrumented-core:</strong> Install additional software development tools in the
 Core, such as Bash, Vim, tmux, tree, strace, grep, ip, less, gdb, tcpdump,
 etc. (This is a non-exhautive list, for the complete list please refer to
-the <code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-core</span></code> ebuild)</p></li>
-<li><p><strong>passwordless-root-login:</strong> Enable local and remote (SSH) root login
+the <code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-core</span></code> ebuild)</p>
+</li>
+<li><p class="first"><strong>passwordless-root-login:</strong> Enable local and remote (SSH) root login
 without password.</p>
 <div class="warning admonition">
-<p class="admonition-title">Dependency</p>
-<p>To use this instrumentation feature, you must also enable
+<p class="first admonition-title">Dependency</p>
+<p class="last">To use this instrumentation feature, you must also enable
 <strong>instrumented-core</strong>.</p>
 </div>
 </li>
-<li><p><strong>allow-ssh-root-login:</strong> Configure SSH in order to allow a developer to
+<li><p class="first"><strong>allow-ssh-root-login:</strong> Configure SSH in order to allow a developer to
 log in as root (account must be enabled with the appropriate
 instrumentation feature) via SSH and without any password thanks to an
 installed SSH key pair (an SSH key pair will be generated in the cache
 directory at first usage of this instrumentation feature).</p>
 <div class="warning admonition">
-<p class="admonition-title">Dependency</p>
-<p>To use this instrumentation feature, you must also enable
+<p class="first admonition-title">Dependency</p>
+<p class="last">To use this instrumentation feature, you must also enable
 <strong>passwordless-root-login</strong> and <strong>instrumented-core</strong>.</p>
 </div>
 </li>
-<li><p><strong>dev-friendly-bootloader:</strong> Configure the bootloader to provide handy
+<li><p class="first"><strong>dev-friendly-bootloader:</strong> Configure the bootloader to provide handy
 features to developer (i.e.  “Reboot into firmware”) and set a smaller
-timeout before loading the default boot entry.</p></li>
-<li><p><strong>instrumented-initramfs:</strong> Install additional software development tools in
+timeout before loading the default boot entry.</p>
+</li>
+<li><p class="first"><strong>instrumented-initramfs:</strong> Install additional software development tools in
 the initramfs, such as strace, ltrace, less, grep, gdb, etc. (This is a
 non-exhautive list, for the complete list please refer to the
-<code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-efiboot</span></code> ebuild).</p></li>
-<li><p><strong>soften-kernel-configuration:</strong> Lower Linux kernel security parameters at
-runtime.</p></li>
-<li><p><strong>initramfs-no-require-tpm:</strong> Do not require a TPM 2.0 for the LUKS disk
+<code class="docutils literal notranslate"><span class="pre">clipos-meta/clipos-efiboot</span></code> ebuild).</p>
+</li>
+<li><p class="first"><strong>soften-kernel-configuration:</strong> Lower Linux kernel security parameters at
+runtime.</p>
+</li>
+<li><p class="first"><strong>initramfs-no-require-tpm:</strong> Do not require a TPM 2.0 for the LUKS disk
 partition decryption.  Therefore, in case of missing TPM 2.0, LUKS passphrase
-will be prompted on the active console (either tty or serial console ttyS0).</p></li>
-<li><p><strong>initramfs-no-tpm-lockout:</strong> Do not lockout TPM (brute-force attack
+will be prompted on the active console (either tty or serial console ttyS0).</p>
+</li>
+<li><p class="first"><strong>initramfs-no-tpm-lockout:</strong> Do not lockout TPM (brute-force attack
 protection) when interacting with the TPM 2.0 (check out the TPM
 documentation for the “noDA” attribute and for “dictionary attack
-protections”).</p></li>
-<li><p><strong>debuggable-initramfs:</strong> Activate alterations to initramfs/efiboot packages
-intended to ease their debugging (e.g. debugging symbols):</p></li>
-<li><p><strong>breakpointed-initramfs:</strong> Enable dracut breakpoints with interactive shell
+protections”).</p>
+</li>
+<li><p class="first"><strong>debuggable-initramfs:</strong> Activate alterations to initramfs/efiboot packages
+intended to ease their debugging (e.g. debugging symbols):</p>
+</li>
+<li><p class="first"><strong>breakpointed-initramfs:</strong> Enable dracut breakpoints with interactive shell
 drop-outs.</p>
 <div class="important admonition">
-<p class="admonition-title">Important note</p>
-<p>This feature requires multiple interactions on the console (or serial
+<p class="first admonition-title">Important note</p>
+<p class="last">This feature requires multiple interactions on the console (or serial
 console for the QEMU target) to make the boot sequence proceed to the
 final pivot_root(2).</p>
 </div>
 <div class="warning admonition">
-<p class="admonition-title">Dependency</p>
-<p>To use this instrumentation feature, you must also enable
+<p class="first admonition-title">Dependency</p>
+<p class="last">To use this instrumentation feature, you must also enable
 <strong>instrumented-initramfs</strong>.</p>
 </div>
 </li>
-<li><p><strong>early-root-shell:</strong> Spawn a persistent root interactive shell on a serial
+<li><p class="first"><strong>early-root-shell:</strong> Spawn a persistent root interactive shell on a serial
 console or an tty very early in the boot up sequence (right after the
 pivot_root(2) done by the initramfs) in order to ease systemd debugging
 tasks. See <a class="reference external" href="https://freedesktop.org/wiki/Software/systemd/Debugging">systemd debugging</a> for more
 information.</p>
 <div class="warning admonition">
-<p class="admonition-title">Dependency</p>
-<p>To use this instrumentation feature, you must also enable
+<p class="first admonition-title">Dependency</p>
+<p class="last">To use this instrumentation feature, you must also enable
 <strong>instrumented-core</strong>.</p>
 </div>
 </li>
-<li><p><strong>debuggable-kernel:</strong> Activates features for debugging purposes in the
+<li><p class="first"><strong>debuggable-kernel:</strong> Activates features for debugging purposes in the
 kernel (KALLSYMS, core dump production, etc.) with logging output sent on the
-serial port (ttyS0) early on boot up sequence.</p></li>
-<li><p><strong>verbose-systemd:</strong> Sets parameters on the kernel command line to make
+serial port (ttyS0) early on boot up sequence.</p>
+</li>
+<li><p class="first"><strong>verbose-systemd:</strong> Sets parameters on the kernel command line to make
 systemd very verbose on the defined console output (ttyS0 serial port by
-default):</p></li>
-<li><p><strong>coredump-handler:</strong> Configure systemd in order to install the
+default):</p>
+</li>
+<li><p class="first"><strong>coredump-handler:</strong> Configure systemd in order to install the
 systemd-coredump to allow kernel produce core dump files.</p>
 <div class="warning admonition">
-<p class="admonition-title">Dependency</p>
-<p>To use this instrumentation feature, you must also enable
+<p class="first admonition-title">Dependency</p>
+<p class="last">To use this instrumentation feature, you must also enable
 <strong>debuggable-kernel</strong>.</p>
 </div>
 </li>
-<li><p><strong>test-update:</strong> In addition to the normal build, create everything required
+<li><p class="first"><strong>test-update:</strong> In addition to the normal build, create everything required
 to test updates. This creates a second build with the same content but a
-higher version.</p></li>
+higher version.</p>
+</li>
 </ul>
 </div>
 </div>
