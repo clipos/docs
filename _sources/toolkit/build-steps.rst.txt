@@ -18,13 +18,7 @@ Building the documentation
 --------------------------
 
 The project documentation is built with Sphinx. The documentation sources are
-split among three directories:
-
-  * the documentation root and Sphinx configuration in ``toolkit/docroot``;
-  * the source of the toolkit section of the documentation in
-    ``toolkit/doc``;
-  * and the source of the CLIP OS product documentation in
-    ``products/clipos/doc``.
+available in the ``docs-src`` directory.
 
 To build the documentation and to open it in your browser, run:
 
