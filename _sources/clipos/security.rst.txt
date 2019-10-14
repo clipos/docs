@@ -131,12 +131,10 @@ Built from source
   nightly clean builds of the entire project.
 
   .. admonition:: Status
-     :class: notice
+     :class: tip
 
-     In progress:
-
-     * Basic CI infrastrucure is operational.
-     * Build results are not yet publicly available.
+     Completed in version **5.0 beta** (`clipos/bugs#32
+     <https://github.com/clipos/bugs/issues/32>`_).
 
 "Bit-exact" reproducible builds
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

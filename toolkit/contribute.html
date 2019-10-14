@@ -115,7 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#bug-reports">Bug reports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#submitting-patches-and-code-review">Submitting patches and code review</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#low-difficulty-issues">Low difficulty issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#buildbot">Buildbot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#discussion-space">Discussion space</a></li>
 </ul>
 </li>
@@ -219,11 +219,14 @@ provided over HTTPS (i.e. no SSH).</p>
 identify low difficulty tasks for first time contributors to the project. You
 may find them in the <a class="reference external" href="https://github.com/clipos/bugs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">bugs repository</a>.</p>
 </div>
-<div class="section" id="buildbot">
-<h2>Buildbot<a class="headerlink" href="#buildbot" title="Permalink to this headline">¶</a></h2>
-<p>We are still setting up our <a class="reference external" href="https://buildbot.net">Buildbot</a> instance. It
-will be available soon at <a class="reference external" href="https://buildbot.clip-os.org">buildbot.clip-os.org</a> and build artifacts will be available from
-<a class="reference external" href="https://buildbot.clip-os.org/artifacts/">buildbot.clip-os.org/artifacts</a>.</p>
+<div class="section" id="continuous-integration">
+<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
+<p>We use <a class="reference external" href="https://docs.gitlab.com/ee/ci/">GitLab CI</a> to automatically build
+CLIP OS and the projects composing it. The GitLab CI configuration is available
+in the <a class="reference external" href="https://github.com/clipos/ci">CI repository</a>, the build status can be
+tracked on <cite>GitLab &lt;https://gitlab.com/CLIPOS/ci/pipelines&gt;</cite> and the build
+artifacts for each pipeline are available at <cite>files.clip-os.org
+&lt;https://files.clip-os.org&gt;</cite>.</p>
 </div>
 <div class="section" id="discussion-space">
 <h2>Discussion space<a class="headerlink" href="#discussion-space" title="Permalink to this headline">¶</a></h2>

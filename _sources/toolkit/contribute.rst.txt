@@ -49,13 +49,15 @@ identify low difficulty tasks for first time contributors to the project. You
 may find them in the `bugs repository
 <https://github.com/clipos/bugs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22>`_.
 
-Buildbot
---------
+Continuous integration
+----------------------
 
-We are still setting up our `Buildbot <https://buildbot.net>`_ instance. It
-will be available soon at `buildbot.clip-os.org
-<https://buildbot.clip-os.org>`_ and build artifacts will be available from
-`buildbot.clip-os.org/artifacts <https://buildbot.clip-os.org/artifacts/>`_.
+We use `GitLab CI <https://docs.gitlab.com/ee/ci/>`_ to automatically build
+CLIP OS and the projects composing it. The GitLab CI configuration is available
+in the `CI repository <https://github.com/clipos/ci>`_, the build status can be
+tracked on `GitLab <https://gitlab.com/CLIPOS/ci/pipelines>` and the build
+artifacts for each pipeline are available at `files.clip-os.org
+<https://files.clip-os.org>`.
 
 Discussion space
 ----------------
