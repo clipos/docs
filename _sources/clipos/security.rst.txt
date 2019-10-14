@@ -496,7 +496,7 @@ System administration roles separation
   .. admonition:: Status
      :class: notice
 
-     In progress. Initial support available in versions **5.0 beta**
+     In progress. Initial support available in version **5.0 beta**
      (`clipos/bugs#17 <https://github.com/clipos/bugs/issues/17>`_).
 
 * Auditor (audit) role.
@@ -504,7 +504,7 @@ System administration roles separation
   .. admonition:: Status
      :class: notice
 
-     In progress. Initial support available in versions **5.0 beta**
+     In progress. Initial support available in version **5.0 beta**
      (`clipos/bugs#17 <https://github.com/clipos/bugs/issues/17>`_).
 
 * No privilege elevation mechanism support:
@@ -749,24 +749,27 @@ Network setup, isolation and access control
 * Automatic and manual network configuration.
 
   .. admonition:: Status
-     :class: warning
+     :class: notice
 
-     Not started.
+     In progress. Initial support available in version **5.0 beta**
+     (`clipos/bugs#20 <https://github.com/clipos/bugs/issues/20>`_).
 
 * Automatic IPsec tunnel setup once network access is configured.
 
   .. admonition:: Status
-     :class: warning
+     :class: notice
 
-     Not started.
+     In progress. Initial support available in version **5.0 beta**
+     (`clipos/bugs#20 <https://github.com/clipos/bugs/issues/20>`_).
 
-* Access control, isolation and IPSec usage enforcement for host and
+* Access control, isolation and IPsec usage enforcement for host and
   environments.
 
   .. admonition:: Status
-     :class: warning
+     :class: notice
 
-     Not started.
+     In progress. Initial support available in version **5.0 beta**
+     (`clipos/bugs#20 <https://github.com/clipos/bugs/issues/20>`_).
 
 Multi-level environment
 ^^^^^^^^^^^^^^^^^^^^^^^
