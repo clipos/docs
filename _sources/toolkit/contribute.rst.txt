@@ -55,9 +55,9 @@ Continuous integration
 We use `GitLab CI <https://docs.gitlab.com/ee/ci/>`_ to automatically build
 CLIP OS and the projects composing it. The GitLab CI configuration is available
 in the `CI repository <https://github.com/clipos/ci>`_, the build status can be
-tracked on `GitLab <https://gitlab.com/CLIPOS/ci/pipelines>` and the build
+tracked on `GitLab <https://gitlab.com/CLIPOS/ci/pipelines>`_ and the build
 artifacts for each pipeline are available at `files.clip-os.org
-<https://files.clip-os.org>`.
+<https://files.clip-os.org>`_.
 
 Discussion space
 ----------------

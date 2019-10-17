@@ -212,6 +212,10 @@ your userland:
         user = "myusername"  # replace with your current username
         group = "kvm"
 
+- **Optionnal:** **Sphinx** and the **Read the Docs Theme** to build the
+  documentation. If unavailable, **Podman** or **Docker** will be used to run
+  Sphinx inside a container.
+
 .. _dependencies-installation-on-supported-linux-distributions:
 
 Dependencies installation on supported Linux-distributions

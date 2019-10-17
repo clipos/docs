@@ -108,6 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
 </ul>
 </li>
@@ -269,6 +270,27 @@ to your user <code class="docutils literal notranslate"><span class="pre">$PATH<
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="virtual-testbed-setup">
+<h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to test some functionalities of a CLIP OS system, you will need a
+virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> <span class="nb">pushd</span> testbed/boxes/ipsec-gw
+<span class="gp">(toolkit) $</span> ./yaml2json template.yml <span class="p">|</span> packer build -force -
+<span class="gp">(toolkit) $</span> vagrant box add --force --name <span class="s2">&quot;clipos-testbed/ipsec-gw&quot;</span> output/package.box
+<span class="gp">(toolkit) $</span> <span class="nb">popd</span>
+<span class="gp">(toolkit) $</span> <span class="nb">pushd</span> testbed
+<span class="gp">(toolkit) $</span> vagrant up
+</pre></div>
+</div>
+<p>This will setup virtual networks using <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> and create
+a Debian virtual machine running the following services:</p>
+<blockquote>
+<div><ul class="simple">
+<li>IPsec gateway (<code class="docutils literal notranslate"><span class="pre">strongSwan</span></code>)</li>
+<li>Update server (<code class="docutils literal notranslate"><span class="pre">nginx</span></code>)</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="building-a-qemu-image-and-running-using-qemu-kvm">
 <h2>Building a QEMU image and running using QEMU/KVM<a class="headerlink" href="#building-a-qemu-image-and-running-using-qemu-kvm" title="Permalink to this headline">¶</a></h2>
