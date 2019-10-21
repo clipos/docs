@@ -317,28 +317,8 @@ linux-hardened to disable their unprivileged use.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_SLAB_HARDENED=y</code></dt>
-<dd><p>Add various little checks to harden the slab allocator. <a class="reference internal" href="#linux-hardened" id="id2">[linux-hardened]</a></p>
-</dd></dl>
-
-<dl class="describe">
-<dt>
 <code class="descname">CONFIG_SLAB_CANARY=y</code></dt>
-<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
-</dd></dl>
-
-<dl class="describe">
-<dt>
-<code class="descname">CONFIG_SLAB_SANITIZE=y</code></dt>
-<dd><p>Zero-fill slab allocations on free to reduce risks of information leaks and
-help mitigate use-after-free vulnerabilities. <a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
-<dl class="describe">
-<dt>
-<code class="descname">CONFIG_SLAB_SANITIZE_VERIFY=y</code></dt>
-<dd><p>Verify that newly allocated slab allocations are zeroed to detect
-write-after-free bugs. <a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
-</dd></dl>
-
+<dd><p>Place canaries at the end of slab allocations. <a class="reference internal" href="#linux-hardened" id="id2">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -483,7 +463,9 @@ potential source of ROP gadgets.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_X86_VSYSCALL_EMULATION=n</code></dt>
+<code class="descname">CONFIG_X86_VSYSCALL_EMULATE=n</code></dt>
+<dt>
+<code class="descname">CONFIG_LEGACY_VSYSCALL_XONLY=n</code></dt>
 <dd><p>See above.</p>
 </dd></dl>
 
@@ -861,9 +843,9 @@ option has an impact.</p>
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_PAGE_POISONING=n</code></dt>
-<dd><p>We choose to poison pages with zeroes and thus prefer using the simpler
-PaX-based implementation provided by linux-hardened (see
-<code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_SANITIZE</span></code> below).</p>
+<dd><p>We choose to poison pages with zeroes and thus prefer using
+<code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> in combination with linux-hardened’s
+<code class="docutils literal notranslate"><span class="pre">PAGE_SANITIZE_VERIFY</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -915,7 +897,7 @@ heap overflow exploits and information leaks.</p>
 <code class="descname">CONFIG_FORTIFY_SOURCE_STRICT_STRING=n</code></dt>
 <dd><p>This extends <code class="docutils literal notranslate"><span class="pre">FORTIFY_SOURCE</span></code> to intra-object overflow checking. It is
 useful to find bugs but not recommended for a production kernel yet.
-<a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -993,29 +975,53 @@ parts of the system containing executable programs).</p>
 <dt>
 <code class="descname">CONFIG_SECURITY_PERF_EVENTS_RESTRICT=y</code></dt>
 <dd><p>See documentation about the <code class="docutils literal notranslate"><span class="pre">kernel.perf_event_paranoid</span></code> sysctl below.
-<a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
-</dd></dl>
-
-<dl class="describe">
-<dt>
-<code class="descname">CONFIG_PAGE_SANITIZE=y</code></dt>
-<dd><p>Zero-fill page allocations on free to reduce risks of information leaks and
-help mitigate a subset of use-after-free vulnerabilities. This is a simpler
-equivalent to upstream’s <code class="docutils literal notranslate"><span class="pre">CONFIG_PAGE_POISONING_ZERO</span></code>. <a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
-</dd></dl>
-
-<dl class="describe">
-<dt>
-<code class="descname">CONFIG_PAGE_SANITIZE_VERIFY=y</code></dt>
-<dd><p>Verify that newly allocated pages are zeroed to detect write-after-free
-bugs. <a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SECURITY_TIOCSTI_RESTRICT=y</code></dt>
 <dd><p>This prevents unprivileged users from using the TIOCSTI ioctl to inject
-commands into other processes which share a tty session. <a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
+commands into other processes that share a tty session. <a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_GCC_PLUGIN_STACKLEAK=y</code></dt>
+<dt>
+<code class="descname">CONFIG_STACKLEAK_TRACK_MIN_SIZE=100</code></dt>
+<dt>
+<code class="descname">CONFIG_STACKLEAK_METRICS=n</code></dt>
+<dt>
+<code class="descname">CONFIG_STACKLEAK_RUNTIME_DISABLE=n</code></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">STACKLEAK</span></code> erases the kernel stack before returning from system calls,
+leaving it initialized to a poison value. This both reduces the information
+that kernel stack leak bugs can reveal and the exploitability of uninitialized
+stack variables. However, it does not cover functions reaching the same stack
+depth as prior functions during the same system call.</p>
+<p>It used to also block kernel stack depth overflows caused by <code class="docutils literal notranslate"><span class="pre">alloca()</span></code>, such
+as Stack Clash attacks. We maintained this functionality for our kernel for a
+while but eventually <a class="reference external" href="https://github.com/clipos/src_external_linux/commit/3e5f9114fc2f70f6d2ae5d10db10869e0564eb03">dropped it</a>.</p>
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_INIT_ON_FREE_DEFAULT_ON=y</code></dt>
+<dt>
+<code class="descname">CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y</code></dt>
+<dd><p>These set <code class="docutils literal notranslate"><span class="pre">init_on_free=1</span></code> and <code class="docutils literal notranslate"><span class="pre">init_on_alloc=1</span></code> on the kernel command
+line. See the documentation of these kernel parameters for details.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_PAGE_SANITIZE_VERIFY=y</code></dt>
+<dt>
+<code class="descname">CONFIG_SLAB_SANITIZE_VERIFY=y</code></dt>
+<dd><p>Verify that newly allocated pages and slab allocations are zeroed to detect
+write-after-free bugs. This works in concert with <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> and is
+adjusted to not be redundant with <code class="docutils literal notranslate"><span class="pre">init_on_alloc</span></code>.
+<a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
 </dd></dl>
 
 <p>We incorporated most of the <em>Lockdown</em> patch series into the CLIP OS kernel,
@@ -1033,24 +1039,6 @@ already-root attacker. Among the several configuration options brought by
 <code class="descname">CONFIG_LOCK_DOWN_KERNEL=y</code></dt>
 <dt>
 <code class="descname">CONFIG_LOCK_DOWN_MANDATORY=y</code></dt>
-<dd></dd></dl>
-
-</div></blockquote>
-<p>Similarly, we incorporated the <em>STACKLEAK</em> feature ported from grsecurity/PaX
-by Alexander Popov and which should be merged upstream ultimately. <em>STACKLEAK</em>
-erases the kernel stack before returning from system calls in order to reduce
-the information which kernel stack leak bugs can reveal. It also blocks kernel
-stack depth overflows caused by <code class="docutils literal notranslate"><span class="pre">alloca()</span></code>, such as Stack Clash attacks.</p>
-<blockquote>
-<div><dl class="describe">
-<dt>
-<code class="descname">CONFIG_GCC_PLUGIN_STACKLEAK=y</code></dt>
-<dt>
-<code class="descname">CONFIG_STACKLEAK_TRACK_MIN_SIZE=100</code></dt>
-<dt>
-<code class="descname">CONFIG_STACKLEAK_METRICS=n</code></dt>
-<dt>
-<code class="descname">CONFIG_STACKLEAK_RUNTIME_DISABLE=n</code></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -1091,7 +1079,7 @@ users.</p>
 <code class="descname">kernel.perf_event_paranoid = 3</code></dt>
 <dd><p>This completely disallows unprivileged access to the <code class="docutils literal notranslate"><span class="pre">perf_event_open()</span></code>
 system call. This is actually not needed as we already enable
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
 <p>Note that this requires a patch included in linux-hardened (see <a class="reference external" href="https://lwn.net/Articles/696216/">here</a> for the reason why it is not upstream).
 Indeed, on a mainline kernel without such a patch, the above is equivalent
 to setting this sysctl to <code class="docutils literal notranslate"><span class="pre">2</span></code>, which would still allow the profiling of
@@ -1102,7 +1090,7 @@ user processes.</p>
 <dt>
 <code class="descname">kernel.tiocsti_restrict = 1</code></dt>
 <dd><p>This is already forced by the <code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_TIOCSTI_RESTRICT</span></code> kernel
-configuration option that we enable. <a class="reference internal" href="#linux-hardened" id="id12">[linux-hardened]</a></p>
+configuration option that we enable. <a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
 </dd></dl>
 
 <p>The following two sysctls help mitigating TOCTOU vulnerabilities by preventing
@@ -1149,13 +1137,13 @@ using it:</p>
 <dt>
 <code class="descname">kernel.deny_new_usb = 0</code></dt>
 <dd><p>The management of USB devices is handled at a higher level by CLIP OS.
-<a class="reference internal" href="#linux-hardened" id="id13">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">kernel.device_sidechannel_restrict = 1</code></dt>
-<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id14">[linux-hardened]</a></p>
+<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1191,7 +1179,7 @@ separate place.</p>
 <dd><p>This parameter provided by a linux-hardened patch (based on the PaX
 implementation) enables a very simple form of latent entropy extracted
 during system start-up and added to the entropy obtained with
-<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id15">[linux-hardened]</a></p>
+<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1243,10 +1231,10 @@ interesting options that we considered but eventually chose to not use are:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The <code class="docutils literal notranslate"><span class="pre">P</span></code> option, which enables poisoning on slab cache allocations,
-disables the <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE</span></code> and <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE_VERIFY</span></code> features from
-linux-hardened. As they respectively poison with zeroes on object freeing
-and check the zeroing on object allocations, we prefer enabling them
-instead of using <code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</li>
+disables the <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> and <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE_VERIFY</span></code> features. As
+they respectively poison with zeroes on object freeing and check the
+zeroing on object allocations, we prefer enabling them instead of using
+<code class="docutils literal notranslate"><span class="pre">slub_debug=P</span></code>.</li>
 <li>The <code class="docutils literal notranslate"><span class="pre">Z</span></code> option enables red zoning, i.e., it adds extra areas around
 slab objects that detect when one is overwritten past its real size.
 This can help detect overflows but we already rely on <code class="docutils literal notranslate"><span class="pre">SLAB_CANARY</span></code>
@@ -1266,8 +1254,6 @@ zone as it is supposed to be random.</li>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">slub_nomerge</span></code> is not used as we already set
 <code class="docutils literal notranslate"><span class="pre">CONFIG_SLAB_MERGE_DEFAULT=n</span></code> in the kernel configuration.</li>
-<li><code class="docutils literal notranslate"><span class="pre">page_poison</span></code> is not needed by the page poisoning implementation provided
-by linux-hardened patches.</li>
 <li><code class="docutils literal notranslate"><span class="pre">l1tf</span></code>: The built-in PTE Inversion mitigation is sufficient to mitigate
 the L1TF vulnerability as long as CLIP OS is not used as an hypervisor with
 untrusted guest VMs. If it were to be someday, <code class="docutils literal notranslate"><span class="pre">l1tf=full,force</span></code> should be
@@ -1280,12 +1266,27 @@ vulnerabilities in an arch-independent and more coarse-grained way. For now,
 we keep using arch-specific options for the sake of explicitness. Not setting
 this parameter equals setting it to <code class="docutils literal notranslate"><span class="pre">auto</span></code>, which itself does not update
 anything.</li>
+<li><code class="docutils literal notranslate"><span class="pre">init_on_free=1</span></code> is automatically set due to <code class="docutils literal notranslate"><span class="pre">INIT_ON_FREE_DEFAULT_ON</span></code>. It
+zero-fills page and slab allocations on free to reduce risks of information
+leaks and help mitigate a subset of use-after-free vulnerabilities.</li>
+<li><code class="docutils literal notranslate"><span class="pre">init_on_alloc=1</span></code> is automatically set due to <code class="docutils literal notranslate"><span class="pre">INIT_ON_ALLOC_DEFAULT_ON</span></code>.
+The purpose of this functionality is to eliminate several kinds of
+<em>uninitialized heap memory</em> flaws by zero-filling:<ul>
+<li>all page allocator and slab allocator memory when allocated: this is
+already guaranteed by our use of <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> in combination with
+<code class="docutils literal notranslate"><span class="pre">PAGE_SANITIZE_VERIFY</span></code> and <code class="docutils literal notranslate"><span class="pre">SLAB_SANITIZE_VERIFY</span></code> from linux-hardened,
+and thus has no effect;</li>
+<li>a few more <em>special</em> objects when allocated: these are the ones for which
+we enable <code class="docutils literal notranslate"><span class="pre">init_on_alloc</span></code> as they are not covered by the aforementioned
+combination of <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> and <code class="docutils literal notranslate"><span class="pre">SANITIZE_VERIFY</span></code> features.</li>
+</ul>
+</li>
 </ul>
 <p class="rubric">Citations and origin of some items</p>
 <table class="docutils citation" frame="void" id="linux-hardened" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>, <a class="fn-backref" href="#id12">11</a>, <a class="fn-backref" href="#id13">12</a>, <a class="fn-backref" href="#id14">13</a>, <a class="fn-backref" href="#id15">14</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
+<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
 </tbody>
 </table>
 </div>

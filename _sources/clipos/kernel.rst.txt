@@ -111,23 +111,11 @@ General setup
 
    Harden slab metadata
 
-.. describe:: CONFIG_SLAB_HARDENED=y
-
-   Add various little checks to harden the slab allocator. [linux-hardened]_
-
 .. describe:: CONFIG_SLAB_CANARY=y
 
    Place canaries at the end of slab allocations. [linux-hardened]_
 
-.. describe:: CONFIG_SLAB_SANITIZE=y
-
-   Zero-fill slab allocations on free to reduce risks of information leaks and
-   help mitigate use-after-free vulnerabilities. [linux-hardened]_
-
-   .. describe:: CONFIG_SLAB_SANITIZE_VERIFY=y
-
-      Verify that newly allocated slab allocations are zeroed to detect
-      write-after-free bugs. [linux-hardened]_
+.. ---
 
 .. describe:: CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
 
@@ -241,7 +229,8 @@ Processor type and features
    The vsyscall table is not required anymore by libc and is a fixed-position
    potential source of ROP gadgets.
 
-.. describe:: CONFIG_X86_VSYSCALL_EMULATION=n
+.. describe:: CONFIG_X86_VSYSCALL_EMULATE=n
+              CONFIG_LEGACY_VSYSCALL_XONLY=n
 
    See above.
 
@@ -526,9 +515,9 @@ commonly targeted kernel structures:
   .. describe:: CONFIG_SCHED_STACK_END_CHECK=y
   .. describe:: CONFIG_PAGE_POISONING=n
 
-     We choose to poison pages with zeroes and thus prefer using the simpler
-     PaX-based implementation provided by linux-hardened (see
-     ``CONFIG_PAGE_SANITIZE`` below).
+     We choose to poison pages with zeroes and thus prefer using
+     ``init_on_free`` in combination with linux-hardened's
+     ``PAGE_SANITIZE_VERIFY``.
 
 Security
 ~~~~~~~~
@@ -639,23 +628,44 @@ Security
 
 .. ---
 
-.. describe:: CONFIG_PAGE_SANITIZE=y
-
-   Zero-fill page allocations on free to reduce risks of information leaks and
-   help mitigate a subset of use-after-free vulnerabilities. This is a simpler
-   equivalent to upstream's ``CONFIG_PAGE_POISONING_ZERO``. [linux-hardened]_
-
-.. describe:: CONFIG_PAGE_SANITIZE_VERIFY=y
-
-   Verify that newly allocated pages are zeroed to detect write-after-free
-   bugs. [linux-hardened]_
-
-.. ---
-
 .. describe:: CONFIG_SECURITY_TIOCSTI_RESTRICT=y
 
    This prevents unprivileged users from using the TIOCSTI ioctl to inject
-   commands into other processes which share a tty session. [linux-hardened]_
+   commands into other processes that share a tty session. [linux-hardened]_
+
+.. ---
+
+.. describe:: CONFIG_GCC_PLUGIN_STACKLEAK=y
+              CONFIG_STACKLEAK_TRACK_MIN_SIZE=100
+              CONFIG_STACKLEAK_METRICS=n
+              CONFIG_STACKLEAK_RUNTIME_DISABLE=n
+
+``STACKLEAK`` erases the kernel stack before returning from system calls,
+leaving it initialized to a poison value. This both reduces the information
+that kernel stack leak bugs can reveal and the exploitability of uninitialized
+stack variables. However, it does not cover functions reaching the same stack
+depth as prior functions during the same system call.
+
+It used to also block kernel stack depth overflows caused by ``alloca()``, such
+as Stack Clash attacks. We maintained this functionality for our kernel for a
+while but eventually `dropped it
+<https://github.com/clipos/src_external_linux/commit/3e5f9114fc2f70f6d2ae5d10db10869e0564eb03>`_.
+
+.. describe:: CONFIG_INIT_ON_FREE_DEFAULT_ON=y
+              CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y
+
+   These set ``init_on_free=1`` and ``init_on_alloc=1`` on the kernel command
+   line. See the documentation of these kernel parameters for details.
+
+.. describe:: CONFIG_PAGE_SANITIZE_VERIFY=y
+              CONFIG_SLAB_SANITIZE_VERIFY=y
+
+   Verify that newly allocated pages and slab allocations are zeroed to detect
+   write-after-free bugs. This works in concert with ``init_on_free`` and is
+   adjusted to not be redundant with ``init_on_alloc``.
+   [linux-hardened]_
+
+.. ---
 
 We incorporated most of the *Lockdown* patch series into the CLIP OS kernel,
 though it may be merged into the mainline kernel in the near future.
@@ -669,17 +679,6 @@ already-root attacker. Among the several configuration options brought by
 
   .. describe:: CONFIG_LOCK_DOWN_KERNEL=y
                 CONFIG_LOCK_DOWN_MANDATORY=y
-
-Similarly, we incorporated the *STACKLEAK* feature ported from grsecurity/PaX
-by Alexander Popov and which should be merged upstream ultimately. *STACKLEAK*
-erases the kernel stack before returning from system calls in order to reduce
-the information which kernel stack leak bugs can reveal. It also blocks kernel
-stack depth overflows caused by ``alloca()``, such as Stack Clash attacks.
-
-  .. describe:: CONFIG_GCC_PLUGIN_STACKLEAK=y
-                CONFIG_STACKLEAK_TRACK_MIN_SIZE=100
-                CONFIG_STACKLEAK_METRICS=n
-                CONFIG_STACKLEAK_RUNTIME_DISABLE=n
 
 
 Compilation
@@ -830,10 +829,10 @@ We pass the following command line parameters to the kernel:
    interesting options that we considered but eventually chose to not use are:
 
     * The ``P`` option, which enables poisoning on slab cache allocations,
-      disables the ``SLAB_SANITIZE`` and ``SLAB_SANITIZE_VERIFY`` features from
-      linux-hardened. As they respectively poison with zeroes on object freeing
-      and check the zeroing on object allocations, we prefer enabling them
-      instead of using ``slub_debug=P``.
+      disables the ``init_on_free`` and ``SLAB_SANITIZE_VERIFY`` features. As
+      they respectively poison with zeroes on object freeing and check the
+      zeroing on object allocations, we prefer enabling them instead of using
+      ``slub_debug=P``.
     * The ``Z`` option enables red zoning, i.e., it adds extra areas around
       slab objects that detect when one is overwritten past its real size.
       This can help detect overflows but we already rely on ``SLAB_CANARY``
@@ -848,8 +847,6 @@ Also, note that:
 
 * ``slub_nomerge`` is not used as we already set
   ``CONFIG_SLAB_MERGE_DEFAULT=n`` in the kernel configuration.
-* ``page_poison`` is not needed by the page poisoning implementation provided
-  by linux-hardened patches.
 * ``l1tf``: The built-in PTE Inversion mitigation is sufficient to mitigate
   the L1TF vulnerability as long as CLIP OS is not used as an hypervisor with
   untrusted guest VMs. If it were to be someday, ``l1tf=full,force`` should be
@@ -862,6 +859,20 @@ Also, note that:
   we keep using arch-specific options for the sake of explicitness. Not setting
   this parameter equals setting it to ``auto``, which itself does not update
   anything.
+* ``init_on_free=1`` is automatically set due to ``INIT_ON_FREE_DEFAULT_ON``. It
+  zero-fills page and slab allocations on free to reduce risks of information
+  leaks and help mitigate a subset of use-after-free vulnerabilities.
+* ``init_on_alloc=1`` is automatically set due to ``INIT_ON_ALLOC_DEFAULT_ON``.
+  The purpose of this functionality is to eliminate several kinds of
+  *uninitialized heap memory* flaws by zero-filling:
+
+  * all page allocator and slab allocator memory when allocated: this is
+    already guaranteed by our use of ``init_on_free`` in combination with
+    ``PAGE_SANITIZE_VERIFY`` and ``SLAB_SANITIZE_VERIFY`` from linux-hardened,
+    and thus has no effect;
+  * a few more *special* objects when allocated: these are the ones for which
+    we enable ``init_on_alloc`` as they are not covered by the aforementioned
+    combination of ``init_on_free`` and ``SANITIZE_VERIFY`` features.
 
 .. rubric:: Citations and origin of some items
 
