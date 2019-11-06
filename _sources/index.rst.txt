@@ -20,12 +20,15 @@ architecture.
 .. admonition:: How to get started?
    :class: tip
 
-   * If you wish to build an image of the CLIP OS project, please check out the
+   * If you wish to try CLIP OS, please check out this `Quick try
+     <https://discuss.clip-os.org/t/nightly-builds-are-now-available/65>`_
+     guide.
+   * If you wish to **build** an image of the CLIP OS project, please check out the
      :ref:`development environment setup <setup>` and :ref:`build <build>`
      instructions.
-   * If you wish to contribue to this project, please check out the
+   * If you wish to **contribue** to this project, please check out the
      :ref:`contribute` guide.
-   * If you wish to adapt this project to your specific use case, please check
+   * If you wish to **adapt** this project to your specific use case, please check
      out the :ref:`derive` guide.
 
 .. toctree::
