@@ -142,6 +142,21 @@ populated with the binary packages archive set produced by the continuous
 integration server during the nightly build. This will prevent annoying and
 time-consuming package builds on the developers' machines.
 
+``docs-src/``
+-------------
+
+This directory encloses all the documentation related to the CLIP OS project.
+
+``docs-src/clipos/``
+~~~~~~~~~~~~~~~~~~~~
+
+Documentation of the CLIP OS product itself.
+
+``docs-src/toolkit/``
+~~~~~~~~~~~~~~~~~~~~~
+
+Documentation of the CLIP OS toolkit.
+
 ``manifest/``
 -------------
 
@@ -235,12 +250,6 @@ The recipes files in charge of spawning SDK containers making use of the
 scripts below to build the sub-parts of CLIP OS and bundling them together in a
 final image or set of installable images.
 
-``products/clipos/doc/``
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-This directory encloses all the documentation related to the CLIP OS project
-(i.e., CLIP OS toolkit excluded).
-
 ``products/clipos/sdk/``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -290,8 +299,8 @@ Upstream systemd source code with both `systemd
 ``src/platform/``
 ~~~~~~~~~~~~~~~~~
 
-This directory encloses all the repositories of the in-house sub-projects which
-are part of CLIP OS.
+This directory encloses all repositories of the in-house sub-projects that are
+part of CLIP OS.
 
 ``src/portage/``
 ~~~~~~~~~~~~~~~~
@@ -334,25 +343,15 @@ The CLIP OS toolkit.
 The Python package/module containing all the source code for the CLIP OS build
 and source tree management tools developed in Python.
 
-``toolkit/doc/``
-~~~~~~~~~~~~~~~~
-
-The toolkit documentation.
-
-``toolkit/docroot/``
-~~~~~~~~~~~~~~~~~~~~
-
-The root and configuration files used to build the full CLIP OS documentation.
-
 ``toolkit/helpers/``
 ~~~~~~~~~~~~~~~~~~~~
 
 This directory contains all the helpers scripts that are of particular interest
 for the project development common tasks. These tasks include (but are not
-limited to) the ability to build the documentation or to process the
-annotations in the *repo* manifest files (e.g., for fetching or synchronizing
-the upstream branches of downstream projects that are part of the CLIP OS
-source tree or for verifying the OpenPGP signatures of the Git commits).
+limited to) the ability to process annotations in *repo* manifest files, e.g.
+for fetching or synchronizing upstream branches of downstream projects that are
+part of the CLIP OS source tree or for verifying OpenPGP signatures of Git
+commits.
 
 .. admonition:: Scripts under this directory are available in the ``PATH`` for
                 easier access
