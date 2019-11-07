@@ -241,6 +241,11 @@ from the project root directory.</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just --list
 </pre></div>
 </div>
+<p>To reduce compilation time, you may download pre-built SDKs and packages from
+the public CLIP OS CI using:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just get-cache
+</pre></div>
+</div>
 <p>To run all steps required to build CLIP OS:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust all
 </pre></div>
@@ -275,11 +280,8 @@ to your user <code class="docutils literal notranslate"><span class="pre">$PATH<
 <h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
 <p>In order to test some functionalities of a CLIP OS system, you will need a
 virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> <span class="nb">pushd</span> testbed/boxes/ipsec-gw
-<span class="gp">(toolkit) $</span> ./yaml2json template.yml <span class="p">|</span> packer build -force -
-<span class="gp">(toolkit) $</span> vagrant box add --force --name <span class="s2">&quot;clipos-testbed/ipsec-gw&quot;</span> output/package.box
-<span class="gp">(toolkit) $</span> <span class="nb">popd</span>
-<span class="gp">(toolkit) $</span> <span class="nb">pushd</span> testbed
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> <span class="nb">cd</span> testbed
+<span class="gp">(toolkit) $</span> ./build_vagrant_boxes.sh <span class="c1"># Follow the instructions here</span>
 <span class="gp">(toolkit) $</span> vagrant up
 </pre></div>
 </div>

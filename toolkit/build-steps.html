@@ -267,15 +267,17 @@ everything from scratch:</p>
 <span class="gp">(toolkit) $</span> sujust all
 </pre></div>
 </div>
-<div class="note admonition">
+<div class="important admonition">
 <p class="first admonition-title">Pre-built binary packages by a continuous integration
-             infrastructure</p>
-<p class="last">As of 20th September 2018, we are still working on the deployment of a
-continuous integration infrastructure which will provide pre-built binary
-packages to speed up day-to-day work on the developer’s workstations. Once
-this CI infrastructure will be deployed, some commands will be made
-available to fetch those CI-built binary packages directly into the
-appropriate <code class="docutils literal notranslate"><span class="pre">cache/</span></code> subdirectories.</p>
+             infrastructure (GitLab CI)</p>
+<p class="last">We use GitLab CI to automatically build CLIP OS. The GitLab CI configuration
+and build scripts are tracked in the <a class="reference external" href="https://github.com/clipos/ci">clipos/ci</a> repository and the resulting artifacts are
+made available at <a class="reference external" href="https://files.clip-os.org/">files.clip-os.org</a>.</p>
+</div>
+<p>To download CI-built binary packages and SDKs from the last successful CI job,
+use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just get-cache
+</pre></div>
 </div>
 </div>
 </div>

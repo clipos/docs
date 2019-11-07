@@ -109,14 +109,19 @@ everything from scratch:
    (toolkit) $ sujust all
 
 .. admonition:: Pre-built binary packages by a continuous integration
-                infrastructure
-   :class: note
+                infrastructure (GitLab CI)
+   :class: important
 
-   As of 20th September 2018, we are still working on the deployment of a
-   continuous integration infrastructure which will provide pre-built binary
-   packages to speed up day-to-day work on the developer's workstations. Once
-   this CI infrastructure will be deployed, some commands will be made
-   available to fetch those CI-built binary packages directly into the
-   appropriate ``cache/`` subdirectories.
+   We use GitLab CI to automatically build CLIP OS. The GitLab CI configuration
+   and build scripts are tracked in the `clipos/ci
+   <https://github.com/clipos/ci>`_ repository and the resulting artifacts are
+   made available at `files.clip-os.org <https://files.clip-os.org/>`_.
+
+To download CI-built binary packages and SDKs from the last successful CI job,
+use:
+
+.. code-block:: shell-session
+
+   (toolkit) $ just get-cache
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

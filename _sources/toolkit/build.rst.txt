@@ -76,6 +76,13 @@ To list the available `just` recipes:
 
    (toolkit) $ just --list
 
+To reduce compilation time, you may download pre-built SDKs and packages from
+the public CLIP OS CI using:
+
+.. code-block:: shell-session
+
+   (toolkit) $ just get-cache
+
 To run all steps required to build CLIP OS:
 
 .. code-block:: shell-session
@@ -117,11 +124,8 @@ virtual infrastructure acting as testbed. To setup this infrastructure, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ pushd testbed/boxes/ipsec-gw
-   (toolkit) $ ./yaml2json template.yml | packer build -force -
-   (toolkit) $ vagrant box add --force --name "clipos-testbed/ipsec-gw" output/package.box
-   (toolkit) $ popd
-   (toolkit) $ pushd testbed
+   (toolkit) $ cd testbed
+   (toolkit) $ ./build_vagrant_boxes.sh # Follow the instructions here
    (toolkit) $ vagrant up
 
 This will setup virtual networks using ``Vagrant`` with ``libvirt`` and create
