@@ -381,11 +381,10 @@ TPM (i.e. it cleans transient objects when the file handle to <code class="docut
 is closed).</li>
 <li>We use the Owner Hierarchy (OH) and leave the Endorsement Hierarchy (EH) for
 remote attestation.</li>
-<li>One could make the primary object persistent (with <code class="docutils literal notranslate"><span class="pre">tpm2_evictcontrol</span></code>) to
-avoid re-derivating it from the seed each time and save some time at the
-expense of additional complexity.</li>
-<li>We do not directly make the loaded keyfile object persistent as we would not
-have enough space in the TPM for all keyfiles we are going to want to use.</li>
+<li>We make the primary key a persistent object to avoid running the
+time-consuming Key Derivation Fonction at each boot. We do not make the
+loaded keyfile object persistent as we would not have enough space in the TPM
+for all keyfiles we are going to want to use.</li>
 </ul>
 </div>
 <div class="section" id="planned-improvements">

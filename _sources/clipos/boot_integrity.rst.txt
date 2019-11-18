@@ -187,11 +187,10 @@ Initramfs and LUKS
   is closed).
 * We use the Owner Hierarchy (OH) and leave the Endorsement Hierarchy (EH) for
   remote attestation.
-* One could make the primary object persistent (with ``tpm2_evictcontrol``) to
-  avoid re-derivating it from the seed each time and save some time at the
-  expense of additional complexity.
-* We do not directly make the loaded keyfile object persistent as we would not
-  have enough space in the TPM for all keyfiles we are going to want to use.
+* We make the primary key a persistent object to avoid running the
+  time-consuming Key Derivation Fonction at each boot. We do not make the
+  loaded keyfile object persistent as we would not have enough space in the TPM
+  for all keyfiles we are going to want to use.
 
 Planned Improvements
 ********************
