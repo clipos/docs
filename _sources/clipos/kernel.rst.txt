@@ -294,6 +294,10 @@ Processor type and features
    Memory Protection Keys are a promising feature but they are still not
    supported on current hardware.
 
+.. describe:: CONFIG_X86_INTEL_TSX_MODE_OFF=y
+
+   Set the default value of the ``tsx`` kernel parameter to ``off``.
+
 .. ---
 
 Enable the **seccomp** BPF userspace API for syscall attack surface reduction:
@@ -819,10 +823,12 @@ We pass the following command line parameters to the kernel:
 
 .. describe:: mds=full,nosmt
 
-   This parameter controls optional mitigations for the MDS class of Intel CPU
-   vulnerabilities. Not specifying this parameter is equivalent to setting
-   ``mds=full``, which leaves SMT enabled and therefore is not a complete
-   mitigation. Note that this mitigation requires an Intel microcode update.
+   This parameter controls optional mitigations for the Microarchitectural Data
+   Sampling (MDS) class of Intel CPU vulnerabilities. Not specifying this
+   parameter is equivalent to setting ``mds=full``, which leaves SMT enabled
+   and therefore is not a complete mitigation. Note that this mitigation
+   requires an Intel microcode update and also addresses the TSX Asynchronous
+   Abort (TAA) Intel CPU vulnerability on systems that are affected by MDS.
 
 .. describe:: iommu=force
 
@@ -868,6 +874,27 @@ Also, note that:
   (note that an Intel microcode update is not required for this mitigation to
   work but improves performance by providing a way to invalidate caches with a
   finer granularity).
+* ``tsx=off``: This parameter is already set by default thanks to
+  ``CONFIG_X86_INTEL_TSX_MODE_OFF``. It deactivates the Intel TSX feature on
+  CPUs that support TSX control (i.e. are recent enough or received a microcode
+  update) and that are not already vulnerable to MDS, therefore mitigating the
+  TSX Asynchronous Abort (TAA) Intel CPU vulnerability.
+* ``tsx_async_abort``: This parameter controls optional mitigations for the TSX
+  Asynchronous Abort (TAA) Intel CPU vulnerability. Due to our use of
+  ``mds=full,nosmt`` in addition to ``CONFIG_X86_INTEL_TSX_MODE_OFF``, CLIP OS
+  is already protected against this vulnerability as long as the CPU microcode
+  has been updated, whether or not the CPU is affected by MDS. For the record,
+  if we wanted to keep TSX activated, we could specify
+  ``tsx_async_abort=full,nosmt``. Not specifying this parameter is equivalent
+  to setting ``tsx_async_abort=full``, which leaves SMT enabled and therefore
+  is not a complete mitigation. Note that this mitigation requires an Intel
+  microcode update and has no effect on systems that are already affected by
+  MDS and enable mitigations against it, nor on systems that disable TSX.
+* ``kvm.nx_huge_pages``: This parameter allows to control the KVM hypervisor
+  iTLB multihit mitigations. Such mitigations are not needed as long as CLIP OS
+  is not used as an hypervisor with untrusted guest VMs. If it were to be
+  someday, ``kvm.nx_huge_pages=force`` should be used to ensure that guests
+  cannot exploit the iTLB multihit erratum to crash the host.
 * ``mitigations``: This parameter controls optional mitigations for CPU
   vulnerabilities in an arch-independent and more coarse-grained way. For now,
   we keep using arch-specific options for the sake of explicitness. Not setting

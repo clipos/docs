@@ -550,6 +550,12 @@ probably be dropped in GCC 9.</p>
 supported on current hardware.</p>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_X86_INTEL_TSX_MODE_OFF=y</code></dt>
+<dd><p>Set the default value of the <code class="docutils literal notranslate"><span class="pre">tsx</span></code> kernel parameter to <code class="docutils literal notranslate"><span class="pre">off</span></code>.</p>
+</dd></dl>
+
 <p>Enable the <strong>seccomp</strong> BPF userspace API for syscall attack surface reduction:</p>
 <blockquote>
 <div><dl class="describe">
@@ -1218,10 +1224,12 @@ mitigation requires updated microcode for Intel processors.</p>
 <dl class="describe">
 <dt>
 <code class="descname">mds=full,nosmt</code></dt>
-<dd><p>This parameter controls optional mitigations for the MDS class of Intel CPU
-vulnerabilities. Not specifying this parameter is equivalent to setting
-<code class="docutils literal notranslate"><span class="pre">mds=full</span></code>, which leaves SMT enabled and therefore is not a complete
-mitigation. Note that this mitigation requires an Intel microcode update.</p>
+<dd><p>This parameter controls optional mitigations for the Microarchitectural Data
+Sampling (MDS) class of Intel CPU vulnerabilities. Not specifying this
+parameter is equivalent to setting <code class="docutils literal notranslate"><span class="pre">mds=full</span></code>, which leaves SMT enabled
+and therefore is not a complete mitigation. Note that this mitigation
+requires an Intel microcode update and also addresses the TSX Asynchronous
+Abort (TAA) Intel CPU vulnerability on systems that are affected by MDS.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1279,6 +1287,27 @@ used to force-enable VMX unconditional cache flushes and force-disable SMT
 (note that an Intel microcode update is not required for this mitigation to
 work but improves performance by providing a way to invalidate caches with a
 finer granularity).</li>
+<li><code class="docutils literal notranslate"><span class="pre">tsx=off</span></code>: This parameter is already set by default thanks to
+<code class="docutils literal notranslate"><span class="pre">CONFIG_X86_INTEL_TSX_MODE_OFF</span></code>. It deactivates the Intel TSX feature on
+CPUs that support TSX control (i.e. are recent enough or received a microcode
+update) and that are not already vulnerable to MDS, therefore mitigating the
+TSX Asynchronous Abort (TAA) Intel CPU vulnerability.</li>
+<li><code class="docutils literal notranslate"><span class="pre">tsx_async_abort</span></code>: This parameter controls optional mitigations for the TSX
+Asynchronous Abort (TAA) Intel CPU vulnerability. Due to our use of
+<code class="docutils literal notranslate"><span class="pre">mds=full,nosmt</span></code> in addition to <code class="docutils literal notranslate"><span class="pre">CONFIG_X86_INTEL_TSX_MODE_OFF</span></code>, CLIP OS
+is already protected against this vulnerability as long as the CPU microcode
+has been updated, whether or not the CPU is affected by MDS. For the record,
+if we wanted to keep TSX activated, we could specify
+<code class="docutils literal notranslate"><span class="pre">tsx_async_abort=full,nosmt</span></code>. Not specifying this parameter is equivalent
+to setting <code class="docutils literal notranslate"><span class="pre">tsx_async_abort=full</span></code>, which leaves SMT enabled and therefore
+is not a complete mitigation. Note that this mitigation requires an Intel
+microcode update and has no effect on systems that are already affected by
+MDS and enable mitigations against it, nor on systems that disable TSX.</li>
+<li><code class="docutils literal notranslate"><span class="pre">kvm.nx_huge_pages</span></code>: This parameter allows to control the KVM hypervisor
+iTLB multihit mitigations. Such mitigations are not needed as long as CLIP OS
+is not used as an hypervisor with untrusted guest VMs. If it were to be
+someday, <code class="docutils literal notranslate"><span class="pre">kvm.nx_huge_pages=force</span></code> should be used to ensure that guests
+cannot exploit the iTLB multihit erratum to crash the host.</li>
 <li><code class="docutils literal notranslate"><span class="pre">mitigations</span></code>: This parameter controls optional mitigations for CPU
 vulnerabilities in an arch-independent and more coarse-grained way. For now,
 we keep using arch-specific options for the sake of explicitness. Not setting
