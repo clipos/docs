@@ -32,7 +32,7 @@ Security aware system architecture and partition layout
 
 * Root partition mounted read-only
 * Restricted set of state partitions bind-mounted at pre-determined
-  emplacements (listed in the read only root partition)
+  emplacements (listed in the read-only root partition)
 
 Initial boot chain integrity with UEFI Secure Boot support and DM-Verity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -46,9 +46,9 @@ Development model and secure by default software compilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Everything is rebuilt from source (excepted proprietary firmware required for
-  hardware support).
+  hardware support)
 * Gentoo Hardened based binary executable compilation
-* Most of the Portage compilation security features are enabled.
+* Most of Portage compilation security features are enabled
 
 Linux kernel
 ^^^^^^^^^^^^
@@ -82,18 +82,16 @@ Robust update system
 
 * Atomic system update using A/B partitions (similar to Android or ChromeOS)
 * Fallback system version available in case of unexpected failure or bug
-* Supports updating both the system and other environments
+* Support for Core system updates
 
 System partition integrity and confidentiality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * LUKS2/DM-Crypt/DM-Integrity support
-* Optional system read only partition encryption
 * Mandatory system read/write partition encryption (journal logs,
   configuration, etc.)
-* TPM backed secret sealing and unsealing for unattended system partition
+* TPM-backed secret sealing and unsealing for unattended system partition
   decryption
-* Support for install time escrow keys setup for administrator enabled recovery
 
 Confined system services
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -116,19 +114,15 @@ Services available
 Firewall rules
 ^^^^^^^^^^^^^^
 
-* Static firewall rules for system services
+* Static firewall rules for system services with IPsec awareness
 
 Confined (non-root) administration roles
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Admin role: can edit files in the state configuration folder
+* Admin role: can edit some files in the state configuration folder
 * Audit role: can read all system logs
-* Administration roles are accessible:
-
-  * through the IPsec tunnel, over SSH with key based authentication;
-  * locally on a console, using a password.
-
-* Split credential management for password based authentication (``pam-tcb``)
+* Administration roles are accessible through the IPsec tunnel, over SSH with
+  key-based authentication only
 
 Linux kernel
 ^^^^^^^^^^^^
@@ -166,7 +160,7 @@ User data integrity and confidentiality
   * Password
   * Smartcard
 
-* Smartcard daemon isolation using Caml Crush.
+* Smartcard daemon isolation using Caml Crush
 
 Multi-level environment support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -198,7 +192,7 @@ Virtualized environments support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Linux only
-* virtio based peripherals only
+* virtio-based peripherals only
 * UEFI Secure Boot optional
 
 Firewall rules
@@ -206,10 +200,15 @@ Firewall rules
 
 * Dynamic firewall rules for user environments
 
+Update system
+^^^^^^^^^^^^^
+
+* Support for user environment updates
+
 Trusted graphical environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Wayland based system compositor and lock screen
+* Wayland-based system compositor and lock screen
 * Permanently displayed and trusted panel for interaction with system
   services and configuration
 
@@ -231,11 +230,23 @@ Hardware support
   * List of validated laptop, desktop and server platforms supported
   * Generic laptop, desktop and server platforms support
 
+Automatic installation
+^^^^^^^^^^^^^^^^^^^^^^
+
+* Automatic installer (PXE) with secret provisioning
+* Support for install time escrow keys setup for administrator enabled recovery
+
 
 Milestone features whose integration planning are yet to be determined
 ----------------------------------------------------------------------
 
-* Remote integrity and version attestation using TPM backed signatures.
+* Optional system read-only partition (Core) encryption
+
+* Administration roles accessible locally on a console, using a password
+
+* Split credential management for password-based authentication (``pam-tcb``)
+
+* Remote integrity and version attestation using TPM-backed signatures
 
 * Port remaining security features from CLIP OS version 4:
 
@@ -253,7 +264,7 @@ Milestone features whose integration planning are yet to be determined
 
 * Additional user credential support:
 
-  * U2F based user session unlocking
+  * U2F-based user session unlocking
 
 * Append-only log storage and automatic log rotation support
 

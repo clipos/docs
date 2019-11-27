@@ -131,10 +131,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#multi-level-aware-device-assignment">Multi-level aware device assignment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#virtualized-environments-support">Virtualized environments support</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id6">Firewall rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-system">Update system</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#trusted-graphical-environment">Trusted graphical environment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#arbitrary-code-execution-restrictions-in-user-environments">Arbitrary code execution restrictions in user environments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id7">Linux kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id8">Hardware support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>
 </ul>
 </li>
 </ul>
@@ -240,7 +242,7 @@ as features are added.</strong></p>
 <ul class="simple">
 <li>Root partition mounted read-only</li>
 <li>Restricted set of state partitions bind-mounted at pre-determined
-emplacements (listed in the read only root partition)</li>
+emplacements (listed in the read-only root partition)</li>
 </ul>
 </div>
 <div class="section" id="initial-boot-chain-integrity-with-uefi-secure-boot-support-and-dm-verity">
@@ -256,9 +258,9 @@ line)</li>
 <h4>Development model and secure by default software compilation<a class="headerlink" href="#development-model-and-secure-by-default-software-compilation" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Everything is rebuilt from source (excepted proprietary firmware required for
-hardware support).</li>
+hardware support)</li>
 <li>Gentoo Hardened based binary executable compilation</li>
-<li>Most of the Portage compilation security features are enabled.</li>
+<li>Most of Portage compilation security features are enabled</li>
 </ul>
 </div>
 <div class="section" id="linux-kernel">
@@ -293,19 +295,17 @@ hardware support).</li>
 <ul class="simple">
 <li>Atomic system update using A/B partitions (similar to Android or ChromeOS)</li>
 <li>Fallback system version available in case of unexpected failure or bug</li>
-<li>Supports updating both the system and other environments</li>
+<li>Support for Core system updates</li>
 </ul>
 </div>
 <div class="section" id="system-partition-integrity-and-confidentiality">
 <h4>System partition integrity and confidentiality<a class="headerlink" href="#system-partition-integrity-and-confidentiality" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>LUKS2/DM-Crypt/DM-Integrity support</li>
-<li>Optional system read only partition encryption</li>
 <li>Mandatory system read/write partition encryption (journal logs,
 configuration, etc.)</li>
-<li>TPM backed secret sealing and unsealing for unattended system partition
+<li>TPM-backed secret sealing and unsealing for unattended system partition
 decryption</li>
-<li>Support for install time escrow keys setup for administrator enabled recovery</li>
 </ul>
 </div>
 <div class="section" id="confined-system-services">
@@ -332,20 +332,16 @@ decryption</li>
 <div class="section" id="firewall-rules">
 <h4>Firewall rules<a class="headerlink" href="#firewall-rules" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Static firewall rules for system services</li>
+<li>Static firewall rules for system services with IPsec awareness</li>
 </ul>
 </div>
 <div class="section" id="confined-non-root-administration-roles">
 <h4>Confined (non-root) administration roles<a class="headerlink" href="#confined-non-root-administration-roles" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Admin role: can edit files in the state configuration folder</li>
+<li>Admin role: can edit some files in the state configuration folder</li>
 <li>Audit role: can read all system logs</li>
-<li>Administration roles are accessible:<ul>
-<li>through the IPsec tunnel, over SSH with key based authentication;</li>
-<li>locally on a console, using a password.</li>
-</ul>
-</li>
-<li>Split credential management for password based authentication (<code class="docutils literal notranslate"><span class="pre">pam-tcb</span></code>)</li>
+<li>Administration roles are accessible through the IPsec tunnel, over SSH with
+key-based authentication only</li>
 </ul>
 </div>
 <div class="section" id="id3">
@@ -385,7 +381,7 @@ upstream</li>
 <li>Smartcard</li>
 </ul>
 </li>
-<li>Smartcard daemon isolation using Caml Crush.</li>
+<li>Smartcard daemon isolation using Caml Crush</li>
 </ul>
 </div>
 <div class="section" id="multi-level-environment-support">
@@ -420,7 +416,7 @@ host:<ul>
 <h4>Virtualized environments support<a class="headerlink" href="#virtualized-environments-support" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Linux only</li>
-<li>virtio based peripherals only</li>
+<li>virtio-based peripherals only</li>
 <li>UEFI Secure Boot optional</li>
 </ul>
 </div>
@@ -430,10 +426,16 @@ host:<ul>
 <li>Dynamic firewall rules for user environments</li>
 </ul>
 </div>
+<div class="section" id="update-system">
+<h4>Update system<a class="headerlink" href="#update-system" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Support for user environment updates</li>
+</ul>
+</div>
 <div class="section" id="trusted-graphical-environment">
 <h4>Trusted graphical environment<a class="headerlink" href="#trusted-graphical-environment" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Wayland based system compositor and lock screen</li>
+<li>Wayland-based system compositor and lock screen</li>
 <li>Permanently displayed and trusted panel for interaction with system
 services and configuration</li>
 </ul>
@@ -462,12 +464,22 @@ services and configuration</li>
 </ul>
 </div></blockquote>
 </div>
+<div class="section" id="automatic-installation">
+<h4>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Automatic installer (PXE) with secret provisioning</li>
+<li>Support for install time escrow keys setup for administrator enabled recovery</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="milestone-features-whose-integration-planning-are-yet-to-be-determined">
 <h2>Milestone features whose integration planning are yet to be determined<a class="headerlink" href="#milestone-features-whose-integration-planning-are-yet-to-be-determined" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Remote integrity and version attestation using TPM backed signatures.</li>
+<li>Optional system read-only partition (Core) encryption</li>
+<li>Administration roles accessible locally on a console, using a password</li>
+<li>Split credential management for password-based authentication (<code class="docutils literal notranslate"><span class="pre">pam-tcb</span></code>)</li>
+<li>Remote integrity and version attestation using TPM-backed signatures</li>
 <li>Port remaining security features from CLIP OS version 4:<ul>
 <li>Ignored SUID binaries</li>
 <li>System entropy and RNG improvements: timer_entropyd, kernel patch</li>
@@ -483,7 +495,7 @@ services and configuration</li>
 </li>
 <li>Reproducible builds</li>
 <li>Additional user credential support:<ul>
-<li>U2F based user session unlocking</li>
+<li>U2F-based user session unlocking</li>
 </ul>
 </li>
 <li>Append-only log storage and automatic log rotation support</li>

@@ -354,7 +354,7 @@ project depends.</p>
 </div>
 </li>
 <li><p class="first">The project is entirely built from source. This property is guaranteed by
-nightly clean builds of the entire project.</p>
+weekly clean builds of the entire project and nightly incremental builds.</p>
 <div class="tip admonition">
 <p class="first admonition-title">Status</p>
 <p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/32">clipos/bugs#32</a>).</p>
@@ -619,9 +619,9 @@ Secure Boot.</p>
 </li>
 <li><p class="first">The writable system state partition integrity is ensured by DM-Integrity. The
 secret used to unlock the DM-Integrity partition is sealed using the TPM.</p>
-<div class="warning admonition">
+<div class="tip admonition">
 <p class="first admonition-title">Status</p>
-<p class="last">Not started.</p>
+<p class="last">Completed in version <strong>5.0 beta</strong> (<a class="reference external" href="https://github.com/clipos/bugs/issues/8">clipos/bugs#8</a>).</p>
 </div>
 </li>
 </ul>
@@ -917,8 +917,7 @@ etc.).</p>
 <p class="last">Not started.</p>
 </div>
 </li>
-<li><p class="first">Virtual machine-based in-kernel mounting and sharing using NFS, CIFS, 9P,
-VirtFS, etc.</p>
+<li><p class="first">Virtual machine-based in-kernel mounting and sharing using CIFS or VirtFS.</p>
 <div class="warning admonition">
 <p class="first admonition-title">Status</p>
 <p class="last">Not started.</p>
@@ -977,8 +976,8 @@ namespaces, cgroups, seccomp-bpf filters, etc.</p>
 </li>
 <li><p class="first">Safe and controlled communication to the host:</p>
 <ul class="simple">
-<li>Unix sockets or encrypted TCP sockets (SSH)</li>
-<li>vsocks (virtio)</li>
+<li>Unix sockets or encrypted TCP sockets (SSH).</li>
+<li>vsocks (virtio).</li>
 </ul>
 <div class="warning admonition">
 <p class="first admonition-title">Status</p>
@@ -987,9 +986,9 @@ namespaces, cgroups, seccomp-bpf filters, etc.</p>
 </li>
 <li><p class="first">Host controlled inter-level communication:</p>
 <ul class="simple">
-<li>File passing diode</li>
-<li>Encrypting / decryption diode</li>
-<li>Smartcard proxy and command filtering (see <em>Caml Crush</em> project)</li>
+<li>File passing diode.</li>
+<li>Encrypting / decryption diode.</li>
+<li>Smartcard proxy and command filtering (see <em>Caml Crush</em> project).</li>
 </ul>
 <div class="warning admonition">
 <p class="first admonition-title">Status</p>
@@ -1152,9 +1151,9 @@ secret.</p>
 <h3>Deployment profiles<a class="headerlink" href="#deployment-profiles" title="Permalink to this headline">¶</a></h3>
 <p>Here is the list of the considered deployment profiles for the CLIP OS images:</p>
 <ul class="simple">
-<li>Desktop environment</li>
-<li>Administrator dedicated environment</li>
-<li>Server environment</li>
+<li>Desktop environment.</li>
+<li>Administrator dedicated environment.</li>
+<li>Server environment.</li>
 </ul>
 </div>
 </div>
@@ -1201,7 +1200,7 @@ secret.</p>
 <td>✘</td>
 <td>✔</td>
 </tr>
-<tr class="row-odd"><td>Linux kernel command line <a class="footnote-reference" href="#cmdline" id="id8">[1]</a></td>
+<tr class="row-odd"><td>Linux kernel command line <a class="footnote-reference" href="#cmdline" id="id9">[1]</a></td>
 <td>✔</td>
 <td>✘</td>
 <td>✔</td>
@@ -1276,7 +1275,7 @@ secret.</p>
 <table class="docutils footnote" frame="void" id="cmdline" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[1]</a></td><td>The Linux kernel command line holds the DM-Verity root hash of
+<tr><td class="label"><a class="fn-backref" href="#id9">[1]</a></td><td>The Linux kernel command line holds the DM-Verity root hash of
 the system partition.</td></tr>
 </tbody>
 </table>
