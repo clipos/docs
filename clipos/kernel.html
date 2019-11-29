@@ -457,16 +457,14 @@ required.</p>
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_LEGACY_VSYSCALL_NONE=y</code></dt>
-<dd><p>The vsyscall table is not required anymore by libc and is a fixed-position
-potential source of ROP gadgets.</p>
-</dd></dl>
-
-<dl class="describe">
 <dt>
-<code class="descname">CONFIG_X86_VSYSCALL_EMULATE=n</code></dt>
+<code class="descname">CONFIG_LEGACY_VSYSCALL_EMULATE=n</code></dt>
 <dt>
 <code class="descname">CONFIG_LEGACY_VSYSCALL_XONLY=n</code></dt>
-<dd><p>See above.</p>
+<dt>
+<code class="descname">CONFIG_X86_VSYSCALL_EMULATION=n</code></dt>
+<dd><p>The vsyscall table is not required anymore by libc and is a fixed-position
+potential source of ROP gadgets.</p>
 </dd></dl>
 
 <dl class="describe">

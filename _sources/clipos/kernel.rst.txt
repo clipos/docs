@@ -225,14 +225,12 @@ Processor type and features
    required.
 
 .. describe:: CONFIG_LEGACY_VSYSCALL_NONE=y
+              CONFIG_LEGACY_VSYSCALL_EMULATE=n
+              CONFIG_LEGACY_VSYSCALL_XONLY=n
+              CONFIG_X86_VSYSCALL_EMULATION=n
 
    The vsyscall table is not required anymore by libc and is a fixed-position
    potential source of ROP gadgets.
-
-.. describe:: CONFIG_X86_VSYSCALL_EMULATE=n
-              CONFIG_LEGACY_VSYSCALL_XONLY=n
-
-   See above.
 
 .. describe:: CONFIG_MICROCODE=y
 
