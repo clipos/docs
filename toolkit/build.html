@@ -103,6 +103,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
@@ -110,6 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-qemu-virtual-machine-over-ssh">Access to QEMU virtual machine over SSH</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
@@ -319,6 +321,34 @@ machine with <code class="docutils literal notranslate"><span class="pre">libvir
 <p class="last">The default build configuration will create production images with root
 access disabled. See the <a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a> paragraph
 for instructions to create an instrumented build.</p>
+</div>
+</div>
+<div class="section" id="access-to-qemu-virtual-machine-over-ssh">
+<h2>Access to QEMU virtual machine over SSH<a class="headerlink" href="#access-to-qemu-virtual-machine-over-ssh" title="Permalink to this headline">¶</a></h2>
+<div class="important admonition">
+<p class="first admonition-title">Access disabled by default</p>
+<p class="last">The default build configuration will create production images with SSH
+access available only over the IPsec tunnel. To enable SSH access from
+outside the IPsec tunnel, you must enable the <code class="docutils literal notranslate"><span class="pre">allow-ssh-root-login</span></code>
+instrumentation feature. See the <a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a>
+paragraph for instructions to create an instrumented build.</p>
+</div>
+<p>To access a QEMU virtual machine over SSH, retrieve the IP address using
+<code class="docutils literal notranslate"><span class="pre">virsh</span></code> and use the SSH keys stored in the cache directory:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh --connect qemu:///system domifaddr clipos-qemu_5.0.0-alpha.1--instrumented
+<span class="go"> Name       MAC address          Protocol     Address</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go"> vnet2      XX:XX:XX:XX:XX:XX    ipv4         172.27.1.XX/24</span>
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_root <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      root@172.27.1.XX
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_audit <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      audit@172.27.1.XX
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_admin <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      admin@172.27.1.XX
+</pre></div>
 </div>
 </div>
 </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to derive this project &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
+  <title>Quick try guide &mdash; CLIP OS 5.0.0_alpha1 documentation</title>
   
 
   
@@ -39,7 +39,8 @@
   <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="How to contribute" href="contribute.html" /> 
+    <link rel="next" title="Environment setup" href="setup.html" />
+    <link rel="prev" title="Development and debug" href="../clipos/development.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,17 +102,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick try guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to derive this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
 </ul>
 
             
@@ -157,13 +158,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>How to derive this project</li>
+      <li>Quick try guide</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/toolkit/derive.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/toolkit/quick-try.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,25 +177,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-derive-this-project">
-<span id="derive"></span><h1>How to derive this project<a class="headerlink" href="#how-to-derive-this-project" title="Permalink to this headline">¶</a></h1>
-<p>We designed the project to be extensible and maintainable over time for
-downstream derivative projects.</p>
-<div class="note admonition">
-<p class="first admonition-title">Work in progress</p>
-<p class="last">We will add more information about the way you may extend the CLIP OS
-project with your own changes in a near future.</p>
+  <div class="section" id="quick-try-guide">
+<span id="quick-try"></span><h1>Quick try guide<a class="headerlink" href="#quick-try-guide" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Those files are provided AS IS for TESTING PURPOSES ONLY and MUST NOT be
+used in a PRODUCTION CONTEXT.</strong></p>
 </div>
-<div class="warning admonition">
-<p class="first admonition-title">CLIP OS trademark</p>
-<p class="last">CLIP OS is a trademark of the French Republic. As a consequence, any use of
-the name “CLIP OS” has to be first authorized by the ANSSI. This does not
-preclude changes to the software posted online and their republication or
-quotation from identifying the original software under the terms of the LGPL
-v2.1+ license.  Regardless, no use of the name “CLIP OS” on a modified
-version should suggest that this version is the original work published by
-the ANSSI.</p>
+<p>To easily try the latest version (nightly build) of CLIP OS 5, you may download
+pre-built packages, SDK and pre-installed QEMU images from <a class="reference external" href="https://files.clip-os.org">files.clip-os.org</a>.</p>
+<p>Be aware that those packages and QEMU images are instrumented, which means they
+allow full root access without any password on the system.</p>
+<p>To run the CLIP OS system in a virtual machine, you will have to install QEMU.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> For Debian <span class="p">&amp;</span> Ubuntu
+<span class="gp">$</span> sudo apt-get install qemu-system-x86
+
+<span class="gp">#</span> For Fedora <span class="p">&amp;</span> CentOS
+<span class="gp">$</span> sudo dnf install -y qemu-system-x86
+
+<span class="gp">#</span> For Arch Linux
+<span class="gp">$</span> sudo pacman -Syu qemu
+</pre></div>
 </div>
+<p>Then, you can download and start a CLIP OS QEMU virtual machine with the
+following commands:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Pick the latest successful build from https://gitlab.com/CLIPOS/ci/pipelines
+<span class="gp">$</span> <span class="nv">BUILD</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>curl <span class="s1">&#39;https://gitlab.com/api/v4/projects/14752889/pipelines?scope=finished&amp;status=success&#39;</span> <span class="p">|</span> jq <span class="s1">&#39;.[0].id&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="gp">#</span> Retrieve the QEMU image
+<span class="gp">$</span> wget https://files.clip-os.org/<span class="nv">$BUILD</span>/qemu.tar.zst
+
+<span class="gp">#</span> Extract and enter directory
+<span class="gp">$</span> tar xf qemu.tar.zst <span class="o">&amp;&amp;</span> <span class="nb">cd</span> clipos_*_qemu
+
+<span class="gp">#</span> Read the README
+<span class="gp">$</span> cat README.md
+
+<span class="gp">#</span> Start CLIP OS with QEMU
+<span class="gp">$</span> ./qemu.sh
+</pre></div>
+</div>
+<p>You can login as root with no password.</p>
 </div>
 
 
@@ -205,8 +228,10 @@ the ANSSI.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="setup.html" class="btn btn-neutral float-right" title="Environment setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="contribute.html" class="btn btn-neutral float-left" title="How to contribute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="../clipos/development.html" class="btn btn-neutral float-left" title="Development and debug" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

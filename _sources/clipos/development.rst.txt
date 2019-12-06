@@ -39,7 +39,9 @@ values for development.
   log in as root (account must be enabled with the appropriate
   instrumentation feature) via SSH and without any password thanks to an
   installed SSH key pair (an SSH key pair will be generated in the cache
-  directory at first usage of this instrumentation feature).
+  directory at first usage of this instrumentation feature). This also makes
+  the openssh server accessible over the local network and not only restricted
+  to IPsec interface.
 
   .. admonition:: Dependency
      :class: warning
