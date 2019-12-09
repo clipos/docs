@@ -12,7 +12,7 @@ architecture.
 .. admonition:: Status of the project
    :class: warning
 
-   The CLIP OS project is still in **alpha** stage. Please check out the
+   The CLIP OS project is still in **beta** stage. Please check out the
    `project homepage <https://clip-os.org>`_ and the :ref:`project roadmap
    <roadmap>` to know more about the CLIP OS project history, its current
    status and its objectives.
@@ -20,7 +20,7 @@ architecture.
 .. admonition:: How to get started?
    :class: tip
 
-   * If you wish to try CLIP OS, please check out the :ref:`quick try guide
+   * If you wish to **try** CLIP OS, please check out the :ref:`quick try guide
      <quick-try>`.
    * If you wish to **build** an image of the CLIP OS project, please check out
      the :ref:`development environment setup <setup>` and :ref:`build <build>`

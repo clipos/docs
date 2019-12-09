@@ -69,9 +69,9 @@ Hardware support
 --------------------------------------------------
 
 .. admonition:: Status
-   :class: notice
+   :class: tip
 
-   In progress. See the `5.0 Beta milestone
+   Released on **2019-12-10**. See the `5.0 Beta milestone
    <https://github.com/clipos/bugs/milestone/1>`_.
 
 Features
@@ -142,9 +142,10 @@ Hardware support
 --------------------------------------------------
 
 .. admonition:: Status
-   :class: warning
+   :class: notice
 
-   Not started yet.
+   In progress. See the `5.0 Stable milestone
+   <https://github.com/clipos/bugs/milestone/2>`_.
 
 Features
 ~~~~~~~~
@@ -239,6 +240,11 @@ Automatic installation
 
 Milestone features whose integration planning are yet to be determined
 ----------------------------------------------------------------------
+
+.. admonition:: Status
+   :class: warning
+
+   Not started yet.
 
 * Optional system read-only partition (Core) encryption
 
