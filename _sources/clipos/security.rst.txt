@@ -9,24 +9,44 @@ Security objectives
 This is the list of all the security objectives we would like to achieve in the
 CLIP OS project.
 
-For the order and priority in which we will try achieve these objectives,
+For the order and priority in which we will try to achieve these objectives,
 please check out the :ref:`project roadmap <roadmap>`.
 
 Hardware requirements
 ---------------------
 
-* x86-64 architecture (AMD64 / Intel 64)
+The CLIP OS project does not aim at broad device support. Supported machines
+are to be carefully chosen based on their merits and must meet the standards of
+the project in order to be considered as potential targets. In particular,
+standard hardware-based security features are essential since a lot of the
+low-level work ends up being fairly tied to them.
 
-* UEFI Secure Boot:
+Consequently, the following features are required:
 
-  * Removable default keys
-  * Custom key enrollment available
+* x86-64 architecture (AMD64 / Intel 64), with modern hardware-based mechanisms
+  for exploit mitigation such as:
+
+  * write-protect (WP) bit support
+  * no-execute (NX) bit support (Intel XD, AMD EVP)
+  * Supervisor Mode Execution Protection (SMEP)
+  * Supervisor Mode Access Prevention (SMAP)
+
+* Decent integration of IOMMUs for isolating system components
+
+* UEFI Secure Boot, with available custom key enrollment (including Platform
+  Key replacement)
 
 * Trusted Platform Module (TPM):
 
   * Discrete TPM preferred, firmware TPM not recommended
   * Certified TPM preferred
-  * Version 2.0 preferred, 1.2 accepted
+  * Version 2.0 preferred, 1.2 accepted [#tpm1.2]_
+
+* Proper ongoing support for firmware (*via* `LVFS`_) and software specific to
+  the hardware (i.e. drivers, *via* the upstream Linux kernel). Devices that
+  are end-of-life and no longer receiving these updates will not be supported.
+
+.. _`LVFS`: https://fwupd.org/
 
 Hypotheses
 ----------
@@ -1021,5 +1041,7 @@ Here is a list of all the assets to protect with their protection level:
 
 .. [#cmdline] The Linux kernel command line holds the DM-Verity root hash of
               the system partition.
+
+.. [#tpm1.2] but not currently supported
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

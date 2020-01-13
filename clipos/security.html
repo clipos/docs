@@ -240,23 +240,37 @@
 <h1>Security objectives<a class="headerlink" href="#security-objectives" title="Permalink to this headline">¶</a></h1>
 <p>This is the list of all the security objectives we would like to achieve in the
 CLIP OS project.</p>
-<p>For the order and priority in which we will try achieve these objectives,
+<p>For the order and priority in which we will try to achieve these objectives,
 please check out the <a class="reference internal" href="roadmap.html#roadmap"><span class="std std-ref">project roadmap</span></a>.</p>
 <div class="section" id="hardware-requirements">
 <h2>Hardware requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h2>
+<p>The CLIP OS project does not aim at broad device support. Supported machines
+are to be carefully chosen based on their merits and must meet the standards of
+the project in order to be considered as potential targets. In particular,
+standard hardware-based security features are essential since a lot of the
+low-level work ends up being fairly tied to them.</p>
+<p>Consequently, the following features are required:</p>
 <ul class="simple">
-<li>x86-64 architecture (AMD64 / Intel 64)</li>
-<li>UEFI Secure Boot:<ul>
-<li>Removable default keys</li>
-<li>Custom key enrollment available</li>
+<li>x86-64 architecture (AMD64 / Intel 64), with modern hardware-based mechanisms
+for exploit mitigation such as:<ul>
+<li>write-protect (WP) bit support</li>
+<li>no-execute (NX) bit support (Intel XD, AMD EVP)</li>
+<li>Supervisor Mode Execution Protection (SMEP)</li>
+<li>Supervisor Mode Access Prevention (SMAP)</li>
 </ul>
 </li>
+<li>Decent integration of IOMMUs for isolating system components</li>
+<li>UEFI Secure Boot, with available custom key enrollment (including Platform
+Key replacement)</li>
 <li>Trusted Platform Module (TPM):<ul>
 <li>Discrete TPM preferred, firmware TPM not recommended</li>
 <li>Certified TPM preferred</li>
-<li>Version 2.0 preferred, 1.2 accepted</li>
+<li>Version 2.0 preferred, 1.2 accepted <a class="footnote-reference" href="#tpm1-2" id="id1">[2]</a></li>
 </ul>
 </li>
+<li>Proper ongoing support for firmware (<em>via</em> <a class="reference external" href="https://fwupd.org/">LVFS</a>) and software specific to
+the hardware (i.e. drivers, <em>via</em> the upstream Linux kernel). Devices that
+are end-of-life and no longer receiving these updates will not be supported.</li>
 </ul>
 </div>
 <div class="section" id="hypotheses">
@@ -1201,7 +1215,7 @@ secret.</p>
 <td>✘</td>
 <td>✔</td>
 </tr>
-<tr class="row-odd"><td>Linux kernel command line <a class="footnote-reference" href="#cmdline" id="id9">[1]</a></td>
+<tr class="row-odd"><td>Linux kernel command line <a class="footnote-reference" href="#cmdline" id="id10">[1]</a></td>
 <td>✔</td>
 <td>✘</td>
 <td>✔</td>
@@ -1276,8 +1290,14 @@ secret.</p>
 <table class="docutils footnote" frame="void" id="cmdline" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[1]</a></td><td>The Linux kernel command line holds the DM-Verity root hash of
+<tr><td class="label"><a class="fn-backref" href="#id10">[1]</a></td><td>The Linux kernel command line holds the DM-Verity root hash of
 the system partition.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tpm1-2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>but not currently supported</td></tr>
 </tbody>
 </table>
 </div>
