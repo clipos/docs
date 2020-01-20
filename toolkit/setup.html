@@ -365,7 +365,8 @@ can install it with <a class="reference external" href="https://rustup.rs/">rust
 <li><p class="first"><strong>Bash 4.1 (or later)</strong> is required for some toolkit helper scripts.</p>
 </li>
 <li><p class="first"><strong>libvirt with QEMU and KVM support</strong> are required as the platform to run the
-CLIP OS virtual machines with QEMU with virtualized networks.</p>
+CLIP OS virtual machines with QEMU with virtualized networks. The <strong>Python 3
+module for libvirt</strong> is also required.</p>
 <div class="tip admonition">
 <p class="first admonition-title">Avoid running QEMU as root if not necessary</p>
 <p>On some Linux distributions (e.g., Arch Linux), libvirt is provided with a
@@ -380,6 +381,10 @@ group = &quot;kvm&quot;
 </div>
 </div>
 </li>
+<li><p class="first"><strong>liguestfs tools</strong> to build the disk image for the QEMU virtual machine. If
+unavailable, <strong>Podman</strong> or <strong>Docker</strong> will be used to run libguestfs inside a
+container.</p>
+</li>
 <li><p class="first"><strong>Optionnal:</strong> <strong>Sphinx</strong> and the <strong>Read the Docs Theme</strong> to build the
 documentation. If unavailable, <strong>Podman</strong> or <strong>Docker</strong> will be used to run
 Sphinx inside a container.</p>
@@ -393,9 +398,8 @@ Sphinx inside a container.</p>
        gnupg2 repo git git-lfs openssh-client <span class="se">\</span>
        build-essential pkg-config <span class="se">\</span>
        runc sudo squashfs-tools <span class="se">\</span>
-       qemu libvirt-dev libvirt-daemon <span class="se">\</span>
+       qemu libvirt-dev libvirt-daemon python3-libvirt libguestfs-tools <span class="se">\</span>
        virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 <span class="se">\</span>
-       debootstrap <span class="se">\</span>
        rustc cargo jq zstd
 </pre></div>
 </div>
@@ -405,9 +409,8 @@ Sphinx inside a container.</p>
        gnupg git git-lfs openssh-clients <span class="se">\</span>
        @development-tools <span class="se">\</span>
        runc sudo squashfs-tools <span class="se">\</span>
-       qemu libvirt-devel libvirt-daemon <span class="se">\</span>
-       virt-manager <span class="se">\</span>
-       debootstrap <span class="se">\</span>
+       qemu libvirt-devel libvirt-daemon python3-libvirt <span class="se">\</span>
+       virt-manager libguestfs-tools <span class="se">\</span>
        rust cargo jq zstd
 </pre></div>
 </div>
@@ -418,10 +421,14 @@ Sphinx inside a container.</p>
       base-devel <span class="se">\</span>
       runc sudo squashfs-tools <span class="se">\</span>
       qemu libvirt bridge-utils dnsmasq <span class="se">\</span>
-      virt-manager ebtables <span class="se">\</span>
-      debootstrap debian-archive-keyring <span class="se">\</span>
+      virt-manager ebtables libvirt-python <span class="se">\</span>
       rust jq zstd
 </pre></div>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">Installing libguestfs on Arch Linux</p>
+<p class="last">As there is currently no official package for <cite>libguestfs</cite> on Arch Linux,
+you will have to install it using the <a class="reference external" href="https://aur.archlinux.org/packages/libguestfs">corresponding AUR package</a>.</p>
 </div>
 </div>
 </div>

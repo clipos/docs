@@ -283,7 +283,7 @@ to your user <code class="docutils literal notranslate"><span class="pre">$PATH<
 <p>In order to test some functionalities of a CLIP OS system, you will need a
 virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> <span class="nb">cd</span> testbed
-<span class="gp">(toolkit) $</span> ./build_vagrant_boxes.sh <span class="c1"># Follow the instructions here</span>
+<span class="gp">(toolkit) $</span> ./build_vagrant_boxes.sh
 <span class="gp">(toolkit) $</span> vagrant up
 </pre></div>
 </div>
@@ -313,7 +313,7 @@ is <code class="docutils literal notranslate"><span class="pre">core_state_key</
 </div>
 <p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
 machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust qemu
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just qemu
 </pre></div>
 </div>
 <div class="important admonition">
@@ -335,7 +335,7 @@ paragraph for instructions to create an instrumented build.</p>
 </div>
 <p>To access a QEMU virtual machine over SSH, retrieve the IP address using
 <code class="docutils literal notranslate"><span class="pre">virsh</span></code> and use the SSH keys stored in the cache directory:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh --connect qemu:///system domifaddr clipos-qemu_5.0.0-alpha.1--instrumented
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh --connect qemu:///system domifaddr clipos-testbed_clipos-qemu
 <span class="go"> Name       MAC address          Protocol     Address</span>
 <span class="go">-------------------------------------------------------------------------------</span>
 <span class="go"> vnet2      XX:XX:XX:XX:XX:XX    ipv4         172.27.1.XX/24</span>

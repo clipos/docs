@@ -111,7 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#sdk">SDK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#core">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#efi-boot-partition">EFI boot partition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#qemu-image-debian-sdk">QEMU image &amp; Debian SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qemu-image">QEMU image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-the-qemu-image">Testing the QEMU image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#caching-and-binary-packages">Caching and binary packages</a></li>
 </ul>
@@ -231,25 +231,19 @@ partition (bootloader, kernel image, etc.) is built using:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="qemu-image-debian-sdk">
-<h2>QEMU image &amp; Debian SDK<a class="headerlink" href="#qemu-image-debian-sdk" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="qemu-image">
+<h2>QEMU image<a class="headerlink" href="#qemu-image" title="Permalink to this headline">¶</a></h2>
 <p>In order to test the resulting OS, we use <code class="docutils literal notranslate"><span class="pre">libguestfs</span></code> tools to assemble a
 QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
-<code class="docutils literal notranslate"><span class="pre">libvirt</span></code>.</p>
-<p>Similarly to the Gentoo Hardened based SDK, the Debian SDK is automatically
-built, and may be manually rebuilt from scratch using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/sdk_debian/bootstrap-from-scratch
-</pre></div>
-</div>
-<p>The qcow2 QEMU image may then be assembled using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/qemu/bundle
+<code class="docutils literal notranslate"><span class="pre">libvirt</span></code>. The qcow2 QEMU image may be assembled using:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> ./testbed/create_qemu_image.sh
 </pre></div>
 </div>
 </div>
 <div class="section" id="testing-the-qemu-image">
 <h2>Testing the QEMU image<a class="headerlink" href="#testing-the-qemu-image" title="Permalink to this headline">¶</a></h2>
 <p>To setup a EFI &amp; QEMU/KVM enabled virtual machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/qemu/run
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> ./testbed/run_with_libvirt.py
 </pre></div>
 </div>
 </div>

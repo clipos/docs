@@ -60,25 +60,16 @@ partition (bootloader, kernel image, etc.) is built using:
 
    (toolkit) $ sujust products/clipos/efiboot
 
-QEMU image & Debian SDK
------------------------
+QEMU image
+----------
 
 In order to test the resulting OS, we use ``libguestfs`` tools to assemble a
 QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
-``libvirt``.
-
-Similarly to the Gentoo Hardened based SDK, the Debian SDK is automatically
-built, and may be manually rebuilt from scratch using:
+``libvirt``. The qcow2 QEMU image may be assembled using:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust products/clipos/sdk_debian/bootstrap-from-scratch
-
-The qcow2 QEMU image may then be assembled using:
-
-.. code-block:: shell-session
-
-   (toolkit) $ sujust products/clipos/qemu/bundle
+   (toolkit) $ ./testbed/create_qemu_image.sh
 
 Testing the QEMU image
 ----------------------
@@ -87,7 +78,7 @@ To setup a EFI & QEMU/KVM enabled virtual machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust products/clipos/qemu/run
+   (toolkit) $ ./testbed/run_with_libvirt.py
 
 Caching and binary packages
 ---------------------------

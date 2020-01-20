@@ -125,7 +125,7 @@ virtual infrastructure acting as testbed. To setup this infrastructure, use:
 .. code-block:: shell-session
 
    (toolkit) $ cd testbed
-   (toolkit) $ ./build_vagrant_boxes.sh # Follow the instructions here
+   (toolkit) $ ./build_vagrant_boxes.sh
    (toolkit) $ vagrant up
 
 This will setup virtual networks using ``Vagrant`` with ``libvirt`` and create
@@ -157,7 +157,7 @@ machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust qemu
+   (toolkit) $ just qemu
 
 .. admonition:: Local login disabled by default
    :class: important
@@ -183,7 +183,7 @@ To access a QEMU virtual machine over SSH, retrieve the IP address using
 
 .. code-block:: shell-session
 
-   $ virsh --connect qemu:///system domifaddr clipos-qemu_5.0.0-alpha.1--instrumented
+   $ virsh --connect qemu:///system domifaddr clipos-testbed_clipos-qemu
     Name       MAC address          Protocol     Address
    -------------------------------------------------------------------------------
     vnet2      XX:XX:XX:XX:XX:XX    ipv4         172.27.1.XX/24

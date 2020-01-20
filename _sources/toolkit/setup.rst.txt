@@ -199,7 +199,8 @@ your userland:
 - **Bash 4.1 (or later)** is required for some toolkit helper scripts.
 
 - **libvirt with QEMU and KVM support** are required as the platform to run the
-  CLIP OS virtual machines with QEMU with virtualized networks.
+  CLIP OS virtual machines with QEMU with virtualized networks. The **Python 3
+  module for libvirt** is also required.
 
   .. admonition:: Avoid running QEMU as root if not necessary
      :class: tip
@@ -216,6 +217,10 @@ your userland:
 
         user = "myusername"  # replace with your current username
         group = "kvm"
+
+- **liguestfs tools** to build the disk image for the QEMU virtual machine. If
+  unavailable, **Podman** or **Docker** will be used to run libguestfs inside a
+  container.
 
 - **Optionnal:** **Sphinx** and the **Read the Docs Theme** to build the
   documentation. If unavailable, **Podman** or **Docker** will be used to run
@@ -235,9 +240,8 @@ On Ubuntu or Debian (with ``contrib`` sources enabled for Debian):
           gnupg2 repo git git-lfs openssh-client \
           build-essential pkg-config \
           runc sudo squashfs-tools \
-          qemu libvirt-dev libvirt-daemon \
+          qemu libvirt-dev libvirt-daemon python3-libvirt libguestfs-tools \
           virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 \
-          debootstrap \
           rustc cargo jq zstd
 
 On Fedora and CentOS:
@@ -249,9 +253,8 @@ On Fedora and CentOS:
           gnupg git git-lfs openssh-clients \
           @development-tools \
           runc sudo squashfs-tools \
-          qemu libvirt-devel libvirt-daemon \
-          virt-manager \
-          debootstrap \
+          qemu libvirt-devel libvirt-daemon python3-libvirt \
+          virt-manager libguestfs-tools \
           rust cargo jq zstd
 
 On Arch Linux:
@@ -264,9 +267,15 @@ On Arch Linux:
          base-devel \
          runc sudo squashfs-tools \
          qemu libvirt bridge-utils dnsmasq \
-         virt-manager ebtables \
-         debootstrap debian-archive-keyring \
+         virt-manager ebtables libvirt-python \
          rust jq zstd
+
+.. admonition:: Installing libguestfs on Arch Linux
+   :class: note
+
+   As there is currently no official package for `libguestfs` on Arch Linux,
+   you will have to install it using the `corresponding AUR package
+   <https://aur.archlinux.org/packages/libguestfs>`_.
 
 
 How to fetch the entire source tree?
