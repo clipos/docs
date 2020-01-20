@@ -188,7 +188,9 @@ used in a PRODUCTION CONTEXT.</strong></p>
 pre-built packages, SDK and pre-installed QEMU images from <a class="reference external" href="https://files.clip-os.org">files.clip-os.org</a>.</p>
 <p>Be aware that those packages and QEMU images are instrumented, which means they
 allow full root access without any password on the system.</p>
-<p>To run the CLIP OS system in a virtual machine, you will have to install QEMU.</p>
+<p>To run the CLIP OS system in a virtual machine, you will have to install QEMU.
+It is also strongly recommended to have KVM support enabled for your current
+user (i.e. your current user is part of the <code class="docutils literal notranslate"><span class="pre">kvm</span></code> group).</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> For Debian <span class="p">&amp;</span> Ubuntu
 <span class="gp">$</span> sudo apt-get install qemu-system-x86
 
@@ -215,6 +217,10 @@ following commands:</p>
 
 <span class="gp">#</span> Start CLIP OS with QEMU
 <span class="gp">$</span> ./qemu.sh
+
+<span class="gp">#</span> Start CLIP OS with QEMU without KVM support <span class="o">(</span>not supported, may have issues<span class="o">)</span>
+<span class="gp">#</span> See: https://discuss.clip-os.org/t/qemu-system-x86-64-overcommit-invalid-option-at-boot/76/12
+<span class="gp">$</span> ./qemu-nokvm.sh
 </pre></div>
 </div>
 <p>You can login as root with no password.</p>

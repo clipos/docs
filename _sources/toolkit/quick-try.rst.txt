@@ -21,6 +21,8 @@ Be aware that those packages and QEMU images are instrumented, which means they
 allow full root access without any password on the system.
 
 To run the CLIP OS system in a virtual machine, you will have to install QEMU.
+It is also strongly recommended to have KVM support enabled for your current
+user (i.e. your current user is part of the ``kvm`` group).
 
 .. code-block:: shell-session
 
@@ -52,6 +54,10 @@ following commands:
 
    # Start CLIP OS with QEMU
    $ ./qemu.sh
+
+   # Start CLIP OS with QEMU without KVM support (not supported, may have issues)
+   # See: https://discuss.clip-os.org/t/qemu-system-x86-64-overcommit-invalid-option-at-boot/76/12
+   $ ./qemu-nokvm.sh
 
 You can login as root with no password.
 
