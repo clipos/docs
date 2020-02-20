@@ -748,6 +748,14 @@ TPM’s HWRNG (see documentation of <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">rng_core.default_quality</span></code> command line parameter).</p>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_STAGING=n</code></dt>
+<dd><p><em>Staging</em> drivers are typically of lower quality and under heavy
+development. They are thus more likely to contain bugs, including security
+vulnerabilities, and should be avoided.</p>
+</dd></dl>
+
 <p>The IOMMU allows for protecting the system’s main memory from arbitrary
 accesses from devices (e.g., DMA attacks). Note that this is related to
 hardware features. On a recent Intel machine, we enable the following:</p>
@@ -1123,9 +1131,10 @@ read/write access to:</p>
 <dd></dd></dl>
 
 </div></blockquote>
-<p>In addition, the following other two sysctls impose restrictions on the
-opening of FIFOs and regular files in order to make similar spoofing attacks
-harder:</p>
+<p>In addition, the following other two sysctls impose restrictions on the opening
+of FIFOs and regular files in order to make similar spoofing attacks harder
+(note however that <a class="reference external" href="https://www.openwall.com/lists/oss-security/2020/01/28/2">these restrictions currently do not apply to networked
+filesystems, among others</a>):</p>
 <blockquote>
 <div><dl class="describe">
 <dt>

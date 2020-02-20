@@ -457,6 +457,12 @@ Device Drivers
    TPM's HWRNG (see documentation of ``CONFIG_HW_RANDOM_TPM`` and the
    ``rng_core.default_quality`` command line parameter).
 
+.. describe:: CONFIG_STAGING=n
+
+   *Staging* drivers are typically of lower quality and under heavy
+   development. They are thus more likely to contain bugs, including security
+   vulnerabilities, and should be avoided.
+
 The IOMMU allows for protecting the system's main memory from arbitrary
 accesses from devices (e.g., DMA attacks). Note that this is related to
 hardware features. On a recent Intel machine, we enable the following:
@@ -749,12 +755,15 @@ read/write access to:
   .. describe:: fs.protected_symlinks = 1
                 fs.protected_hardlinks = 1
 
-In addition, the following other two sysctls impose restrictions on the
-opening of FIFOs and regular files in order to make similar spoofing attacks
-harder:
+In addition, the following other two sysctls impose restrictions on the opening
+of FIFOs and regular files in order to make similar spoofing attacks harder
+(note however that `these restrictions currently do not apply to networked
+filesystems, among others <sysctl_protected_limitations_>`_):
 
   .. describe:: fs.protected_fifos = 2
                 fs.protected_regular = 2
+
+.. _sysctl_protected_limitations: https://www.openwall.com/lists/oss-security/2020/01/28/2
 
 We do not simply disable the BPF Just in Time compiler as CLIP OS plans on
 using it:
