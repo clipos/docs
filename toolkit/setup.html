@@ -196,7 +196,7 @@ to use the tools in the CLIP OS project.</p>
 <li><p class="first">You must run a <strong>64-bit x86 system</strong> (a.k.a. <code class="docutils literal notranslate"><span class="pre">AMD64</span></code>, <code class="docutils literal notranslate"><span class="pre">Intel</span> <span class="pre">64</span></code> or
 <code class="docutils literal notranslate"><span class="pre">x86_64</span></code>) architecture.</p>
 <div class="tip admonition">
-<p class="first admonition-title">About other system architectures…</p>
+<p class="first admonition-title">About other system architectures</p>
 <p class="last">Cross-compiling to other system architectures is not supported yet. No
 other host system architecture is supported yet.</p>
 </div>
@@ -215,48 +215,35 @@ distributions:</p>
 </ul>
 </div></blockquote>
 <p>Although not regularly tested, the following distributions are supported
-(i.e. we will fix reported bugs) and the project should work on those:</p>
-<blockquote>
+(i.e. we will investigate and fix reported bugs) and the project should
+work on those:</p>
+<blockquote class="last">
 <div><ul class="simple">
 <li>Debian testing and unstable</li>
-<li>Fedora 31 (with cgroup v1 enabled)</li>
+<li>Fedora 31 and later</li>
 <li>Ubuntu 18.04 and later</li>
-<li>CentOS 8</li>
+<li>CentOS 8 and later</li>
 </ul>
 </div></blockquote>
-<p>Similarly, the following kernels are supported:</p>
-<blockquote>
-<div><ul class="simple">
-<li>4.19 and above (Arch Linux, Debian unstable, etc.)</li>
-</ul>
-</div></blockquote>
-<p class="last">The project will likely work on other distributions but we do not plan on
-supporting any other one yet.</p>
 </div>
 <div class="tip admonition">
-<p class="first admonition-title">About other Linux distributions…</p>
-<p class="last">Provided a kernel can support all the features used within the CLIP OS
-toolkit (such as namespaces, capabilities, cgroups for containerization,
-SquashFS, loop devices, OverlayFS, tmpfs, etc.), it is expected to work
-without issue.</p>
+<p class="first admonition-title">About other Linux distributions</p>
+<p class="last">The project will likely work on other distributions but there is
+currently no plan to extend our support. If your distribution kernel is
+at least version 4.19 and supports all the features used by the CLIP OS
+toolkit (such as namespaces, capabilities, cgroups, OverlayFS, tmpfs,
+etc.), it is expected to work without issue.</p>
 </div>
 </li>
-<li><p class="first">Both your hardware and your kernel must support <strong>KVM</strong> (through Intel
-VT-x or AMD-V technologies) to run CLIP OS virtual machine images.</p>
+<li><p class="first">Both your hardware and your kernel must support <strong>KVM</strong> (through Intel VT-x
+or AMD-V technologies) to run CLIP OS virtual machine images in the virtual
+testbed. Building without KVM support is supported but testing requires KVM
+support and access to an instance of <strong>libvirt</strong>.</p>
 </li>
-<li><p class="first"><strong>Super-user privileges</strong> are required on punctual occasions through the use
-of the <code class="docutils literal notranslate"><span class="pre">sudo</span></code> utility.</p>
-<div class="tip admonition">
-<p class="first admonition-title">Why this requirement?</p>
-<p>Super-user privileges are required to permit the CLIP OS toolkit to
-create and manage Linux containers, such as the CLIP OS SDK ephemeral
-containers.</p>
-<p>However, the CLIP OS toolkit will not run everything as root as it will
-lower its effective privileges when root privileges are not necessary.</p>
-<p class="last">For more information, see the implementation of the class
-<cite>clipostoolkit.cosmk.privileges.ElevatedPrivileges</cite> in the <a class="reference external" href="https://github.com/clipos/toolkit/blob/master/clipostoolkit/cosmk/privileges.py">CLIP OS
-Toolkit</a>.</p>
-</div>
+<li><p class="first"><strong>Podman</strong> is required to spawn SDK containers to build CLIP OS. Rootless
+podman is supported and rootfull podman support requires <strong>Super-user
+privileges</strong> acquired through <strong>sudo</strong>. Running containers with <strong>Docker</strong>
+is also supported but not actively tested.</p>
 </li>
 <li><p class="first">Make sure to have allocated a consequent size of <strong>swap space</strong> on your
 system as it might be required when working on large ephemeral SDK
@@ -294,16 +281,6 @@ your userland:</p>
 <ul>
 <li><p class="first"><strong>Git</strong> as all the source code is versioned through Git repositories.</p>
 </li>
-<li><p class="first"><strong>repo</strong> (tool from the Android Open Source Project) is required to fetch
-the source tree.</p>
-<div class="note admonition">
-<p class="first admonition-title">Alternative way to install <em>repo</em></p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">repo</span></code> might be packaged by your Linux distribution. Otherwise you may
-have to get it and install it from source. To do so, follow the related
-instructions on <a class="reference external" href="https://source.android.com/setup/build/downloading#installing-repo">the Android Open Source project page regarding the setup
-of the environment for AOSP</a>.</p>
-</div>
-</li>
 <li><p class="first"><strong>Git LFS</strong> (Git Large File Storage extension) is required to fetch Git
 repositories with a lot of large binary files.</p>
 <div class="note admonition">
@@ -312,61 +289,36 @@ repositories with a lot of large binary files.</p>
 distribution, you can follow instructions from the <a class="reference external" href="https://github.com/git-lfs/git-lfs/wiki/Installation">Git LFS project pages</a> to install it.</p>
 </div>
 </li>
-<li><p class="first"><strong>Python 3.6 (or later)</strong> with a working C compiler and some basic
-development libraries and tools as well as the appropriate CPython C header
-files.</p>
+<li><p class="first"><strong>repo</strong> (tool from the Android Open Source Project) is required to fetch
+the source tree.</p>
 <div class="note admonition">
-<p class="first admonition-title">Why a C compilation infrastructure is needed on the host
-             while all the compilations are done within containers?</p>
-<p class="last">These development packages are required to build some external Python
-packages vendored in the source tree and which embed some CPython code.</p>
-</div>
-</li>
-<li><p class="first"><strong>sudo</strong> (v1.8.21 or above) is required to permit the CLIP OS toolkit to
-elevate privileges to super-user privileges. The current unprivileged user
-must be a <code class="docutils literal notranslate"><span class="pre">sudoer</span></code> to be able to gain those privileges <em>via</em> the use of
-<code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
-</li>
-<li><p class="first"><strong>runc</strong> (the OCI runtime tool) is required as it is used as the runtime
-for the CLIP OS SDK Linux containers.</p>
-<div class="tip admonition">
-<p class="first admonition-title">Alternative and more convenient way to get <em>runc</em> on your
-             system</p>
-<p>Since <em>runc</em> is a project originated from Docker and used as a container
-runtime by the Docker engine (since version 1.11 of the Docker Engine),
-installing <strong>the Docker Engine is an alternative</strong> to provide the <code class="docutils literal notranslate"><span class="pre">runc</span></code>
-utility to the CLIP OS toolkit (Docker embeds a <code class="docutils literal notranslate"><span class="pre">runc</span></code> binary under the
-name of <code class="docutils literal notranslate"><span class="pre">docker-runc</span></code>).</p>
-<p class="last">This tip may be useful if your distribution does not provide a standalone
-<code class="docutils literal notranslate"><span class="pre">runc</span></code> package but does provide a package for Docker.</p>
-</div>
-</li>
-<li><p class="first"><strong>squashfs-tools</strong> and <strong>util-linux</strong> system packages for the use of
-<code class="docutils literal notranslate"><span class="pre">mksquashfs</span></code> and <code class="docutils literal notranslate"><span class="pre">losetup</span></code> system utilities.</p>
-<div class="note admonition">
-<p class="first admonition-title">Why SquashFS and loop devices?</p>
-<p class="last">These two utilities are required to create and mount squashfs images used
-internally by the CLIP OS toolkit as the rootfs images of the ephemeral
-SDK containers.</p>
-</div>
-</li>
-<li><p class="first"><strong>Rust</strong> language support to build <a class="reference external" href="https://github.com/casey/just">just</a>.
-<code class="docutils literal notranslate"><span class="pre">just</span></code> is a simple command-line utility to launch and abstract sequences of
-shell commands within <code class="docutils literal notranslate"><span class="pre">Justfiles</span></code>. These files follow a <em>Makefile</em>-like
-syntax and provide an alternative way (in the context of the CLIP OS toolkit)
-to launch build jobs and other source code management common scripts as the
-<code class="docutils literal notranslate"><span class="pre">cosmk</span></code> tool does not implement all the required features yet.</p>
-<div class="note admonition">
-<p class="first admonition-title">Alternative way to install Rust</p>
-<p class="last">If Rust is not provided by any of your Linux distribution packages, you
-can install it with <a class="reference external" href="https://rustup.rs/">rustup</a>.</p>
+<p class="first admonition-title">Alternative way to install repo</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">repo</span></code> might be packaged by your Linux distribution. Otherwise you may
+have to get it and install it from source. To do so, follow the related
+instructions on <a class="reference external" href="https://source.android.com/setup/build/downloading#installing-repo">the Android Open Source project page regarding the setup
+of the environment for AOSP</a>.</p>
 </div>
 </li>
 <li><p class="first"><strong>Bash 4.1 (or later)</strong> is required for some toolkit helper scripts.</p>
 </li>
+<li><p class="first">The <strong>Go</strong> compiler (version <strong>1.12 or above</strong>) is required to build the
+<code class="docutils literal notranslate"><span class="pre">cosmk</span></code> tool.</p>
+<div class="note admonition">
+<p class="first admonition-title">Alternative way to install Go</p>
+<p class="last">If your ditribution does not have a recent enough version of Go, you may
+download a pre-built official version from <a class="reference external" href="https://golang.org/">golang.org</a>.</p>
+</div>
+</li>
+<li><p class="first"><strong>Podman</strong> is required to launch SDK containers. SDK containers may be run
+rootless using podman or rootfull using podman. Running SDK containers
+rootfull will also require <strong>sudo</strong> for automatic privilege escalation (the
+current unprivileged user must be a <code class="docutils literal notranslate"><span class="pre">sudoer</span></code> to be able to gain those
+privileges). Running container with <strong>Docker</strong> is also supported and requires
+<strong>sudo</strong>.</p>
+</li>
 <li><p class="first"><strong>libvirt with QEMU and KVM support</strong> are required as the platform to run the
 CLIP OS virtual machines with QEMU with virtualized networks. The <strong>Python 3
-module for libvirt</strong> is also required.</p>
+module for libvirt</strong> and a TPM emulator are also required.</p>
 <div class="tip admonition">
 <p class="first admonition-title">Avoid running QEMU as root if not necessary</p>
 <p>On some Linux distributions (e.g., Arch Linux), libvirt is provided with a
@@ -381,9 +333,9 @@ group = &quot;kvm&quot;
 </div>
 </div>
 </li>
-<li><p class="first"><strong>liguestfs tools</strong> to build the disk image for the QEMU virtual machine. If
-unavailable, <strong>Podman</strong> or <strong>Docker</strong> will be used to run libguestfs inside a
-container.</p>
+<li><p class="first"><strong>Optionnal (but recommended):</strong> <strong>liguestfs tools</strong> to build the disk image
+for the QEMU virtual machine. If unavailable, <strong>Podman</strong> or <strong>Docker</strong> will
+be used to run libguestfs inside a container.</p>
 </li>
 <li><p class="first"><strong>Optionnal:</strong> <strong>Sphinx</strong> and the <strong>Read the Docs Theme</strong> to build the
 documentation. If unavailable, <strong>Podman</strong> or <strong>Docker</strong> will be used to run
@@ -394,41 +346,63 @@ Sphinx inside a container.</p>
 <span id="id1"></span><h3>Dependencies installation on supported Linux-distributions<a class="headerlink" href="#dependencies-installation-on-supported-linux-distributions" title="Permalink to this headline">¶</a></h3>
 <p>On Ubuntu or Debian (with <code class="docutils literal notranslate"><span class="pre">contrib</span></code> sources enabled for Debian):</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt install <span class="se">\</span>
-       python3 python3-dev python3-venv <span class="se">\</span>
-       gnupg2 repo git git-lfs openssh-client <span class="se">\</span>
-       build-essential pkg-config <span class="se">\</span>
-       runc sudo squashfs-tools <span class="se">\</span>
+       gnupg2 repo git git-lfs openssh-client golang jq zstd <span class="se">\</span>
        qemu libvirt-dev libvirt-daemon python3-libvirt libguestfs-tools <span class="se">\</span>
-       virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 <span class="se">\</span>
-       rustc cargo jq zstd
-</pre></div>
-</div>
-<p>On Fedora and CentOS:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dnf install <span class="se">\</span>
-       python2 python3-devel <span class="se">\</span>
-       gnupg git git-lfs openssh-clients <span class="se">\</span>
-       @development-tools <span class="se">\</span>
-       runc sudo squashfs-tools <span class="se">\</span>
-       qemu libvirt-devel libvirt-daemon python3-libvirt <span class="se">\</span>
-       virt-manager libguestfs-tools <span class="se">\</span>
-       rust cargo jq zstd
-</pre></div>
-</div>
-<p>On Arch Linux:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo pacman -Syu <span class="se">\</span>
-      python <span class="se">\</span>
-      gnupg repo git git-lfs openssh <span class="se">\</span>
-      base-devel <span class="se">\</span>
-      runc sudo squashfs-tools <span class="se">\</span>
-      qemu libvirt bridge-utils dnsmasq <span class="se">\</span>
-      virt-manager ebtables libvirt-python <span class="se">\</span>
-      rust jq zstd
+       virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0
 </pre></div>
 </div>
 <div class="note admonition">
-<p class="first admonition-title">Installing libguestfs on Arch Linux</p>
-<p class="last">As there is currently no official package for <cite>libguestfs</cite> on Arch Linux,
-you will have to install it using the <a class="reference external" href="https://aur.archlinux.org/packages/libguestfs">corresponding AUR package</a>.</p>
+<p class="first admonition-title">Installing Podman or Docker</p>
+<p>On Debian and Ubuntu systems, you will have to choose between Podman
+(recommended) and Docker and install them on your system using the following
+guides:</p>
+<ul class="last simple">
+<li><a class="reference external" href="https://github.com/containers/libpod/blob/master/install.md">Podman for Ubuntu and Debian</a></li>
+<li><a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Docker for Ubuntu</a></li>
+<li><a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/debian/">Docker for Debian</a></li>
+</ul>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">Installing libtpms and swtpm on Ubuntu or Debian</p>
+<p class="last">As there is currently no official package for libtpms and swtpm on
+Ubuntu and Debian, you will have to follow the instructions from the
+<code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their respective GitHub repositories:
+<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
+<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a>.</p>
+</div>
+<p>On Fedora and CentOS:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dnf install <span class="se">\</span>
+       gnupg git git-lfs openssh-clients podman golang jq zstd <span class="se">\</span>
+       qemu libvirt-devel libvirt-daemon python3-libvirt libguestfs-tools <span class="se">\</span>
+       virt-manager
+
+<span class="gp">#</span> Fedora only
+<span class="gp">$</span> sudo dnf install swtpm
+</pre></div>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">Installing libtpms and swtpm on CentOS</p>
+<p class="last">As there is currently no official package for libtpms and swtpm on CentOS,
+you will have to follow the instructions from the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their
+respective GitHub repositories:
+<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
+<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a>.</p>
+</div>
+<p>On Arch Linux:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo pacman -Syu <span class="se">\</span>
+      gnupg repo git git-lfs openssh podman go jq zstd <span class="se">\</span>
+      qemu libvirt bridge-utils dnsmasq ebtables libvirt-python <span class="se">\</span>
+      virt-manager
+</pre></div>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">Installing libguestfs, libtpms and swtpm on Arch Linux</p>
+<p class="last">As there is currently no official package for those packages on Arch Linux,
+you will have to install them using AUR packages:
+<a class="reference external" href="https://aur.archlinux.org/packages/libguestfs">libguestfs</a>,
+<a class="reference external" href="https://aur.archlinux.org/packages/libtpms">libtpms</a>,
+<a class="reference external" href="https://aur.archlinux.org/packages/tpm-tools">tpm-tools</a> and
+<a class="reference external" href="https://aur.archlinux.org/packages/swtpm">swtpm</a>.</p>
 </div>
 </div>
 </div>
@@ -438,20 +412,13 @@ you will have to install it using the <a class="reference external" href="https:
 managed together using <code class="docutils literal notranslate"><span class="pre">repo</span></code>.</p>
 <div class="important admonition">
 <p class="first admonition-title">Make sure the Git LFS filters are enabled</p>
-<p><strong>Please ensure to have installed the Git LFS filters hooks for Git</strong> either
-globally on your system (changes will be made in <code class="docutils literal notranslate"><span class="pre">/etc/gitconfig</span></code>) with
-the following command:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo git-lfs install --system --skip-repo
-</pre></div>
-</div>
-<p>or only for your current user (changes will be made in <code class="docutils literal notranslate"><span class="pre">~/.gitconfig</span></code>):</p>
+<p>To enable the Git LFS filters for your current user (changes will be made in
+<code class="docutils literal notranslate"><span class="pre">~/.gitconfig</span></code>), please run:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git-lfs install --skip-repo
 </pre></div>
 </div>
-<p class="last">This step is required to be done before synchronizing the whole CLIP OS
-source tree and allows to automatically download the files stored within the
-Git LFS server when <code class="docutils literal notranslate"><span class="pre">repo</span></code> checks out the Git LFS-backed repositories of
-the source tree.</p>
+<p class="last">This step should be done before synchronizing the whole CLIP OS source tree
+to automatically download the files stored with Git LFS.</p>
 </div>
 <div class="error admonition">
 <p class="first admonition-title">Watch out for unusual <em>umask</em> values!</p>
@@ -481,29 +448,25 @@ kernel (<code class="docutils literal notranslate"><span class="pre">src/externa
 (<code class="docutils literal notranslate"><span class="pre">src/portage/gentoo/</span></code>).</p>
 <div class="tip admonition">
 <p class="first admonition-title">Quicker synchronization</p>
-<p>If you are certain to have set everything up correctly and if you are not
-intreseted in the output of the <code class="docutils literal notranslate"><span class="pre">repo</span> <span class="pre">sync</span></code> command, you can instruct
-<em>repo</em> to synchronize all the sub-repositories concurrently by using
-multiple Git processes:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo sync -j4
+<p>You can instruct <code class="docutils literal notranslate"><span class="pre">repo</span></code> to synchronize all the sub-repositories
+concurrently by using multiple Git processes:</p>
+<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo sync -j4
 </pre></div>
 </div>
-<p class="last">This should be significantly faster than the method above but the output of
-the Git cloning processes might be interlaced and not easily readable.</p>
 </div>
 <p>At this point, you should have successfully set up your environment and
 fetched the whole source tree of the CLIP OS project.</p>
 <div class="note admonition">
-<p class="first admonition-title">In case you forgot to install the Git LFS filters <em>before</em>
-             synchronizing the whole source tree</p>
-<p>If you forgot to setup the Git LFS filter before running <code class="docutils literal notranslate"><span class="pre">repo</span> <span class="pre">sync</span></code>, you
-can still download the missing contents of the files backed by Git LFS (and
-therefore fix your current source tree checkout) by running this command:</p>
+<p class="first admonition-title">Quick fix for Git LFS issues</p>
+<p>If for any reason the Git LFS filters were not installed during <code class="docutils literal notranslate"><span class="pre">repo</span>
+<span class="pre">sync</span></code>, you can still download the missing contents of the files backed by
+Git LFS (and therefore fix your current source tree checkout) by running
+this command:</p>
 <div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo forall -c <span class="s1">&#39;git lfs install &amp;&amp; git lfs pull&#39;</span>
 </pre></div>
 </div>
 </div>
-<p>Congratulations, you are now ready to launch a <a class="reference internal" href="build.html#build"><span class="std std-ref">build of a CLIP OS image</span></a>.</p>
+<p>Congratulations, you are now ready to start <a class="reference internal" href="build.html#build"><span class="std std-ref">building CLIP OS</span></a>.</p>
 </div>
 </div>
 

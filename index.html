@@ -263,7 +263,8 @@ check out the <a class="reference internal" href="toolkit/derive.html#derive"><s
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="toolkit/build.html">Building</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-the-clip-os-toolkit-cosmk">Building the CLIP OS toolkit (cosmk)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#creating-a-config-toml-for-cosmk">Creating a <code class="docutils literal notranslate"><span class="pre">config.toml</span></code> for cosmk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build.html#virtual-testbed-setup">Virtual testbed setup</a></li>
@@ -276,7 +277,9 @@ check out the <a class="reference internal" href="toolkit/derive.html#derive"><s
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#sdk">SDK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#core">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#efi-boot-partition">EFI boot partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#initial-state-for-qemu-test-image">Initial state for QEMU test image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#qemu-image">QEMU image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#testbed-environment-setup">Testbed environment setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#testing-the-qemu-image">Testing the QEMU image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/build-steps.html#caching-and-binary-packages">Caching and binary packages</a></li>
 </ul>
@@ -284,11 +287,8 @@ check out the <a class="reference internal" href="toolkit/derive.html#derive"><s
 <li class="toctree-l1"><a class="reference internal" href="toolkit/source-tree.html">Source tree organization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#id1"><code class="docutils literal notranslate"><span class="pre">.repo/</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#assets"><code class="docutils literal notranslate"><span class="pre">assets/</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-crates-io"><code class="docutils literal notranslate"><span class="pre">assets/crates-io/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-debian"><code class="docutils literal notranslate"><span class="pre">assets/debian/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-distfiles"><code class="docutils literal notranslate"><span class="pre">assets/distfiles/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-gentoo"><code class="docutils literal notranslate"><span class="pre">assets/gentoo/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#assets-toolkit"><code class="docutils literal notranslate"><span class="pre">assets/toolkit/</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#cache"><code class="docutils literal notranslate"><span class="pre">cache/</span></code></a><ul>
@@ -317,13 +317,10 @@ check out the <a class="reference internal" href="toolkit/derive.html#derive"><s
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#toolkit"><code class="docutils literal notranslate"><span class="pre">toolkit/</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#toolkit-clipostoolkit"><code class="docutils literal notranslate"><span class="pre">toolkit/clipostoolkit/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#toolkit-cosmk"><code class="docutils literal notranslate"><span class="pre">toolkit/cosmk/</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#toolkit-helpers"><code class="docutils literal notranslate"><span class="pre">toolkit/helpers/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#toolkit-qa"><code class="docutils literal notranslate"><span class="pre">toolkit/qa/</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="toolkit/source-tree.html#toolkit-maintenance"><code class="docutils literal notranslate"><span class="pre">toolkit/maintenance/</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="toolkit/source-tree.html#justfile"><code class="docutils literal notranslate"><span class="pre">justfile</span></code></a></li>
 </ul>
 </li>
 </ul>

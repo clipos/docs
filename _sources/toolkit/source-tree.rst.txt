@@ -74,19 +74,6 @@ remote resource.
    most of them rely on Git LFS for the revision of those large files to avoid
    cluttering their Git repository internal objects.
 
-``assets/crates-io/``
-~~~~~~~~~~~~~~~~~~~~~
-
-This directory holds Rust crates from `crates.io <https://crates.io/>`_ that
-serve to bootstrap and compile ``just`` (handy CLI tool to launch and abstract
-sequences of shell commands).
-
-``assets/debian/``
-~~~~~~~~~~~~~~~~~~
-
-This directory holds all the Debian packages used by the alternative SDK based
-on a Debian environment.
-
 ``assets/distfiles/``
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,17 +85,6 @@ This directory holds the *distfiles* from Gentoo which serve for the Gentoo
 
 This directory contains the Gentoo *stage3* image that serves to bootstrap the
 CLIP OS SDK.
-
-``assets/toolkit/``
-~~~~~~~~~~~~~~~~~~~
-
-This directory holds all the Python packages that are dependencies of the CLIP
-OS toolkit and need to be installed in the CLIP OS toolkit *virtualenv*.
-
-These Python packages are originating from `PyPI <https://pypi.org/>`_ and must
-only be source packages (in opposition with `wheel packages
-<https://www.python.org/dev/peps/pep-0427/>`_) for legal and platform
-compatibility reasons.
 
 ``cache/``
 ----------
@@ -155,7 +131,7 @@ Documentation of the CLIP OS product itself.
 ``docs-src/toolkit/``
 ~~~~~~~~~~~~~~~~~~~~~
 
-Documentation of the CLIP OS toolkit.
+Documentation of the CLIP OS toolkit and build steps.
 
 ``manifest/``
 -------------
@@ -268,9 +244,8 @@ The recipe describing the CLIP OS *EFI boot* items.
 ``run/``
 --------
 
-Runtime working directory for the CLIP OS toolkit utilities (i.e. the Python
-virtual environment location, some tools part of the toolkit working directory,
-etc.).
+Runtime working directory storing the ``cosmk`` binary and temporary QEMU
+images for testbed virtual machines.
 
 ``src/``
 --------
@@ -326,22 +301,13 @@ Portage profiles that are specific to CLIP OS.
 ``toolkit/``
 ------------
 
-The CLIP OS toolkit.
+The CLIP OS toolkit (``cosmk``) and various helper scripts usefull for
+development.
 
-.. admonition:: Notable files
-   :class: tip
+``toolkit/cosmk/``
+~~~~~~~~~~~~~~~~~~
 
-   * ``repo_root.justfile``: The source tree root (symlinked in the source tree
-     root) *justfile*.
-   * ``setup.sh``: The script to *call* to setup the Python virtualenv.
-   * ``activate``: The script to *source* to activate the CLIP OS toolkit
-     environment/virtualenv.
-
-``toolkit/clipostoolkit/``
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Python package/module containing all the source code for the CLIP OS build
-and source tree management tools developed in Python.
+The ``cosmk`` tool written in Go with vendored dependencies.
 
 ``toolkit/helpers/``
 ~~~~~~~~~~~~~~~~~~~~
@@ -360,33 +326,5 @@ commits.
    When the CLIP OS toolkit environment is activated (see the ``activate``
    script), the scripts under this directory are exposed in the environment
    ``PATH`` thanks to symbolic links in the CLIP OS toolkit virtualenv.
-
-``toolkit/qa/``
-~~~~~~~~~~~~~~~
-
-This directory contains wrapper scripts and resources (e.g. configuration files
-for common Python checker tools such as *mypy* or *pylint*) used for quality
-assurance of the CLIP OS toolkit.
-
-``toolkit/maintenance/``
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-This directory contains scripts useful to the CLIP OS toolkit developer for the
-maintenance of the CLIP OS toolkit (e.g., bumping and vendoring the required
-Python packages).
-
-
-``justfile``
-------------
-
-The root ``Justfile`` with the often used commands and recipes to work on the
-project and interact easily with the Git repositories.
-
-.. admonition:: Origin of this file
-   :class: tip
-
-   This file is symlinked at the root of the source tree by the toolkit
-   activation script to source (``toolkit/activate``). It won't show up here
-   until you have ``source``'d that specific file.
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

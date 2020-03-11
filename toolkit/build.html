@@ -106,7 +106,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setup-and-activate-the-toolkit-environment">Setup and activate the toolkit environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-clip-os-toolkit-cosmk">Building the CLIP OS toolkit (cosmk)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-config-toml-for-cosmk">Creating a <code class="docutils literal notranslate"><span class="pre">config.toml</span></code> for cosmk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
@@ -190,44 +191,46 @@
 <div class="important admonition">
 <p class="first admonition-title">Before going further, ensure to get a functional build
              environment setup</p>
-<p class="last">You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">toolkit environment setup</span></a> before
-executing any command from this page.</p>
+<p class="last">You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">environment setup</span></a> before executing any
+command from this page.</p>
 </div>
-<div class="section" id="setup-and-activate-the-toolkit-environment">
-<h2>Setup and activate the toolkit environment<a class="headerlink" href="#setup-and-activate-the-toolkit-environment" title="Permalink to this headline">¶</a></h2>
-<p>Setup and activate the CLIP OS toolkit environment in which you will be able
-to use all the CLIP OS tools required to build and conveniently manage the
-source tree (such as <code class="docutils literal notranslate"><span class="pre">just</span></code> to handle the <code class="docutils literal notranslate"><span class="pre">justfile</span></code>’s and <code class="docutils literal notranslate"><span class="pre">cosmk</span></code>):</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> toolkit/setup.sh    <span class="c1"># This is to be run at least once on your machine.</span>
-<span class="gp">$</span> <span class="nb">source</span> toolkit/activate
-<span class="gp">(toolkit) $</span>           <span class="c1"># Your shell prompt is automatically prefixed.</span>
+<div class="section" id="building-the-clip-os-toolkit-cosmk">
+<h2>Building the CLIP OS toolkit (cosmk)<a class="headerlink" href="#building-the-clip-os-toolkit-cosmk" title="Permalink to this headline">¶</a></h2>
+<p>To build the CLIP OS toolkit, run and follow the setup instructions from the
+script:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./toolkit/setup.sh
 </pre></div>
 </div>
-<div class="note admonition">
-<p class="first admonition-title">About the CLIP OS toolkit virtualenv setup</p>
-<p>The purpose of the script <code class="docutils literal notranslate"><span class="pre">toolkit/setup.sh</span></code> is to compile and store the
-CLIP OS toolkit environment under the form of a Python virtualenv in
-<code class="docutils literal notranslate"><span class="pre">run/venv</span></code> directory. You might be invited to run it again if the
-specification of the toolkit environment has changed over time.</p>
-<p class="last">This setup script can take some time (up to a couple of minutes) to complete
-on the first launch as it will automatically trigger the compilation of some
-CPython packages required by the CLIP OS toolkit. Thanks for your patience.</p>
+</div>
+<div class="section" id="creating-a-config-toml-for-cosmk">
+<h2>Creating a <code class="docutils literal notranslate"><span class="pre">config.toml</span></code> for cosmk<a class="headerlink" href="#creating-a-config-toml-for-cosmk" title="Permalink to this headline">¶</a></h2>
+<p>We now need to tell <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> what it should build by writing a <code class="docutils literal notranslate"><span class="pre">config.toml</span></code>
+file at the repository root directory. A working default configuration to build
+the CLIP OS project is provided in the <code class="docutils literal notranslate"><span class="pre">config.toml.example</span></code> file from the
+<code class="docutils literal notranslate"><span class="pre">toolkit</span></code> repository:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cp toolkit/config.toml.example config.toml
+</pre></div>
 </div>
 </div>
 <div class="section" id="instrumentation-features-for-testing">
 <h2>Instrumentation features for testing<a class="headerlink" href="#instrumentation-features-for-testing" title="Permalink to this headline">¶</a></h2>
 <p>Default builds of the project are meant to be set up with a production-ready
 configuration. There is currently no password-based local login available in
-this configuration. Thus if you want to test the project in QEMU, you will have
-to enable some <a class="reference internal" href="../clipos/development.html#development"><span class="std std-ref">instrumentation features</span></a>. A good default
-set of instrumentation features is provided in the
-<code class="docutils literal notranslate"><span class="pre">toolkit/instrumentation.toml.example</span></code> example file which can be used as is
-by copying it to the source tree root folder:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> cp toolkit/instrumentation.toml.example instrumentation.toml
+this configuration. Thus if you want to test the project in QEMU, you will
+have to enable some <a class="reference internal" href="../clipos/development.html#development"><span class="std std-ref">instrumentation features</span></a> in
+<code class="docutils literal notranslate"><span class="pre">config.toml</span></code>. Here are some good defaults for development builds:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;instrumented-core&quot;/s/#//g&#39;</span>        config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;passwordless-root-login&quot;/s/#//g&#39;</span>  config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;allow-ssh-root-login&quot;/s/#//g&#39;</span>     config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;instrumented-initramfs&quot;/s/#//g&#39;</span>   config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;initramfs-no-require-tpm&quot;/s/#//g&#39;</span> config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;initramfs-no-tpm-lockout&quot;/s/#//g&#39;</span> config.toml
+<span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;test-update&quot;/s/#//g&#39;</span>              config.toml
 </pre></div>
 </div>
-<p>The default configuration will keep most system configuration unchanged and
-will give you local password-less <cite>root</cite> access.</p>
+<p>This configuration will keep most system configuration unchanged, will install
+common tools (vim, tar, grep, etc.) and will give you local password-less
+<cite>root</cite> access.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Any change of instrumentation features requires a full project rebuild.</p>
@@ -235,56 +238,25 @@ will give you local password-less <cite>root</cite> access.</p>
 </div>
 <div class="section" id="building-the-full-project">
 <h2>Building the full project<a class="headerlink" href="#building-the-full-project" title="Permalink to this headline">¶</a></h2>
-<p>You will then be able to use the <code class="docutils literal notranslate"><span class="pre">justfile</span></code>’s to run commands to build CLIP
-OS. Building the CLIP OS project requires multiple successive steps that are
-described in <a class="reference external" href="https://github.com/casey/just">Justfiles</a>. All commands are run
-from the project root directory.</p>
-<p>To list the available <cite>just</cite> recipes:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just --list
-</pre></div>
-</div>
-<p>To reduce compilation time, you may download pre-built SDKs and packages from
-the public CLIP OS CI using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just get-cache
+<p>You will then be able to use <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> to run commands to build CLIP OS.
+Building the CLIP OS project requires multiple successive steps that are
+described in TOML files called <code class="docutils literal notranslate"><span class="pre">recipes</span></code>.</p>
+<p>By default, to reduce compilation time, <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> will download pre-built SDKs
+from the public CLIP OS CI infrastructure. To further reduce compilation time,
+you may also download binary packages from the public CLIP OS CI using:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk cache
 </pre></div>
 </div>
 <p>To run all steps required to build CLIP OS:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust all
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk all
 </pre></div>
-</div>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">As some tasks need root privileges to function properly you must pay
-attention to which <code class="docutils literal notranslate"><span class="pre">just</span></code> commands needs <code class="docutils literal notranslate"><span class="pre">root</span></code> privileges as there are
-other <code class="docutils literal notranslate"><span class="pre">just</span></code> commands (such as helpers for source repository and branch
-manipulation) which <strong>do not</strong> require <code class="docutils literal notranslate"><span class="pre">root</span></code> privileges.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>On most distributions, the default configuration will reset the
-<code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable set by the CLIP OS toolkit environment to a
-fixed default value when calling <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
-<p class="last">To workaround this issue without modifying your <code class="docutils literal notranslate"><span class="pre">sudoers</span></code> configuration,
-the CLIP OS toolkit environment sets an alias for the sudo command to keep
-your current <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>On some distributions (e.g., Debian), the default user <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable
-does not include the <code class="docutils literal notranslate"><span class="pre">/sbin</span></code> and <code class="docutils literal notranslate"><span class="pre">/usr/sbin</span></code> folders. Please add those
-to your user <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>. For example:</p>
-<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/sbin:/usr/sbin&quot;</span>
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="virtual-testbed-setup">
 <h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
 <p>In order to test some functionalities of a CLIP OS system, you will need a
 virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> <span class="nb">cd</span> testbed
-<span class="gp">(toolkit) $</span> ./build_vagrant_boxes.sh
-<span class="gp">(toolkit) $</span> vagrant up
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
 </pre></div>
 </div>
 <p>This will setup virtual networks using <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> and create
@@ -300,20 +272,16 @@ a Debian virtual machine running the following services:</p>
 <h2>Building a QEMU image and running using QEMU/KVM<a class="headerlink" href="#building-a-qemu-image-and-running-using-qemu-kvm" title="Permalink to this headline">¶</a></h2>
 <div class="important admonition">
 <p class="first admonition-title">TPM emulation support</p>
-<p>TPM emulation support is required to test the project under QEMU. To enable
-it, you may install
-<a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and
-<a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> using either instructions
-from the <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> file on their respective GitHub repositories or the AUR
-packages for Arch Linux users.</p>
+<p>TPM emulation support (see <a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and <a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> setup in <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Environment setup</span></a>) is required to test the project under QEMU in the test
+environment.</p>
 <p class="last">Alternatively, you may enable the <code class="docutils literal notranslate"><span class="pre">initramfs-no-require-tpm</span></code>
 instrumentation feature which will allow the initramfs to ask for a
 passphrase at bootup if TPM support is not available. The default passphrase
-is <code class="docutils literal notranslate"><span class="pre">core_state_key</span></code>.</p>
+is <code class="docutils literal notranslate"><span class="pre">clipos</span></code> (for old builds, it used to be <code class="docutils literal notranslate"><span class="pre">core_state_key</span></code>).</p>
 </div>
 <p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
 machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just qemu
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
 </pre></div>
 </div>
 <div class="important admonition">

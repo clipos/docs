@@ -12,51 +12,53 @@ Building
                 environment setup
    :class: important
 
-   You must complete the :ref:`toolkit environment setup <setup>` before
-   executing any command from this page.
+   You must complete the :ref:`environment setup <setup>` before executing any
+   command from this page.
 
-Setup and activate the toolkit environment
-------------------------------------------
+Building the CLIP OS toolkit (cosmk)
+------------------------------------
 
-Setup and activate the CLIP OS toolkit environment in which you will be able
-to use all the CLIP OS tools required to build and conveniently manage the
-source tree (such as ``just`` to handle the ``justfile``'s and ``cosmk``):
+To build the CLIP OS toolkit, run and follow the setup instructions from the
+script:
 
 .. code-block:: shell-session
 
-   $ toolkit/setup.sh    # This is to be run at least once on your machine.
-   $ source toolkit/activate
-   (toolkit) $           # Your shell prompt is automatically prefixed.
+   $ ./toolkit/setup.sh
 
-.. admonition:: About the CLIP OS toolkit virtualenv setup
-   :class: note
+Creating a ``config.toml`` for cosmk
+------------------------------------
 
-   The purpose of the script ``toolkit/setup.sh`` is to compile and store the
-   CLIP OS toolkit environment under the form of a Python virtualenv in
-   ``run/venv`` directory. You might be invited to run it again if the
-   specification of the toolkit environment has changed over time.
+We now need to tell ``cosmk`` what it should build by writing a ``config.toml``
+file at the repository root directory. A working default configuration to build
+the CLIP OS project is provided in the ``config.toml.example`` file from the
+``toolkit`` repository:
 
-   This setup script can take some time (up to a couple of minutes) to complete
-   on the first launch as it will automatically trigger the compilation of some
-   CPython packages required by the CLIP OS toolkit. Thanks for your patience.
+.. code-block:: shell-session
+
+   $ cp toolkit/config.toml.example config.toml
 
 Instrumentation features for testing
 ------------------------------------
 
 Default builds of the project are meant to be set up with a production-ready
 configuration. There is currently no password-based local login available in
-this configuration. Thus if you want to test the project in QEMU, you will have
-to enable some :ref:`instrumentation features <development>`. A good default
-set of instrumentation features is provided in the
-``toolkit/instrumentation.toml.example`` example file which can be used as is
-by copying it to the source tree root folder:
+this configuration. Thus if you want to test the project in QEMU, you will
+have to enable some :ref:`instrumentation features <development>` in
+``config.toml``. Here are some good defaults for development builds:
 
 .. code-block:: shell-session
 
-   (toolkit) $ cp toolkit/instrumentation.toml.example instrumentation.toml
+   $ sed -i '/#"instrumented-core"/s/#//g'        config.toml
+   $ sed -i '/#"passwordless-root-login"/s/#//g'  config.toml
+   $ sed -i '/#"allow-ssh-root-login"/s/#//g'     config.toml
+   $ sed -i '/#"instrumented-initramfs"/s/#//g'   config.toml
+   $ sed -i '/#"initramfs-no-require-tpm"/s/#//g' config.toml
+   $ sed -i '/#"initramfs-no-tpm-lockout"/s/#//g' config.toml
+   $ sed -i '/#"test-update"/s/#//g'              config.toml
 
-The default configuration will keep most system configuration unchanged and
-will give you local password-less `root` access.
+This configuration will keep most system configuration unchanged, will install
+common tools (vim, tar, grep, etc.) and will give you local password-less
+`root` access.
 
 .. note::
 
@@ -65,56 +67,23 @@ will give you local password-less `root` access.
 Building the full project
 -------------------------
 
-You will then be able to use the ``justfile``'s to run commands to build CLIP
-OS. Building the CLIP OS project requires multiple successive steps that are
-described in `Justfiles <https://github.com/casey/just>`_. All commands are run
-from the project root directory.
+You will then be able to use ``cosmk`` to run commands to build CLIP OS.
+Building the CLIP OS project requires multiple successive steps that are
+described in TOML files called ``recipes``.
 
-To list the available `just` recipes:
-
-.. code-block:: shell-session
-
-   (toolkit) $ just --list
-
-To reduce compilation time, you may download pre-built SDKs and packages from
-the public CLIP OS CI using:
+By default, to reduce compilation time, ``cosmk`` will download pre-built SDKs
+from the public CLIP OS CI infrastructure. To further reduce compilation time,
+you may also download binary packages from the public CLIP OS CI using:
 
 .. code-block:: shell-session
 
-   (toolkit) $ just get-cache
+   $ cosmk cache
 
 To run all steps required to build CLIP OS:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust all
-
-.. important::
-
-   As some tasks need root privileges to function properly you must pay
-   attention to which ``just`` commands needs ``root`` privileges as there are
-   other ``just`` commands (such as helpers for source repository and branch
-   manipulation) which **do not** require ``root`` privileges.
-
-.. note::
-
-   On most distributions, the default configuration will reset the
-   ``PATH`` environment variable set by the CLIP OS toolkit environment to a
-   fixed default value when calling ``sudo``.
-
-   To workaround this issue without modifying your ``sudoers`` configuration,
-   the CLIP OS toolkit environment sets an alias for the sudo command to keep
-   your current ``PATH``.
-
-.. note::
-
-   On some distributions (e.g., Debian), the default user ``$PATH`` variable
-   does not include the ``/sbin`` and ``/usr/sbin`` folders. Please add those
-   to your user ``$PATH``. For example:
-
-   .. code-block:: shell-session
-
-      $ export PATH="$PATH:/sbin:/usr/sbin"
+   $ cosmk all
 
 Virtual testbed setup
 ---------------------
@@ -124,9 +93,7 @@ virtual infrastructure acting as testbed. To setup this infrastructure, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ cd testbed
-   (toolkit) $ ./build_vagrant_boxes.sh
-   (toolkit) $ vagrant up
+   $ cosmk test setup
 
 This will setup virtual networks using ``Vagrant`` with ``libvirt`` and create
 a Debian virtual machine running the following services:
@@ -140,24 +107,23 @@ Building a QEMU image and running using QEMU/KVM
 .. admonition:: TPM emulation support
    :class: important
 
-   TPM emulation support is required to test the project under QEMU. To enable
-   it, you may install
-   `libtpms <https://github.com/stefanberger/libtpms>`_ and
-   `swtpm <https://github.com/stefanberger/swtpm>`_ using either instructions
-   from the ``INSTALL`` file on their respective GitHub repositories or the AUR
-   packages for Arch Linux users.
+   TPM emulation support (see `libtpms
+   <https://github.com/stefanberger/libtpms>`_ and `swtpm
+   <https://github.com/stefanberger/swtpm>`_ setup in :ref:`Environment setup
+   <setup>`) is required to test the project under QEMU in the test
+   environment.
 
    Alternatively, you may enable the ``initramfs-no-require-tpm``
    instrumentation feature which will allow the initramfs to ask for a
    passphrase at bootup if TPM support is not available. The default passphrase
-   is ``core_state_key``.
+   is ``clipos`` (for old builds, it used to be ``core_state_key``).
 
 To build a QCOW2 QEMU disk image and to setup a EFI & QEMU/KVM enabled virtual
 machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ just qemu
+   $ cosmk test qemu
 
 .. admonition:: Local login disabled by default
    :class: important

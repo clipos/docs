@@ -111,7 +111,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#sdk">SDK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#core">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#efi-boot-partition">EFI boot partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initial-state-for-qemu-test-image">Initial state for QEMU test image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#qemu-image">QEMU image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testbed-environment-setup">Testbed environment setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-the-qemu-image">Testing the QEMU image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#caching-and-binary-packages">Caching and binary packages</a></li>
 </ul>
@@ -199,8 +201,8 @@ use directly the instructions from the <a class="reference internal" href="build
 <p>The project documentation is built with Sphinx. The documentation sources are
 available in the <code class="docutils literal notranslate"><span class="pre">docs-src</span></code> directory.</p>
 <p>To build the documentation and to open it in your browser, run:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just doc
-<span class="gp">(toolkit) $</span> just open-doc
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk doc build
+<span class="gp">$</span> cosmk doc open
 </pre></div>
 </div>
 </div>
@@ -210,16 +212,27 @@ available in the <code class="docutils literal notranslate"><span class="pre">do
 Hardened. The SDK container is created by importing the upstream <a class="reference external" href="https://wiki.gentoo.org/wiki/Stage_tarball#Stage_3">stage 3 root
 filesystem</a> and updating
 it with a current copy of the upstream Gentoo Portage tree to include various
-utilities. If unavailable, the SDK is automatically build, and may be manually
-rebuild from scratch using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/sdk/bootstrap-from-scratch
+utilities. If unavailable, the SDK is automatically imported from the
+configured CI or build locally, and may be manually rebuild from scratch using:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Remove the current SDK container images
+<span class="gp">$</span> podman rmi &lt;registry&gt;/clipos/sdk:&lt;version&gt;       <span class="c1"># podman</span>
+<span class="gp">$</span> sudo docker rmi &lt;registry&gt;/clipos/sdk:&lt;version&gt;  <span class="c1"># Docker</span>
+
+<span class="gp">#</span> Set empty URLs <span class="k">for</span> the <span class="s1">&#39;registry&#39;</span> in the <span class="s1">&#39;ci&#39;</span> section of the <span class="s1">&#39;config.toml&#39;</span>
+<span class="gp">$</span> <span class="nv">$EDITOR</span> config.toml
+
+<span class="gp">#</span> Bootstrap the SDK
+<span class="gp">$</span> cosmk bootstrap sdk
 </pre></div>
 </div>
 </div>
 <div class="section" id="core">
 <h2>Core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h2>
 <p>The main rootfs in CLIP OS is called Core, and can be built using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/core
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk build core
+<span class="gp">$</span> cosmk image core
+<span class="gp">$</span> cosmk configure core
+<span class="gp">$</span> cosmk bundle core
 </pre></div>
 </div>
 </div>
@@ -227,7 +240,18 @@ rebuild from scratch using:</p>
 <h2>EFI boot partition<a class="headerlink" href="#efi-boot-partition" title="Permalink to this headline">¶</a></h2>
 <p>EFI boot is the only supported boot method. The content of the EFI boot
 partition (bootloader, kernel image, etc.) is built using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust products/clipos/efiboot
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk build efiboot
+<span class="gp">$</span> cosmk image efiboot
+<span class="gp">$</span> cosmk configure efiboot
+<span class="gp">$</span> cosmk bundle efiboot
+</pre></div>
+</div>
+</div>
+<div class="section" id="initial-state-for-qemu-test-image">
+<h2>Initial state for QEMU test image<a class="headerlink" href="#initial-state-for-qemu-test-image" title="Permalink to this headline">¶</a></h2>
+<p>To test the resulting OS in a QEMU virtual machine, we generate a tarball with
+the configuration to be installed in the system state partition:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk bundle qemu
 </pre></div>
 </div>
 </div>
@@ -236,14 +260,21 @@ partition (bootloader, kernel image, etc.) is built using:</p>
 <p>In order to test the resulting OS, we use <code class="docutils literal notranslate"><span class="pre">libguestfs</span></code> tools to assemble a
 QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
 <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>. The qcow2 QEMU image may be assembled using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> ./testbed/create_qemu_image.sh
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
+</pre></div>
+</div>
+</div>
+<div class="section" id="testbed-environment-setup">
+<h2>Testbed environment setup<a class="headerlink" href="#testbed-environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>To setup the virtual testbed environment with <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> and <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
 </pre></div>
 </div>
 </div>
 <div class="section" id="testing-the-qemu-image">
 <h2>Testing the QEMU image<a class="headerlink" href="#testing-the-qemu-image" title="Permalink to this headline">¶</a></h2>
 <p>To setup a EFI &amp; QEMU/KVM enabled virtual machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> ./testbed/run_with_libvirt.py
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> run
 </pre></div>
 </div>
 </div>
@@ -251,15 +282,14 @@ QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
 <h2>Caching and binary packages<a class="headerlink" href="#caching-and-binary-packages" title="Permalink to this headline">¶</a></h2>
 <p>To speed up the build process during development, we keep the output of each
 build action in the <code class="docutils literal notranslate"><span class="pre">cache</span></code> and <code class="docutils literal notranslate"><span class="pre">out</span></code> folders. The <code class="docutils literal notranslate"><span class="pre">cache</span></code> directory
-keeps binary packages and SDK images. The <code class="docutils literal notranslate"><span class="pre">cache</span></code> directory keeps the
-intermediate rootfs, logs and temporary files that are safe to remove before a
-rebuild.</p>
-<p>By default, the build commands will clear their <code class="docutils literal notranslate"><span class="pre">out</span></code> folder and reuse cached
+keeps binary packages and logs. The <code class="docutils literal notranslate"><span class="pre">out</span></code> directory keeps the intermediate
+rootfs and temporary files that are safe to remove before a rebuild.</p>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">cosmk</span></code> tool will clear the <code class="docutils literal notranslate"><span class="pre">out</span></code> folder and reuse cached
 output (mainly packages) to speedup iterative development builds. To restart
 everything from scratch:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> sujust clean
-<span class="gp">(toolkit) $</span> sujust clean-cache
-<span class="gp">(toolkit) $</span> sujust all
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> rm -rf out cache
+<span class="gp">#</span> If using Docker or rootfull podman
+<span class="gp">$</span> sudo rm -rf out cache
 </pre></div>
 </div>
 <div class="important admonition">
@@ -269,11 +299,11 @@ everything from scratch:</p>
 and build scripts are tracked in the <a class="reference external" href="https://github.com/clipos/ci">clipos/ci</a> repository and the resulting artifacts are
 made available at <a class="reference external" href="https://files.clip-os.org/">files.clip-os.org</a>.</p>
 </div>
-<p>To download CI-built binary packages and SDKs from the last successful CI job,
-use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">(toolkit) $</span> just get-cache
+<p>To download CI-built binary packages from the last successful CI job, use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk cache
 </pre></div>
 </div>
+<p>SDKs are automatically downloaded from the CI if configured in <code class="docutils literal notranslate"><span class="pre">config.toml</span></code>.</p>
 </div>
 </div>
 

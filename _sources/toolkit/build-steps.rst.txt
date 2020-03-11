@@ -24,8 +24,8 @@ To build the documentation and to open it in your browser, run:
 
 .. code-block:: shell-session
 
-   (toolkit) $ just doc
-   (toolkit) $ just open-doc
+   $ cosmk doc build
+   $ cosmk doc open
 
 SDK
 ---
@@ -34,12 +34,20 @@ To build the software components of CLIP OS, we use a SDK based on Gentoo
 Hardened. The SDK container is created by importing the upstream `stage 3 root
 filesystem <https://wiki.gentoo.org/wiki/Stage_tarball#Stage_3>`_ and updating
 it with a current copy of the upstream Gentoo Portage tree to include various
-utilities. If unavailable, the SDK is automatically build, and may be manually
-rebuild from scratch using:
+utilities. If unavailable, the SDK is automatically imported from the
+configured CI or build locally, and may be manually rebuild from scratch using:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust products/clipos/sdk/bootstrap-from-scratch
+   # Remove the current SDK container images
+   $ podman rmi <registry>/clipos/sdk:<version>       # podman
+   $ sudo docker rmi <registry>/clipos/sdk:<version>  # Docker
+
+   # Set empty URLs for the 'registry' in the 'ci' section of the 'config.toml'
+   $ $EDITOR config.toml
+
+   # Bootstrap the SDK
+   $ cosmk bootstrap sdk
 
 Core
 ----
@@ -48,7 +56,10 @@ The main rootfs in CLIP OS is called Core, and can be built using:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust products/clipos/core
+   $ cosmk build core
+   $ cosmk image core
+   $ cosmk configure core
+   $ cosmk bundle core
 
 EFI boot partition
 ------------------
@@ -58,7 +69,20 @@ partition (bootloader, kernel image, etc.) is built using:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust products/clipos/efiboot
+   $ cosmk build efiboot
+   $ cosmk image efiboot
+   $ cosmk configure efiboot
+   $ cosmk bundle efiboot
+
+Initial state for QEMU test image
+---------------------------------
+
+To test the resulting OS in a QEMU virtual machine, we generate a tarball with
+the configuration to be installed in the system state partition:
+
+.. code-block:: shell-session
+
+   $ cosmk bundle qemu
 
 QEMU image
 ----------
@@ -69,7 +93,16 @@ QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
 
 .. code-block:: shell-session
 
-   (toolkit) $ ./testbed/create_qemu_image.sh
+   $ cosmk test qemu
+
+Testbed environment setup
+-------------------------
+
+To setup the virtual testbed environment with ``Vagrant`` and ``libvirt``, use:
+
+.. code-block:: shell-session
+
+  $ cosmk test setup
 
 Testing the QEMU image
 ----------------------
@@ -78,26 +111,25 @@ To setup a EFI & QEMU/KVM enabled virtual machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ ./testbed/run_with_libvirt.py
+   $ cosmk test run
 
 Caching and binary packages
 ---------------------------
 
 To speed up the build process during development, we keep the output of each
 build action in the ``cache`` and ``out`` folders. The ``cache`` directory
-keeps binary packages and SDK images. The ``cache`` directory keeps the
-intermediate rootfs, logs and temporary files that are safe to remove before a
-rebuild.
+keeps binary packages and logs. The ``out`` directory keeps the intermediate
+rootfs and temporary files that are safe to remove before a rebuild.
 
-By default, the build commands will clear their ``out`` folder and reuse cached
+By default, the ``cosmk`` tool will clear the ``out`` folder and reuse cached
 output (mainly packages) to speedup iterative development builds. To restart
 everything from scratch:
 
 .. code-block:: shell-session
 
-   (toolkit) $ sujust clean
-   (toolkit) $ sujust clean-cache
-   (toolkit) $ sujust all
+   $ rm -rf out cache
+   # If using Docker or rootfull podman
+   $ sudo rm -rf out cache
 
 .. admonition:: Pre-built binary packages by a continuous integration
                 infrastructure (GitLab CI)
@@ -108,11 +140,12 @@ everything from scratch:
    <https://github.com/clipos/ci>`_ repository and the resulting artifacts are
    made available at `files.clip-os.org <https://files.clip-os.org/>`_.
 
-To download CI-built binary packages and SDKs from the last successful CI job,
-use:
+To download CI-built binary packages from the last successful CI job, use:
 
 .. code-block:: shell-session
 
-   (toolkit) $ just get-cache
+   $ cosmk cache
+
+SDKs are automatically downloaded from the CI if configured in ``config.toml``.
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

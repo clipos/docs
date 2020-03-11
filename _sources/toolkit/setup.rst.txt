@@ -19,7 +19,7 @@ Here is a requirements check-list about your global environment:
 1. You must run a **64-bit x86 system** (a.k.a. ``AMD64``, ``Intel 64`` or
    ``x86_64``) architecture.
 
-   .. admonition:: About other system architectures...
+   .. admonition:: About other system architectures
       :class: tip
 
       Cross-compiling to other system architectures is not supported yet. No
@@ -39,47 +39,32 @@ Here is a requirements check-list about your global environment:
         * Debian 10 (stable)
 
       Although not regularly tested, the following distributions are supported
-      (i.e. we will fix reported bugs) and the project should work on those:
+      (i.e. we will investigate and fix reported bugs) and the project should
+      work on those:
 
         * Debian testing and unstable
-        * Fedora 31 (with cgroup v1 enabled)
+        * Fedora 31 and later
         * Ubuntu 18.04 and later
-        * CentOS 8
+        * CentOS 8 and later
 
-      Similarly, the following kernels are supported:
-
-        * 4.19 and above (Arch Linux, Debian unstable, etc.)
-
-      The project will likely work on other distributions but we do not plan on
-      supporting any other one yet.
-
-   .. admonition:: About other Linux distributions...
+   .. admonition:: About other Linux distributions
       :class: tip
 
-      Provided a kernel can support all the features used within the CLIP OS
-      toolkit (such as namespaces, capabilities, cgroups for containerization,
-      SquashFS, loop devices, OverlayFS, tmpfs, etc.), it is expected to work
-      without issue.
+      The project will likely work on other distributions but there is
+      currently no plan to extend our support. If your distribution kernel is
+      at least version 4.19 and supports all the features used by the CLIP OS
+      toolkit (such as namespaces, capabilities, cgroups, OverlayFS, tmpfs,
+      etc.), it is expected to work without issue.
 
-3. Both your hardware and your kernel must support **KVM** (through Intel
-   VT-x or AMD-V technologies) to run CLIP OS virtual machine images.
+3. Both your hardware and your kernel must support **KVM** (through Intel VT-x
+   or AMD-V technologies) to run CLIP OS virtual machine images in the virtual
+   testbed. Building without KVM support is supported but testing requires KVM
+   support and access to an instance of **libvirt**.
 
-4. **Super-user privileges** are required on punctual occasions through the use
-   of the ``sudo`` utility.
-
-   .. admonition:: Why this requirement?
-      :class: tip
-
-      Super-user privileges are required to permit the CLIP OS toolkit to
-      create and manage Linux containers, such as the CLIP OS SDK ephemeral
-      containers.
-
-      However, the CLIP OS toolkit will not run everything as root as it will
-      lower its effective privileges when root privileges are not necessary.
-
-      For more information, see the implementation of the class
-      `clipostoolkit.cosmk.privileges.ElevatedPrivileges` in the `CLIP OS
-      Toolkit <https://github.com/clipos/toolkit/blob/master/clipostoolkit/cosmk/privileges.py>`_.
+4. **Podman** is required to spawn SDK containers to build CLIP OS. Rootless
+   podman is supported and rootfull podman support requires **Super-user
+   privileges** acquired through **sudo**. Running containers with **Docker**
+   is also supported but not actively tested.
 
 5. Make sure to have allocated a consequent size of **swap space** on your
    system as it might be required when working on large ephemeral SDK
@@ -119,18 +104,6 @@ your userland:
 
 - **Git** as all the source code is versioned through Git repositories.
 
-- **repo** (tool from the Android Open Source Project) is required to fetch
-  the source tree.
-
-  .. admonition:: Alternative way to install *repo*
-     :class: note
-
-     ``repo`` might be packaged by your Linux distribution. Otherwise you may
-     have to get it and install it from source. To do so, follow the related
-     instructions on `the Android Open Source project page regarding the setup
-     of the environment for AOSP
-     <https://source.android.com/setup/build/downloading#installing-repo>`_.
-
 - **Git LFS** (Git Large File Storage extension) is required to fetch Git
   repositories with a lot of large binary files.
 
@@ -141,66 +114,40 @@ your userland:
      distribution, you can follow instructions from the `Git LFS project pages
      <https://github.com/git-lfs/git-lfs/wiki/Installation>`_ to install it.
 
-- **Python 3.6 (or later)** with a working C compiler and some basic
-  development libraries and tools as well as the appropriate CPython C header
-  files.
+- **repo** (tool from the Android Open Source Project) is required to fetch
+  the source tree.
 
-  .. admonition:: Why a C compilation infrastructure is needed on the host
-                  while all the compilations are done within containers?
+  .. admonition:: Alternative way to install repo
      :class: note
 
-     These development packages are required to build some external Python
-     packages vendored in the source tree and which embed some CPython code.
-
-- **sudo** (v1.8.21 or above) is required to permit the CLIP OS toolkit to
-  elevate privileges to super-user privileges. The current unprivileged user
-  must be a ``sudoer`` to be able to gain those privileges *via* the use of
-  ``sudo``.
-
-- **runc** (the OCI runtime tool) is required as it is used as the runtime
-  for the CLIP OS SDK Linux containers.
-
-  .. admonition:: Alternative and more convenient way to get *runc* on your
-                  system
-     :class: tip
-
-     Since *runc* is a project originated from Docker and used as a container
-     runtime by the Docker engine (since version 1.11 of the Docker Engine),
-     installing **the Docker Engine is an alternative** to provide the ``runc``
-     utility to the CLIP OS toolkit (Docker embeds a ``runc`` binary under the
-     name of ``docker-runc``).
-
-     This tip may be useful if your distribution does not provide a standalone
-     ``runc`` package but does provide a package for Docker.
-
-- **squashfs-tools** and **util-linux** system packages for the use of
-  ``mksquashfs`` and ``losetup`` system utilities.
-
-  .. admonition:: Why SquashFS and loop devices?
-     :class: note
-
-     These two utilities are required to create and mount squashfs images used
-     internally by the CLIP OS toolkit as the rootfs images of the ephemeral
-     SDK containers.
-
-- **Rust** language support to build `just <https://github.com/casey/just>`_.
-  ``just`` is a simple command-line utility to launch and abstract sequences of
-  shell commands within ``Justfiles``. These files follow a *Makefile*-like
-  syntax and provide an alternative way (in the context of the CLIP OS toolkit)
-  to launch build jobs and other source code management common scripts as the
-  ``cosmk`` tool does not implement all the required features yet.
-
-  .. admonition:: Alternative way to install Rust
-     :class: note
-
-     If Rust is not provided by any of your Linux distribution packages, you
-     can install it with `rustup <https://rustup.rs/>`_.
+     ``repo`` might be packaged by your Linux distribution. Otherwise you may
+     have to get it and install it from source. To do so, follow the related
+     instructions on `the Android Open Source project page regarding the setup
+     of the environment for AOSP
+     <https://source.android.com/setup/build/downloading#installing-repo>`_.
 
 - **Bash 4.1 (or later)** is required for some toolkit helper scripts.
 
+- The **Go** compiler (version **1.12 or above**) is required to build the
+  ``cosmk`` tool.
+
+  .. admonition:: Alternative way to install Go
+     :class: note
+
+     If your ditribution does not have a recent enough version of Go, you may
+     download a pre-built official version from `golang.org
+     <https://golang.org/>`_.
+
+- **Podman** is required to launch SDK containers. SDK containers may be run
+  rootless using podman or rootfull using podman. Running SDK containers
+  rootfull will also require **sudo** for automatic privilege escalation (the
+  current unprivileged user must be a ``sudoer`` to be able to gain those
+  privileges). Running container with **Docker** is also supported and requires
+  **sudo**.
+
 - **libvirt with QEMU and KVM support** are required as the platform to run the
   CLIP OS virtual machines with QEMU with virtualized networks. The **Python 3
-  module for libvirt** is also required.
+  module for libvirt** and a TPM emulator are also required.
 
   .. admonition:: Avoid running QEMU as root if not necessary
      :class: tip
@@ -218,9 +165,9 @@ your userland:
         user = "myusername"  # replace with your current username
         group = "kvm"
 
-- **liguestfs tools** to build the disk image for the QEMU virtual machine. If
-  unavailable, **Podman** or **Docker** will be used to run libguestfs inside a
-  container.
+- **Optionnal (but recommended):** **liguestfs tools** to build the disk image
+  for the QEMU virtual machine. If unavailable, **Podman** or **Docker** will
+  be used to run libguestfs inside a container.
 
 - **Optionnal:** **Sphinx** and the **Read the Docs Theme** to build the
   documentation. If unavailable, **Podman** or **Docker** will be used to run
@@ -236,47 +183,69 @@ On Ubuntu or Debian (with ``contrib`` sources enabled for Debian):
 .. code-block:: shell-session
 
    $ sudo apt install \
-          python3 python3-dev python3-venv \
-          gnupg2 repo git git-lfs openssh-client \
-          build-essential pkg-config \
-          runc sudo squashfs-tools \
+          gnupg2 repo git git-lfs openssh-client golang jq zstd \
           qemu libvirt-dev libvirt-daemon python3-libvirt libguestfs-tools \
-          virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 \
-          rustc cargo jq zstd
+          virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0
+
+.. admonition:: Installing Podman or Docker
+   :class: note
+
+   On Debian and Ubuntu systems, you will have to choose between Podman
+   (recommended) and Docker and install them on your system using the following
+   guides:
+
+   * `Podman for Ubuntu and Debian <https://github.com/containers/libpod/blob/master/install.md>`_
+   * `Docker for Ubuntu <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_
+   * `Docker for Debian <https://docs.docker.com/install/linux/docker-ce/debian/>`_
+
+.. admonition:: Installing libtpms and swtpm on Ubuntu or Debian
+   :class: note
+
+   As there is currently no official package for libtpms and swtpm on
+   Ubuntu and Debian, you will have to follow the instructions from the
+   ``INSTALL`` file on their respective GitHub repositories:
+   `libtpms <https://github.com/stefanberger/libtpms>`_ and
+   `swtpm <https://github.com/stefanberger/swtpm>`_.
 
 On Fedora and CentOS:
 
 .. code-block:: shell-session
 
    $ sudo dnf install \
-          python2 python3-devel \
-          gnupg git git-lfs openssh-clients \
-          @development-tools \
-          runc sudo squashfs-tools \
-          qemu libvirt-devel libvirt-daemon python3-libvirt \
-          virt-manager libguestfs-tools \
-          rust cargo jq zstd
+          gnupg git git-lfs openssh-clients podman golang jq zstd \
+          qemu libvirt-devel libvirt-daemon python3-libvirt libguestfs-tools \
+          virt-manager
+
+   # Fedora only
+   $ sudo dnf install swtpm
+
+.. admonition:: Installing libtpms and swtpm on CentOS
+   :class: note
+
+   As there is currently no official package for libtpms and swtpm on CentOS,
+   you will have to follow the instructions from the ``INSTALL`` file on their
+   respective GitHub repositories:
+   `libtpms <https://github.com/stefanberger/libtpms>`_ and
+   `swtpm <https://github.com/stefanberger/swtpm>`_.
 
 On Arch Linux:
 
 .. code-block:: shell-session
 
    $ sudo pacman -Syu \
-         python \
-         gnupg repo git git-lfs openssh \
-         base-devel \
-         runc sudo squashfs-tools \
-         qemu libvirt bridge-utils dnsmasq \
-         virt-manager ebtables libvirt-python \
-         rust jq zstd
+         gnupg repo git git-lfs openssh podman go jq zstd \
+         qemu libvirt bridge-utils dnsmasq ebtables libvirt-python \
+         virt-manager
 
-.. admonition:: Installing libguestfs on Arch Linux
+.. admonition:: Installing libguestfs, libtpms and swtpm on Arch Linux
    :class: note
 
-   As there is currently no official package for `libguestfs` on Arch Linux,
-   you will have to install it using the `corresponding AUR package
-   <https://aur.archlinux.org/packages/libguestfs>`_.
-
+   As there is currently no official package for those packages on Arch Linux,
+   you will have to install them using AUR packages:
+   `libguestfs <https://aur.archlinux.org/packages/libguestfs>`_,
+   `libtpms <https://aur.archlinux.org/packages/libtpms>`_,
+   `tpm-tools <https://aur.archlinux.org/packages/tpm-tools>`_ and
+   `swtpm <https://aur.archlinux.org/packages/swtpm>`_.
 
 How to fetch the entire source tree?
 ------------------------------------
@@ -287,24 +256,15 @@ managed together using ``repo``.
 .. admonition:: Make sure the Git LFS filters are enabled
    :class: important
 
-   **Please ensure to have installed the Git LFS filters hooks for Git** either
-   globally on your system (changes will be made in ``/etc/gitconfig``) with
-   the following command:
-
-   .. code-block:: shell-session
-
-      $ sudo git-lfs install --system --skip-repo
-
-   or only for your current user (changes will be made in ``~/.gitconfig``):
+   To enable the Git LFS filters for your current user (changes will be made in
+   ``~/.gitconfig``), please run:
 
    .. code-block:: shell-session
 
       $ git-lfs install --skip-repo
 
-   This step is required to be done before synchronizing the whole CLIP OS
-   source tree and allows to automatically download the files stored within the
-   Git LFS server when ``repo`` checks out the Git LFS-backed repositories of
-   the source tree.
+   This step should be done before synchronizing the whole CLIP OS source tree
+   to automatically download the files stored with Git LFS.
 
 .. admonition:: Watch out for unusual *umask* values!
    :class: error
@@ -340,34 +300,28 @@ kernel (``src/external/linux/``) or the Gentoo Portage tree
 .. admonition:: Quicker synchronization
    :class: tip
 
-   If you are certain to have set everything up correctly and if you are not
-   intreseted in the output of the ``repo sync`` command, you can instruct
-   *repo* to synchronize all the sub-repositories concurrently by using
-   multiple Git processes:
+   You can instruct ``repo`` to synchronize all the sub-repositories
+   concurrently by using multiple Git processes:
 
    .. code-block:: shell-session
 
       $ repo sync -j4
 
-   This should be significantly faster than the method above but the output of
-   the Git cloning processes might be interlaced and not easily readable.
-
 At this point, you should have successfully set up your environment and
 fetched the whole source tree of the CLIP OS project.
 
-.. admonition:: In case you forgot to install the Git LFS filters *before*
-                synchronizing the whole source tree
+.. admonition:: Quick fix for Git LFS issues
    :class: note
 
-   If you forgot to setup the Git LFS filter before running ``repo sync``, you
-   can still download the missing contents of the files backed by Git LFS (and
-   therefore fix your current source tree checkout) by running this command:
+   If for any reason the Git LFS filters were not installed during ``repo
+   sync``, you can still download the missing contents of the files backed by
+   Git LFS (and therefore fix your current source tree checkout) by running
+   this command:
 
    .. code-block:: shell-session
 
       $ repo forall -c 'git lfs install && git lfs pull'
 
-Congratulations, you are now ready to launch a :ref:`build of a CLIP OS image
-<build>`.
+Congratulations, you are now ready to start :ref:`building CLIP OS <build>`.
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:
