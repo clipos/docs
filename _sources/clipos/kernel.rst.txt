@@ -619,8 +619,8 @@ Security
 
 .. describe:: CONFIG_SECURITY_SELINUX_DISABLE=n
 
-   We do not want SELinux to be disabled. In addition, this would prevent LSM
-   structures such as security hooks from being marked as read-only.
+   We do not want SELinux to be disabled. In addition, keeping this option off
+   makes LSM structures such as security hooks read-only.
 
 .. describe:: CONFIG_SECURITY_SELINUX_DEVELOP=y
 
