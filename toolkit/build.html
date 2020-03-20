@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Build steps" href="build-steps.html" />
+    <link rel="next" title="Testing" href="test.html" />
     <link rel="prev" title="Environment setup" href="setup.html" /> 
 </head>
 
@@ -110,11 +110,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-config-toml-for-cosmk">Creating a <code class="docutils literal notranslate"><span class="pre">config.toml</span></code> for cosmk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-full-project">Building the full project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#access-to-qemu-virtual-machine-over-ssh">Access to QEMU virtual machine over SSH</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
 </ul>
@@ -247,77 +245,11 @@ you may also download binary packages from the public CLIP OS CI using:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk cache
 </pre></div>
 </div>
-<p>To run all steps required to build CLIP OS:</p>
+<p>To run all the steps required to build CLIP OS:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk all
 </pre></div>
 </div>
-</div>
-<div class="section" id="virtual-testbed-setup">
-<h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
-<p>In order to test some functionalities of a CLIP OS system, you will need a
-virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
-</pre></div>
-</div>
-<p>This will setup virtual networks using <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> and create
-a Debian virtual machine running the following services:</p>
-<blockquote>
-<div><ul class="simple">
-<li>IPsec gateway (<code class="docutils literal notranslate"><span class="pre">strongSwan</span></code>)</li>
-<li>Update server (<code class="docutils literal notranslate"><span class="pre">nginx</span></code>)</li>
-</ul>
-</div></blockquote>
-</div>
-<div class="section" id="building-a-qemu-image-and-running-using-qemu-kvm">
-<h2>Building a QEMU image and running using QEMU/KVM<a class="headerlink" href="#building-a-qemu-image-and-running-using-qemu-kvm" title="Permalink to this headline">¶</a></h2>
-<div class="important admonition">
-<p class="first admonition-title">TPM emulation support</p>
-<p>TPM emulation support (see <a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and <a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> setup in <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Environment setup</span></a>) is required to test the project under QEMU in the test
-environment.</p>
-<p class="last">Alternatively, you may enable the <code class="docutils literal notranslate"><span class="pre">initramfs-no-require-tpm</span></code>
-instrumentation feature which will allow the initramfs to ask for a
-passphrase at bootup if TPM support is not available. The default passphrase
-is <code class="docutils literal notranslate"><span class="pre">clipos</span></code> (for old builds, it used to be <code class="docutils literal notranslate"><span class="pre">core_state_key</span></code>).</p>
-</div>
-<p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
-machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
-</pre></div>
-</div>
-<div class="important admonition">
-<p class="first admonition-title">Local login disabled by default</p>
-<p class="last">The default build configuration will create production images with root
-access disabled. See the <a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a> paragraph
-for instructions to create an instrumented build.</p>
-</div>
-</div>
-<div class="section" id="access-to-qemu-virtual-machine-over-ssh">
-<h2>Access to QEMU virtual machine over SSH<a class="headerlink" href="#access-to-qemu-virtual-machine-over-ssh" title="Permalink to this headline">¶</a></h2>
-<div class="important admonition">
-<p class="first admonition-title">Access disabled by default</p>
-<p class="last">The default build configuration will create production images with SSH
-access available only over the IPsec tunnel. To enable SSH access from
-outside the IPsec tunnel, you must enable the <code class="docutils literal notranslate"><span class="pre">allow-ssh-root-login</span></code>
-instrumentation feature. See the <a class="reference internal" href="#instrumentation-features-for-testing">Instrumentation features for testing</a>
-paragraph for instructions to create an instrumented build.</p>
-</div>
-<p>To access a QEMU virtual machine over SSH, retrieve the IP address using
-<code class="docutils literal notranslate"><span class="pre">virsh</span></code> and use the SSH keys stored in the cache directory:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh --connect qemu:///system domifaddr clipos-testbed_clipos-qemu
-<span class="go"> Name       MAC address          Protocol     Address</span>
-<span class="go">-------------------------------------------------------------------------------</span>
-<span class="go"> vnet2      XX:XX:XX:XX:XX:XX    ipv4         172.27.1.XX/24</span>
-<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_root <span class="se">\</span>
-      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
-      root@172.27.1.XX
-<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_audit <span class="se">\</span>
-      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
-      audit@172.27.1.XX
-<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_admin <span class="se">\</span>
-      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
-      admin@172.27.1.XX
-</pre></div>
-</div>
+<p>Congratulations, you are now ready to <a class="reference internal" href="test.html#test"><span class="std std-ref">test CLIP OS</span></a>.</p>
 </div>
 </div>
 
@@ -329,7 +261,7 @@ paragraph for instructions to create an instrumented build.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="build-steps.html" class="btn btn-neutral float-right" title="Build steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="test.html" class="btn btn-neutral float-right" title="Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="setup.html" class="btn btn-neutral float-left" title="Environment setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

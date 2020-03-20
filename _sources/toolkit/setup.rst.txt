@@ -213,11 +213,16 @@ On Fedora and CentOS:
 
    $ sudo dnf install \
           gnupg git git-lfs openssh-clients podman golang jq zstd \
-          qemu libvirt-devel libvirt-daemon python3-libvirt libguestfs-tools \
-          virt-manager
+          qemu libvirt-devel libvirt-daemon python3-libvirt libvirt-client \
+          libguestfs-tools virt-manager
 
-   # Fedora only
-   $ sudo dnf install swtpm
+   # Vagrant setup for testbed environment
+   $ sudo dnf install vagrant --setopt=install_weak_deps=False
+   $ sudo dnf install @development-tools ruby-devel zlib-devel
+   $ vagrant plugin install vagrant-libvirt
+
+   # Virtual TPM support (Fedora only)
+   $ sudo dnf install swtpm swtpm-tools
 
 .. admonition:: Installing libtpms and swtpm on CentOS
    :class: note
@@ -236,6 +241,10 @@ On Arch Linux:
          gnupg repo git git-lfs openssh podman go jq zstd \
          qemu libvirt bridge-utils dnsmasq ebtables libvirt-python \
          virt-manager
+
+   # Vagrant setup for testbed environment
+   $ sudo pacman -Syu vagrant
+   $ vagrant plugin install vagrant-libvirt
 
 .. admonition:: Installing libguestfs, libtpms and swtpm on Arch Linux
    :class: note

@@ -114,6 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
 </ul>
@@ -373,11 +374,16 @@ Ubuntu and Debian, you will have to follow the instructions from the
 <p>On Fedora and CentOS:</p>
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dnf install <span class="se">\</span>
        gnupg git git-lfs openssh-clients podman golang jq zstd <span class="se">\</span>
-       qemu libvirt-devel libvirt-daemon python3-libvirt libguestfs-tools <span class="se">\</span>
-       virt-manager
+       qemu libvirt-devel libvirt-daemon python3-libvirt libvirt-client <span class="se">\</span>
+       libguestfs-tools virt-manager
 
-<span class="gp">#</span> Fedora only
-<span class="gp">$</span> sudo dnf install swtpm
+<span class="gp">#</span> Vagrant setup <span class="k">for</span> testbed environment
+<span class="gp">$</span> sudo dnf install vagrant --setopt<span class="o">=</span><span class="nv">install_weak_deps</span><span class="o">=</span>False
+<span class="gp">$</span> sudo dnf install @development-tools ruby-devel zlib-devel
+<span class="gp">$</span> vagrant plugin install vagrant-libvirt
+
+<span class="gp">#</span> Virtual TPM support <span class="o">(</span>Fedora only<span class="o">)</span>
+<span class="gp">$</span> sudo dnf install swtpm swtpm-tools
 </pre></div>
 </div>
 <div class="note admonition">
@@ -393,6 +399,10 @@ respective GitHub repositories:
       gnupg repo git git-lfs openssh podman go jq zstd <span class="se">\</span>
       qemu libvirt bridge-utils dnsmasq ebtables libvirt-python <span class="se">\</span>
       virt-manager
+
+<span class="gp">#</span> Vagrant setup <span class="k">for</span> testbed environment
+<span class="gp">$</span> sudo pacman -Syu vagrant
+<span class="gp">$</span> vagrant plugin install vagrant-libvirt
 </pre></div>
 </div>
 <div class="note admonition">

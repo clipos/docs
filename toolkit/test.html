@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Testing &mdash; CLIP OS 5.0.0_beta3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build steps" href="build-steps.html" />
+    <link rel="prev" title="Building" href="build.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CLIP OS
+          
+
+          
+            
+            <img src="../_static/clipos_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.0 (Beta)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">CLIP OS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/security.html">Security objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/kernel.html">Kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/boot_integrity.html">Boot chain and integrity guarantees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/update.html">System updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development environment</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-qemu-virtual-machine-over-ssh">Access to QEMU virtual machine over SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-updates">Testing updates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CLIP OS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Testing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/toolkit/test.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing">
+<span id="test"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<div class="important admonition">
+<p class="first admonition-title">Prerequisite steps</p>
+<p class="last">You must complete the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">environment setup</span></a> and the <a class="reference internal" href="build.html#build"><span class="std std-ref">project
+build</span></a> before executing any command from this page.</p>
+</div>
+<div class="section" id="virtual-testbed-setup">
+<h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to test some functionalities of a CLIP OS system, you will need a
+virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
+</pre></div>
+</div>
+<p>This will setup virtual networks using <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> and create
+a Debian virtual machine running the following services:</p>
+<blockquote>
+<div><ul class="simple">
+<li>IPsec gateway (<code class="docutils literal notranslate"><span class="pre">strongSwan</span></code>)</li>
+<li>Update server (<code class="docutils literal notranslate"><span class="pre">nginx</span></code>)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="building-a-qemu-image-and-running-using-qemu-kvm">
+<h2>Building a QEMU image and running using QEMU/KVM<a class="headerlink" href="#building-a-qemu-image-and-running-using-qemu-kvm" title="Permalink to this headline">¶</a></h2>
+<div class="important admonition">
+<p class="first admonition-title">TPM emulation support</p>
+<p>TPM emulation support (see <a class="reference external" href="https://github.com/stefanberger/libtpms">libtpms</a> and <a class="reference external" href="https://github.com/stefanberger/swtpm">swtpm</a> setup in <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Environment setup</span></a>) is required to test the project under QEMU in the test
+environment.</p>
+<p>Alternatively, you may enable the <code class="docutils literal notranslate"><span class="pre">initramfs-no-require-tpm</span></code>
+instrumentation feature which will allow the initramfs to ask for a
+passphrase at bootup if TPM support is not available:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;initramfs-no-require-tpm&quot;/s/#//g&#39;</span> config.toml
+</pre></div>
+</div>
+<p>The default passphrase is <code class="docutils literal notranslate"><span class="pre">clipos</span></code> (for old builds, it used to be
+<code class="docutils literal notranslate"><span class="pre">core_state_key</span></code>).</p>
+<p class="last">Any change of instrumentation features requires a full project rebuild.</p>
+</div>
+<p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
+machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
+</pre></div>
+</div>
+<div class="important admonition">
+<p class="first admonition-title">Local login disabled by default</p>
+<p>The default build configuration will create production images with root
+access disabled. To enable local passwordless root login, enable the
+<code class="docutils literal notranslate"><span class="pre">passwordless-root-login</span></code> instrumentation feature:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;passwordless-root-login&quot;/s/#//g&#39;</span> config.toml
+</pre></div>
+</div>
+<p class="last">Any change of instrumentation features requires a full project rebuild.</p>
+</div>
+<div class="important admonition">
+<p class="first admonition-title">Workaround for SELinux on Fedora, CentOS and RHEL</p>
+<p>To allow QEMU virtual machines access to files in your home directory, you
+need to turn SELinux into permissive mode for the <code class="docutils literal notranslate"><span class="pre">svirt_t</span></code> domain:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo semanage permissive --add svirt_t
+</pre></div>
+</div>
+<p>This change can be revert with:</p>
+<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo semanage permissive --delete svirt_t
+</pre></div>
+</div>
+</div>
+<div class="important admonition">
+<p class="first admonition-title">Access to <code class="docutils literal notranslate"><span class="pre">testbed/synced_folders</span></code> for QEMU virtual machines</p>
+<p>Make sure that the directory <code class="docutils literal notranslate"><span class="pre">testbed/synced_folders</span></code> used by Vagrant is
+also accessible for everybody:</p>
+<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> chmod o+x ~user<span class="o">{</span>,/clipos<span class="o">{</span>,/testbed<span class="o">{</span>,/synced_folders<span class="o">}}}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="access-to-qemu-virtual-machine-over-ssh">
+<h2>Access to QEMU virtual machine over SSH<a class="headerlink" href="#access-to-qemu-virtual-machine-over-ssh" title="Permalink to this headline">¶</a></h2>
+<div class="important admonition">
+<p class="first admonition-title">Access disabled by default</p>
+<p>The default build configuration will create production images with SSH
+access available only over the IPsec tunnel. To enable SSH access from
+outside the IPsec tunnel, enable the <code class="docutils literal notranslate"><span class="pre">allow-ssh-root-login</span></code>
+instrumentation feature:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;allow-ssh-root-login&quot;/s/#//g&#39;</span> config.toml
+</pre></div>
+</div>
+<p class="last">Any change of instrumentation features requires a full project rebuild.</p>
+</div>
+<p>To access a QEMU virtual machine over SSH, retrieve the IP address using
+<code class="docutils literal notranslate"><span class="pre">virsh</span></code> and use the SSH keys stored in the cache directory:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> virsh --connect qemu:///system domifaddr clipos-testbed_clipos-qemu
+<span class="go"> Name       MAC address          Protocol     Address</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go"> vnet2      XX:XX:XX:XX:XX:XX    ipv4         172.27.1.XX/24</span>
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_root <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      root@172.27.1.XX
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_audit <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      audit@172.27.1.XX
+<span class="gp">$</span> ssh -i cache/clipos/5.0.0-alpha.1/qemu/bundle/ssh_admin <span class="se">\</span>
+      -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null <span class="se">\</span>
+      admin@172.27.1.XX
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-updates">
+<h2>Testing updates<a class="headerlink" href="#testing-updates" title="Permalink to this headline">¶</a></h2>
+<div class="important admonition">
+<p class="first admonition-title">Test updates disabled by default</p>
+<p>The default build configuration will create production images that do not
+include the insecure key used to verify the integrity of test updates. This
+key must not be used in production as the private one is public (included in
+the testbed repository). To include this key in system images and build test
+updates, enable the <code class="docutils literal notranslate"><span class="pre">test-update</span></code> instrumentation feature:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sed -i <span class="s1">&#39;/#&quot;test-update&quot;/s/#//g&#39;</span> config.toml
+</pre></div>
+</div>
+<p class="last">Any change of instrumentation features requires a full project rebuild.</p>
+</div>
+<p>Log in as <code class="docutils literal notranslate"><span class="pre">root</span></code> and start the update process with the following command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl start updater
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="build-steps.html" class="btn btn-neutral float-right" title="Build steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="build.html" class="btn btn-neutral float-left" title="Building" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANSSI. CLIP OS is a trademark of the French Republic. For more details, see the &#34;How to derive this project&#34; section. The contents of this documentation is available under the Open License version 2.0 as published by Etalab (French task force for Open Data)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

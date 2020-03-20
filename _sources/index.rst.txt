@@ -49,6 +49,7 @@ architecture.
    toolkit/quick-try
    toolkit/setup
    toolkit/build
+   toolkit/test
    toolkit/build-steps
    toolkit/source-tree
 
