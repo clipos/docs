@@ -408,15 +408,6 @@ overflows harder to exploit.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_REFCOUNT_FULL=y</code></dt>
-<dd><p>Do extensive checks on reference counting to prevent use-after-free
-conditions. Without this option, on x86, there already is a fast
-assembly-based protection based on the PaX implementation but it does not
-cover all cases.</p>
-</dd></dl>
-
-<dl class="describe">
-<dt>
 <code class="descname">CONFIG_STRICT_MODULE_RWX=y</code></dt>
 <dd><p>Enforce strict memory mappings permissions for loadable kernel modules.</p>
 </dd></dl>
@@ -481,6 +472,13 @@ Rowhammer attack.</p>
 
 <dl class="describe">
 <dt>
+<code class="descname">CONFIG_X86_IOPL_IOPERM=n</code></dt>
+<dd><p>Disable legacy <code class="docutils literal notranslate"><span class="pre">iopl(2)</span></code>  and <code class="docutils literal notranslate"><span class="pre">ioperm(2)</span></code> system calls, which should not
+be used by modern userspace anymore.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
 <code class="descname">CONFIG_MICROCODE=y</code></dt>
 <dd><p>Needed to benefit from microcode updates and thus security fixes (e.g.,
 additional Intel pseudo-MSRs to be used by the kernel as a mitigation for
@@ -540,9 +538,10 @@ techniques.</p>
 
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_X86_INTEL_UMIP=y</code></dt>
-<dd><p>Enable User Mode Instruction Prevention. Note that hardware supporting this
-feature is not common yet.</p>
+<code class="descname">CONFIG_X86_UMIP=y</code></dt>
+<dd><p>Enable User Mode Instruction Prevention to prevent some instructions that
+unnecessarily expose information about the hardware state from being
+executed in user mode.</p>
 </dd></dl>
 
 <dl class="describe">

@@ -184,13 +184,6 @@ General setup
    Virtually-mapped stacks benefit from guard pages, thus making kernel stack
    overflows harder to exploit.
 
-.. describe:: CONFIG_REFCOUNT_FULL=y
-
-   Do extensive checks on reference counting to prevent use-after-free
-   conditions. Without this option, on x86, there already is a fast
-   assembly-based protection based on the PaX implementation but it does not
-   cover all cases.
-
 .. ---
 
 .. describe:: CONFIG_STRICT_MODULE_RWX=y
@@ -239,6 +232,11 @@ Processor type and features
    which may for instance, on systems with ECC memory, reveal an ongoing
    Rowhammer attack.
 
+.. describe:: CONFIG_X86_IOPL_IOPERM=n
+
+   Disable legacy ``iopl(2)``  and ``ioperm(2)`` system calls, which should not
+   be used by modern userspace anymore.
+
 .. describe:: CONFIG_MICROCODE=y
 
    Needed to benefit from microcode updates and thus security fixes (e.g.,
@@ -283,10 +281,11 @@ Processor type and features
    Enable Supervisor Mode Access Prevention to prevent ret2usr exploitation
    techniques.
 
-.. describe:: CONFIG_X86_INTEL_UMIP=y
+.. describe:: CONFIG_X86_UMIP=y
 
-   Enable User Mode Instruction Prevention. Note that hardware supporting this
-   feature is not common yet.
+   Enable User Mode Instruction Prevention to prevent some instructions that
+   unnecessarily expose information about the hardware state from being
+   executed in user mode.
 
 .. describe:: CONFIG_X86_INTEL_MPX=n
 
