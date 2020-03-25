@@ -144,8 +144,9 @@ To access a Vagrant virtual machine over SSH, you can use the ``vagrant ssh``
 command in the testbed directory:
 
 .. code-block:: shell-session
-  $ vagrant ssh ipsec-gw
-  $ sudo -i
+
+   $ vagrant ssh ipsec-gw
+   $ sudo -i
 
 Testing updates
 ---------------
@@ -179,10 +180,11 @@ log in as ``root`` in the Vagrant ipsec-gw virtual machine and list the clients 
 the IPsec side chrony server:
 
 .. code-block:: shell-session
-  # chronyc -h /var/run/chrony-ipsec/chrony-ipsec.sock
-  chronyc> clients
-  Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
-  ===============================================================================
-  foo.example.net                12      0   6   -    23       0      0   -     -
+
+   # chronyc -h /var/run/chrony-ipsec/chrony-ipsec.sock
+   chronyc> clients
+   Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
+   ===============================================================================
+   foo.example.net                12      0   6   -    23       0      0   -     -
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:

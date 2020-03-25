@@ -296,6 +296,10 @@ instrumentation feature:</p>
 <h2>Access to vagrant virtual machine over SSH<a class="headerlink" href="#access-to-vagrant-virtual-machine-over-ssh" title="Permalink to this headline">¶</a></h2>
 <p>To access a Vagrant virtual machine over SSH, you can use the <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ssh</span></code>
 command in the testbed directory:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vagrant ssh ipsec-gw
+<span class="gp">$</span> sudo -i
+</pre></div>
+</div>
 </div>
 <div class="section" id="testing-updates">
 <h2>Testing updates<a class="headerlink" href="#testing-updates" title="Permalink to this headline">¶</a></h2>
@@ -321,6 +325,13 @@ updates, enable the <code class="docutils literal notranslate"><span class="pre"
 <p>In order to test the NTP communication between CLIP OS and the IPsec gateway,
 log in as <code class="docutils literal notranslate"><span class="pre">root</span></code> in the Vagrant ipsec-gw virtual machine and list the clients connected to
 the IPsec side chrony server:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> chronyc -h /var/run/chrony-ipsec/chrony-ipsec.sock
+<span class="go">chronyc&gt; clients</span>
+<span class="go">Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last</span>
+<span class="go">===============================================================================</span>
+<span class="go">foo.example.net                12      0   6   -    23       0      0   -     -</span>
+</pre></div>
+</div>
 </div>
 </div>
 
