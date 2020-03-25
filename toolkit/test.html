@@ -110,7 +110,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#virtual-testbed-setup">Virtual testbed setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-qemu-image-and-running-using-qemu-kvm">Building a QEMU image and running using QEMU/KVM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#access-to-qemu-virtual-machine-over-ssh">Access to QEMU virtual machine over SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-vagrant-virtual-machine-over-ssh">Access to vagrant virtual machine over SSH</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-updates">Testing updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-chrony">Testing chrony</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
@@ -290,6 +292,11 @@ instrumentation feature:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="access-to-vagrant-virtual-machine-over-ssh">
+<h2>Access to vagrant virtual machine over SSH<a class="headerlink" href="#access-to-vagrant-virtual-machine-over-ssh" title="Permalink to this headline">¶</a></h2>
+<p>To access a Vagrant virtual machine over SSH, you can use the <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ssh</span></code>
+command in the testbed directory:</p>
+</div>
 <div class="section" id="testing-updates">
 <h2>Testing updates<a class="headerlink" href="#testing-updates" title="Permalink to this headline">¶</a></h2>
 <div class="important admonition">
@@ -308,6 +315,12 @@ updates, enable the <code class="docutils literal notranslate"><span class="pre"
 <div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl start updater
 </pre></div>
 </div>
+</div>
+<div class="section" id="testing-chrony">
+<h2>Testing chrony<a class="headerlink" href="#testing-chrony" title="Permalink to this headline">¶</a></h2>
+<p>In order to test the NTP communication between CLIP OS and the IPsec gateway,
+log in as <code class="docutils literal notranslate"><span class="pre">root</span></code> in the Vagrant ipsec-gw virtual machine and list the clients connected to
+the IPsec side chrony server:</p>
 </div>
 </div>
 

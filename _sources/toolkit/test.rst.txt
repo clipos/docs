@@ -137,6 +137,16 @@ To access a QEMU virtual machine over SSH, retrieve the IP address using
          -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
          admin@172.27.1.XX
 
+Access to vagrant virtual machine over SSH
+------------------------------------------
+
+To access a Vagrant virtual machine over SSH, you can use the ``vagrant ssh``
+command in the testbed directory:
+
+.. code-block:: shell-session
+  $ vagrant ssh ipsec-gw
+  $ sudo -i
+
 Testing updates
 ---------------
 
@@ -160,5 +170,19 @@ Log in as ``root`` and start the update process with the following command:
 .. code-block:: shell-session
 
   $ systemctl start updater
+
+Testing chrony
+--------------
+
+In order to test the NTP communication between CLIP OS and the IPsec gateway,
+log in as ``root`` in the Vagrant ipsec-gw virtual machine and list the clients connected to
+the IPsec side chrony server:
+
+.. code-block:: shell-session
+  # chronyc -h /var/run/chrony-ipsec/chrony-ipsec.sock
+  chronyc> clients
+  Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
+  ===============================================================================
+  foo.example.net                12      0   6   -    23       0      0   -     -
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:
