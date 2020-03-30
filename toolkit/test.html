@@ -113,6 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#access-to-vagrant-virtual-machine-over-ssh">Access to vagrant virtual machine over SSH</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-updates">Testing updates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-chrony">Testing chrony</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-rsyslog">Testing rsyslog</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
@@ -206,6 +207,8 @@ a Debian virtual machine running the following services:</p>
 <div><ul class="simple">
 <li>IPsec gateway (<code class="docutils literal notranslate"><span class="pre">strongSwan</span></code>)</li>
 <li>Update server (<code class="docutils literal notranslate"><span class="pre">nginx</span></code>)</li>
+<li>Time synchronisation (<code class="docutils literal notranslate"><span class="pre">chrony</span></code>)</li>
+<li>Log forwarding (<code class="docutils literal notranslate"><span class="pre">rsyslog</span></code>)</li>
 </ul>
 </div></blockquote>
 </div>
@@ -330,6 +333,21 @@ the IPsec side chrony server:</p>
 <span class="go">Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last</span>
 <span class="go">===============================================================================</span>
 <span class="go">foo.example.net                12      0   6   -    23       0      0   -     -</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-rsyslog">
+<h2>Testing rsyslog<a class="headerlink" href="#testing-rsyslog" title="Permalink to this headline">¶</a></h2>
+<p>To test journal forwarding between CLIP OS and the IPsec gateway, log in as
+<code class="docutils literal notranslate"><span class="pre">root</span></code> in the CLIP OS virtual machine and create a test log using the
+<code class="docutils literal notranslate"><span class="pre">logger</span></code> command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> logger -p local0.error <span class="s2">&quot;Test error log&quot;</span> <span class="o">&amp;&amp;</span> journalctl -n10
+</pre></div>
+</div>
+<p>Next, log in as <code class="docutils literal notranslate"><span class="pre">root</span></code> in the Vagrant ipsec-gw virtual machine and look for
+the log message we have just created. Logs are stored as json in the
+/var/log/remote folder:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> grep <span class="s1">&#39;Test error log&#39;</span> /var/log/remote/&lt;CLIP OS IP&gt;/journal
 </pre></div>
 </div>
 </div>

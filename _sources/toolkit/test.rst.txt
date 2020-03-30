@@ -29,6 +29,8 @@ a Debian virtual machine running the following services:
 
   * IPsec gateway (``strongSwan``)
   * Update server (``nginx``)
+  * Time synchronisation (``chrony``)
+  * Log forwarding (``rsyslog``)
 
 Building a QEMU image and running using QEMU/KVM
 ------------------------------------------------
@@ -186,5 +188,24 @@ the IPsec side chrony server:
    Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
    ===============================================================================
    foo.example.net                12      0   6   -    23       0      0   -     -
+
+Testing rsyslog
+---------------
+
+To test journal forwarding between CLIP OS and the IPsec gateway, log in as
+``root`` in the CLIP OS virtual machine and create a test log using the
+``logger`` command:
+
+.. code-block:: shell-session
+
+  $ logger -p local0.error "Test error log" && journalctl -n10
+
+Next, log in as ``root`` in the Vagrant ipsec-gw virtual machine and look for
+the log message we have just created. Logs are stored as json in the
+/var/log/remote folder:
+
+.. code-block:: shell-session
+
+  $ grep 'Test error log' /var/log/remote/<CLIP OS IP>/journal
 
 .. vim: set tw=79 ts=2 sts=2 sw=2 et:
