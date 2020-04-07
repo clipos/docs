@@ -391,6 +391,18 @@ Firmware Drivers
    to lock their BIOS with a password, the type of *cold boot attacks* this
    mitigation is supposed to thwart should not be an issue.
 
+Virtualization
+~~~~~~~~~~~~~~
+
+.. describe:: CONFIG_VHOST=n
+
+   The vhost protocol offloads the virtio dataplane implementation to the
+   kernel. This reduces isolation of virtual machines, by getting rid of the
+   existing protocol break and increasing the host kernel attack surface.
+   Note that this option cannot actually be manually toggled as it is
+   automatically selected by other options such as ``CONFIG_VHOST_NET``. As a
+   consequence, blacklisting it prevents all vhost features from being enabled.
+
 Executable file formats / Emulations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
