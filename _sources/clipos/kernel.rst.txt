@@ -391,6 +391,11 @@ Firmware Drivers
    to lock their BIOS with a password, the type of *cold boot attacks* this
    mitigation is supposed to thwart should not be an issue.
 
+.. describe:: CONFIG_EFI_DISABLE_PCI_DMA=y
+
+   Prevent any malicious PCI device from performing DMA attacks while the IOMMU
+   is disabled as part of the handover from system firmware to kernel.
+
 Virtualization
 ~~~~~~~~~~~~~~
 
@@ -474,6 +479,10 @@ Device Drivers
    robust initialization of Linux's CSPRNG is instead achieved thanks to the
    TPM's HWRNG (see documentation of ``CONFIG_HW_RANDOM_TPM`` and the
    ``rng_core.default_quality`` command line parameter).
+
+.. describe:: CONFIG_DRM_LEGACY=n
+
+   Disable old drivers with unfixable security holes.
 
 .. describe:: CONFIG_STAGING=n
 
@@ -951,6 +960,8 @@ Also, note that:
   * a few more *special* objects when allocated: these are the ones for which
     we enable ``init_on_alloc`` as they are not covered by the aforementioned
     combination of ``init_on_free`` and ``SANITIZE_VERIFY`` features.
+* ``efi=disable_early_pci_dma`` is not used as we already set
+  ``CONFIG_EFI_DISABLE_PCI_DMA=y`` in the kernel configuration.
 
 .. rubric:: Citations and origin of some items
 

@@ -664,6 +664,13 @@ to lock their BIOS with a password, the type of <em>cold boot attacks</em> this
 mitigation is supposed to thwart should not be an issue.</p>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_EFI_DISABLE_PCI_DMA=y</code></dt>
+<dd><p>Prevent any malicious PCI device from performing DMA attacks while the IOMMU
+is disabled as part of the handover from system firmware to kernel.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="virtualization">
 <h3>Virtualization<a class="headerlink" href="#virtualization" title="Permalink to this headline">¶</a></h3>
@@ -771,6 +778,12 @@ provided by the bootloader, and included in Linux’s entropy pool. Fast and
 robust initialization of Linux’s CSPRNG is instead achieved thanks to the
 TPM’s HWRNG (see documentation of <code class="docutils literal notranslate"><span class="pre">CONFIG_HW_RANDOM_TPM</span></code> and the
 <code class="docutils literal notranslate"><span class="pre">rng_core.default_quality</span></code> command line parameter).</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_DRM_LEGACY=n</code></dt>
+<dd><p>Disable old drivers with unfixable security holes.</p>
 </dd></dl>
 
 <dl class="describe">
@@ -1372,6 +1385,8 @@ we enable <code class="docutils literal notranslate"><span class="pre">init_on_a
 combination of <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> and <code class="docutils literal notranslate"><span class="pre">SANITIZE_VERIFY</span></code> features.</li>
 </ul>
 </li>
+<li><code class="docutils literal notranslate"><span class="pre">efi=disable_early_pci_dma</span></code> is not used as we already set
+<code class="docutils literal notranslate"><span class="pre">CONFIG_EFI_DISABLE_PCI_DMA=y</span></code> in the kernel configuration.</li>
 </ul>
 <p class="rubric">Citations and origin of some items</p>
 <table class="docutils citation" frame="void" id="linux-hardened" rules="none">
