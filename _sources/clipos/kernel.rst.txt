@@ -69,6 +69,12 @@ General setup
    We do not need ``.config`` to be available at runtime, neither do we need
    access to kernel headers through *sysfs*.
 
+.. describe:: CONFIG_AIO=n
+              CONFIG_IO_URING=n
+
+   Asynchronous I/O mostly targets high-performance applications. It brings a
+   lot of complexity and increases the kernel attack surface.
+
 .. describe:: CONFIG_KALLSYMS=n
 
    Symbols are only useful for debug and attack purposes.

@@ -266,6 +266,15 @@ access to kernel headers through <em>sysfs</em>.</p>
 
 <dl class="describe">
 <dt>
+<code class="descname">CONFIG_AIO=n</code></dt>
+<dt>
+<code class="descname">CONFIG_IO_URING=n</code></dt>
+<dd><p>Asynchronous I/O mostly targets high-performance applications. It brings a
+lot of complexity and increases the kernel attack surface.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
 <code class="descname">CONFIG_KALLSYMS=n</code></dt>
 <dd><p>Symbols are only useful for debug and attack purposes.</p>
 </dd></dl>
