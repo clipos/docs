@@ -184,8 +184,9 @@ On Ubuntu or Debian (with ``contrib`` sources enabled for Debian):
 
    $ sudo apt install \
           gnupg2 repo git git-lfs openssh-client golang jq zstd \
-          qemu libvirt-dev libvirt-daemon python3-libvirt libguestfs-tools \
-          virt-manager gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0
+          qemu qemu-utils libvirt-dev libvirt-daemon python3-libvirt \
+          libguestfs-tools virt-manager gir1.2-spiceclientglib-2.0 \
+          gir1.2-spiceclientgtk-3.0
 
 .. admonition:: Installing Podman or Docker
    :class: note
