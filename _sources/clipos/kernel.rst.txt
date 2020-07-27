@@ -433,6 +433,14 @@ Networking support
 
    Enable TCP syncookies.
 
+.. describe:: CONFIG_TCP_SIMULT_CONNECT_DEFAULT_ON=n
+
+   Disable TCP *simultaneous connect*, which is a weakness in Linux's
+   implementation of TCP that could be used by an attacker to disturb certain
+   connections. This actually sets the default value of the
+   ``net.ipv4.tcp_simult_connect`` sysctl.
+   [linux-hardened]_
+
 Device Drivers
 ~~~~~~~~~~~~~~
 

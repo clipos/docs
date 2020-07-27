@@ -204,9 +204,11 @@ On Ubuntu or Debian (with ``contrib`` sources enabled for Debian):
 
    As there is currently no official package for libtpms and swtpm on
    Ubuntu and Debian, you will have to follow the instructions from the
-   ``INSTALL`` file on their respective GitHub repositories:
-   `libtpms <https://github.com/stefanberger/libtpms>`_ and
-   `swtpm <https://github.com/stefanberger/swtpm>`_.
+   ``INSTALL`` file on their respective GitHub repositories: `libtpms`_
+   and `swtpm`_.
+
+.. _`libtpms`: https://github.com/stefanberger/libtpms
+.. _`swtpm`: https://github.com/stefanberger/swtpm
 
 On Fedora and CentOS:
 
@@ -230,9 +232,7 @@ On Fedora and CentOS:
 
    As there is currently no official package for libtpms and swtpm on CentOS,
    you will have to follow the instructions from the ``INSTALL`` file on their
-   respective GitHub repositories:
-   `libtpms <https://github.com/stefanberger/libtpms>`_ and
-   `swtpm <https://github.com/stefanberger/swtpm>`_.
+   respective GitHub repositories: `libtpms`_ and `swtpm`_.
 
 On Arch Linux:
 
@@ -252,10 +252,10 @@ On Arch Linux:
 
    As there is currently no official package for those packages on Arch Linux,
    you will have to install them using AUR packages:
-   `libguestfs <https://aur.archlinux.org/packages/libguestfs>`_,
-   `libtpms <https://aur.archlinux.org/packages/libtpms>`_,
-   `tpm-tools <https://aur.archlinux.org/packages/tpm-tools>`_ and
-   `swtpm <https://aur.archlinux.org/packages/swtpm>`_.
+   `libguestfs <https://aur.archlinux.org/packages/libguestfs>`__,
+   `libtpms <https://aur.archlinux.org/packages/libtpms>`__,
+   `tpm-tools <https://aur.archlinux.org/packages/tpm-tools>`__ and
+   `swtpm <https://aur.archlinux.org/packages/swtpm>`__.
 
 How to fetch the entire source tree?
 ------------------------------------

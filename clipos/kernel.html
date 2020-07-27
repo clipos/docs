@@ -719,6 +719,16 @@ binaries and interpreted scripts starting with a shebang are enough.</p>
 <dd><p>Enable TCP syncookies.</p>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_TCP_SIMULT_CONNECT_DEFAULT_ON=n</code></dt>
+<dd><p>Disable TCP <em>simultaneous connect</em>, which is a weakness in Linux’s
+implementation of TCP that could be used by an attacker to disturb certain
+connections. This actually sets the default value of the
+<code class="docutils literal notranslate"><span class="pre">net.ipv4.tcp_simult_connect</span></code> sysctl.
+<a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
+</dd></dl>
+
 </div>
 <div class="section" id="device-drivers">
 <h3>Device Drivers<a class="headerlink" href="#device-drivers" title="Permalink to this headline">¶</a></h3>
@@ -970,7 +980,7 @@ heap overflow exploits and information leaks.</p>
 <code class="descname">CONFIG_FORTIFY_SOURCE_STRICT_STRING=n</code></dt>
 <dd><p>This extends <code class="docutils literal notranslate"><span class="pre">FORTIFY_SOURCE</span></code> to intra-object overflow checking. It is
 useful to find bugs but not recommended for a production kernel yet.
-<a class="reference internal" href="#linux-hardened" id="id3">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1066,14 +1076,14 @@ parts of the system containing executable programs).</p>
 <dt>
 <code class="descname">CONFIG_SECURITY_PERF_EVENTS_RESTRICT=y</code></dt>
 <dd><p>See documentation about the <code class="docutils literal notranslate"><span class="pre">kernel.perf_event_paranoid</span></code> sysctl below.
-<a class="reference internal" href="#linux-hardened" id="id4">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">CONFIG_SECURITY_TIOCSTI_RESTRICT=y</code></dt>
 <dd><p>This prevents unprivileged users from using the TIOCSTI ioctl to inject
-commands into other processes that share a tty session. <a class="reference internal" href="#linux-hardened" id="id5">[linux-hardened]</a></p>
+commands into other processes that share a tty session. <a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1112,7 +1122,7 @@ line. See the documentation of these kernel parameters for details.</p>
 <dd><p>Verify that newly allocated pages and slab allocations are zeroed to detect
 write-after-free bugs. This works in concert with <code class="docutils literal notranslate"><span class="pre">init_on_free</span></code> and is
 adjusted to not be redundant with <code class="docutils literal notranslate"><span class="pre">init_on_alloc</span></code>.
-<a class="reference internal" href="#linux-hardened" id="id6">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
 </dd></dl>
 
 </div>
@@ -1152,7 +1162,7 @@ users.</p>
 <code class="descname">kernel.perf_event_paranoid = 3</code></dt>
 <dd><p>This completely disallows unprivileged access to the <code class="docutils literal notranslate"><span class="pre">perf_event_open()</span></code>
 system call. This is actually not needed as we already enable
-<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id7">[linux-hardened]</a></p>
+<code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_PERF_EVENTS_RESTRICT</span></code>. <a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
 <p>Note that this requires a patch included in linux-hardened (see <a class="reference external" href="https://lwn.net/Articles/696216/">here</a> for the reason why it is not upstream).
 Indeed, on a mainline kernel without such a patch, the above is equivalent
 to setting this sysctl to <code class="docutils literal notranslate"><span class="pre">2</span></code>, which would still allow the profiling of
@@ -1163,7 +1173,7 @@ user processes.</p>
 <dt>
 <code class="descname">kernel.tiocsti_restrict = 1</code></dt>
 <dd><p>This is already forced by the <code class="docutils literal notranslate"><span class="pre">CONFIG_SECURITY_TIOCSTI_RESTRICT</span></code> kernel
-configuration option that we enable. <a class="reference internal" href="#linux-hardened" id="id8">[linux-hardened]</a></p>
+configuration option that we enable. <a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
 </dd></dl>
 
 <p>The following two sysctls help mitigating TOCTOU vulnerabilities by preventing
@@ -1211,13 +1221,13 @@ using it:</p>
 <dt>
 <code class="descname">kernel.deny_new_usb = 0</code></dt>
 <dd><p>The management of USB devices is handled at a higher level by CLIP OS.
-<a class="reference internal" href="#linux-hardened" id="id9">[linux-hardened]</a></p>
+<a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
 <dt>
 <code class="descname">kernel.device_sidechannel_restrict = 1</code></dt>
-<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id10">[linux-hardened]</a></p>
+<dd><p>Restrict device timing side channels. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1253,7 +1263,7 @@ separate place.</p>
 <dd><p>This parameter provided by a linux-hardened patch (based on the PaX
 implementation) enables a very simple form of latent entropy extracted
 during system start-up and added to the entropy obtained with
-<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id11">[linux-hardened]</a></p>
+<code class="docutils literal notranslate"><span class="pre">GCC_PLUGIN_LATENT_ENTROPY</span></code>. <a class="reference internal" href="#linux-hardened" id="id12">[linux-hardened]</a></p>
 </dd></dl>
 
 <dl class="describe">
@@ -1401,7 +1411,7 @@ combination of <code class="docutils literal notranslate"><span class="pre">init
 <table class="docutils citation" frame="void" id="linux-hardened" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
+<tr><td class="label">[linux-hardened]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>, <a class="fn-backref" href="#id8">7</a>, <a class="fn-backref" href="#id9">8</a>, <a class="fn-backref" href="#id10">9</a>, <a class="fn-backref" href="#id11">10</a>, <a class="fn-backref" href="#id12">11</a>)</em> This item is provided by the <code class="docutils literal notranslate"><span class="pre">linux-hardened</span></code> patches.</td></tr>
 </tbody>
 </table>
 </div>
