@@ -702,18 +702,21 @@ mitigation is supposed to thwart should not be an issue.</p>
 is disabled as part of the handover from system firmware to kernel.</p>
 </dd></dl>
 
+<dl class="describe">
+<dt>
+<code class="descname">CONFIG_EFI_CUSTOM_SSDT_OVERLAYS=n</code></dt>
+<dd><p>Do not provide means to load arbitrary ACPI tables.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="virtualization">
 <h3>Virtualization<a class="headerlink" href="#virtualization" title="Permalink to this headline">¶</a></h3>
 <dl class="describe">
 <dt>
-<code class="descname">CONFIG_VHOST=n</code></dt>
+<code class="descname">CONFIG_VHOST_MENU=n</code></dt>
 <dd><p>The vhost protocol offloads the virtio dataplane implementation to the
 kernel. This reduces isolation of virtual machines, by getting rid of the
-existing protocol break and increasing the host kernel attack surface.
-Note that this option cannot actually be manually toggled as it is
-automatically selected by other options such as <code class="docutils literal notranslate"><span class="pre">CONFIG_VHOST_NET</span></code>. As a
-consequence, blacklisting it prevents all vhost features from being enabled.</p>
+existing protocol break and increasing the host kernel attack surface.</p>
 </dd></dl>
 
 </div>
