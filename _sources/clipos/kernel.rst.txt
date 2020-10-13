@@ -154,8 +154,7 @@ General setup
       Instrument some kernel code to gather additional (but not
       cryptographically secure) entropy at boot time.
 
-   .. describe:: CONFIG_GCC_PLUGIN_STRUCTLEAK=y
-                 CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y
+   .. describe:: CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL=y
 
       Prevent potential information leakage by forcing zero-initialization of:
 
