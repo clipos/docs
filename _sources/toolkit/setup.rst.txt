@@ -199,6 +199,22 @@ On Ubuntu or Debian (with ``contrib`` sources enabled for Debian):
    * `Docker for Ubuntu <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_
    * `Docker for Debian <https://docs.docker.com/install/linux/docker-ce/debian/>`_
 
+.. admonition:: Using Podman on Debian
+  :class: tip
+
+  **User namespaces** are not enabled by default on Debian but they are
+  required in order to use unprivileged **Podman** containers:
+
+  .. code-block:: shell-session
+
+      $ sudo sysctl kernel.unprivileged_userns_clone=1
+
+  To enable User namespaces permanently:
+
+  .. code-block:: shell-session
+
+      # echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+
 .. admonition:: Installing libtpms and swtpm on Ubuntu or Debian
    :class: note
 

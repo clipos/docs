@@ -364,6 +364,18 @@ guides:</p>
 <li><a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/debian/">Docker for Debian</a></li>
 </ul>
 </div>
+<div class="tip admonition">
+<p class="first admonition-title">Using Podman on Debian</p>
+<p><strong>User namespaces</strong> are not enabled by default on Debian but they are
+required in order to use unprivileged <strong>Podman</strong> containers:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sysctl kernel.unprivileged_userns_clone<span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>To enable User namespaces permanently:</p>
+<div class="last highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s1">&#39;kernel.unprivileged_userns_clone=1&#39;</span> &gt; /etc/sysctl.d/userns.conf
+</pre></div>
+</div>
+</div>
 <div class="note admonition">
 <p class="first admonition-title">Installing libtpms and swtpm on Ubuntu or Debian</p>
 <p class="last">As there is currently no official package for libtpms and swtpm on
