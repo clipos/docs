@@ -29,7 +29,6 @@ project. You may submit patches at `review.clip-os.org
 <https://gerrit-documentation.storage.googleapis.com/Documentation/3.0.1/intro-user.html>`_
 if you are new to Gerrit).
 
-
 .. note::
    A GitHub account is required to log into this Gerrit instance.
 
@@ -40,6 +39,17 @@ if you are new to Gerrit).
    you can not use your GitHub credentials to push changes to
    `review.clip-os.org <https://review.clip-os.org>`_. Git access is only
    provided over HTTPS (i.e. no SSH).
+
+.. note::
+   You should use ``https://review.clip-os.org/clipos/manifest`` as the manifest URL for
+   ``repo init`` (see `toolkit environment setup
+   <https://docs.clip-os.org/toolkit/setup.html#how-to-fetch-the-entire-source-tree>`_).
+
+   You may also init the master branch as follows:
+
+   .. code-block:: shell-session
+
+      $ repo start master --all
 
 Low difficulty issues
 ---------------------
