@@ -160,7 +160,7 @@ your userland:
      To do so, edit the file ``/etc/libvirt/qemu.conf`` and change the values
      for the ``user`` and ``group`` as follows:
 
-     .. code-block:: guess
+     .. code-block:: none
 
         user = "myusername"  # replace with your current username
         group = "kvm"

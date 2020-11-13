@@ -117,6 +117,8 @@
 <li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintaining_portage_tree.html">Maintaining the Portage tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintaining_sdk.html">Maintaining the SDK</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
 <ul>
@@ -328,7 +330,7 @@ libvirt only for the purpose of running CLIP OS QEMU images, you may want
 to run the QEMU processes launched by libvirt as your current user.</p>
 <p>To do so, edit the file <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code> and change the values
 for the <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">group</span></code> as follows:</p>
-<div class="last highlight-guess notranslate"><div class="highlight"><pre><span></span>user = &quot;myusername&quot;  # replace with your current username
+<div class="last highlight-none notranslate"><div class="highlight"><pre><span></span>user = &quot;myusername&quot;  # replace with your current username
 group = &quot;kvm&quot;
 </pre></div>
 </div>

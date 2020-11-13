@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to derive this project &mdash; CLIP OS 5.0.0_beta3 documentation</title>
+  <title>Maintaining the Portage tree &mdash; CLIP OS 5.0.0_beta3 documentation</title>
   
 
   
@@ -39,7 +39,8 @@
   <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="How to contribute" href="contribute.html" /> 
+    <link rel="next" title="Maintaining the SDK" href="maintaining_sdk.html" />
+    <link rel="prev" title="Source tree organization" href="source-tree.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,20 +102,24 @@
 <li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
 <li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="maintaining_portage_tree.html">Maintaining the Portage tree</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Maintaining the Portage tree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fetching-the-upstream-portage-tree">Fetching the upstream Portage tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-the-portage-tree-using-portage-derive">Updating the Portage tree using portage-derive</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="maintaining_sdk.html">Maintaining the SDK</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to derive this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
 </ul>
 
             
@@ -160,13 +165,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>How to derive this project</li>
+      <li>Maintaining the Portage tree</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/toolkit/derive.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/toolkit/maintaining_portage_tree.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,24 +184,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-derive-this-project">
-<span id="derive"></span><h1>How to derive this project<a class="headerlink" href="#how-to-derive-this-project" title="Permalink to this headline">¶</a></h1>
-<p>We designed the project to be extensible and maintainable over time for
-downstream derivative projects.</p>
-<div class="note admonition">
-<p class="first admonition-title">Work in progress</p>
-<p class="last">We will add more information about the way you may extend the CLIP OS
-project with your own changes in a near future.</p>
+  <div class="section" id="maintaining-the-portage-tree">
+<span id="maintaining-portage-tree"></span><h1>Maintaining the Portage tree<a class="headerlink" href="#maintaining-the-portage-tree" title="Permalink to this headline">¶</a></h1>
+<p>CLIP OS leverages the <a class="reference external" href="https://github.com/clipos/src_platform_portage-derive">portage-derive</a>
+tool to efficiently maintain its Portage tree.</p>
+<div class="section" id="fetching-the-upstream-portage-tree">
+<h2>Fetching the upstream Portage tree<a class="headerlink" href="#fetching-the-upstream-portage-tree" title="Permalink to this headline">¶</a></h2>
+<p>First, start by retrieving the latest Gentoo Portage tree using the
+<code class="docutils literal notranslate"><span class="pre">fetch-upstreams</span></code> helper script:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> repo forall src_portage_gentoo --command <span class="s2">&quot;fetch-upstreams.sh&quot;</span>
+</pre></div>
 </div>
-<div class="warning admonition">
-<p class="first admonition-title">CLIP OS trademark</p>
-<p class="last">CLIP OS is a trademark of the French Republic. As a consequence, any use of
-the name “CLIP OS” has to be first authorized by the ANSSI. This does not
-preclude changes to the software posted online and their republication or
-quotation from identifying the original software under the terms of the LGPL
-v2.1+ license.  Regardless, no use of the name “CLIP OS” on a modified
-version should suggest that this version is the original work published by
-the ANSSI.</p>
+<p>This will fetch upstream remote references and update the local
+<code class="docutils literal notranslate"><span class="pre">upstream/gentoo/master</span></code> branch.</p>
+</div>
+<div class="section" id="updating-the-portage-tree-using-portage-derive">
+<h2>Updating the Portage tree using portage-derive<a class="headerlink" href="#updating-the-portage-tree-using-portage-derive" title="Permalink to this headline">¶</a></h2>
+<p>In compliance with the <a class="reference external" href="https://github.com/clipos/src_platform_portage-derive/blob/master/README.md">portage-derive documentation</a>,
+an <em>artificial merge</em> should be started to keep track of the Git history:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> src/portage/gentoo
+<span class="gp">$</span> git checkout autoclean
+<span class="gp">$</span> git merge --no-commit --strategy<span class="o">=</span>ours upstream/gentoo/master
+<span class="gp">$</span> git read-tree -u -m upstream/gentoo/master
+</pre></div>
+</div>
+<p>Next, <strong>enter the SDK</strong> and <strong>equalize</strong> the Portage tree:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk run sdk
+
+<span class="gp">#</span> <span class="nb">cd</span> /mnt/src/portage/gentoo
+<span class="gp">#</span> egencache --update <span class="s2">&quot;--jobs=</span><span class="k">$(($(</span>nproc<span class="k">)</span> <span class="o">+</span> <span class="m">1</span><span class="k">))</span><span class="s2">&quot;</span> --repo<span class="o">=</span>gentoo
+<span class="gp">#</span> portage-derive --portdir . <span class="se">\</span>
+  --profile /mnt/src/portage/clipos/profiles/clipos/arch/amd64/core     <span class="se">\</span>
+  --profile /mnt/src/portage/clipos/profiles/clipos/arch/amd64/efiboot  <span class="se">\</span>
+  --profile /mnt/src/portage/clipos/profiles/clipos/arch/amd64/sdk      <span class="se">\</span>
+  equalize
+</pre></div>
+</div>
+<p><strong>Exit the SDK</strong> and commit the merge:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">exit</span>
+
+<span class="gp">$</span> git add --all
+<span class="gp">$</span> git commit --message<span class="o">=</span><span class="s2">&quot;Merge branch &#39;upstream/gentoo/master&#39; into autoclean&quot;</span>
+</pre></div>
+</div>
+<p>Finally, merge the <em>equalized</em> branch into the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, which
+contains CLIP OS custom changes:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git checkout master
+<span class="gp">$</span> git merge autoclean
+</pre></div>
+</div>
+<p>Manually deal with the remaining merge conflicts, if any.</p>
+<div class="important admonition">
+<p class="first admonition-title">Before going further, make sure to bootstrap a new SDK</p>
+<p class="last">Before rebuilding CLIP OS with the now up-to-date Portage tree, a new SDK
+should be <a class="reference internal" href="maintaining_sdk.html#maintaining-sdk"><span class="std std-ref">rebuilt</span></a>.</p>
+</div>
 </div>
 </div>
 
@@ -208,8 +250,10 @@ the ANSSI.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="maintaining_sdk.html" class="btn btn-neutral float-right" title="Maintaining the SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="contribute.html" class="btn btn-neutral float-left" title="How to contribute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="source-tree.html" class="btn btn-neutral float-left" title="Source tree organization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

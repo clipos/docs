@@ -52,6 +52,8 @@ architecture.
    toolkit/test
    toolkit/build-steps
    toolkit/source-tree
+   toolkit/maintaining_portage_tree
+   toolkit/maintaining_sdk
 
 .. toctree::
    :caption: Contributing

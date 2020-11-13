@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to derive this project &mdash; CLIP OS 5.0.0_beta3 documentation</title>
+  <title>Maintaining the SDK &mdash; CLIP OS 5.0.0_beta3 documentation</title>
   
 
   
@@ -39,7 +39,8 @@
   <link rel="stylesheet" href="../_static/css/colors.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="How to contribute" href="contribute.html" /> 
+    <link rel="next" title="How to contribute" href="contribute.html" />
+    <link rel="prev" title="Maintaining the Portage tree" href="maintaining_portage_tree.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../clipos/development.html">Development and debug</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development environment</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quick-try.html">Quick try guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Environment setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build.html">Building</a></li>
@@ -109,12 +110,17 @@
 <li class="toctree-l1"><a class="reference internal" href="build-steps.html">Build steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-tree.html">Source tree organization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="maintaining_portage_tree.html">Maintaining the Portage tree</a></li>
-<li class="toctree-l1"><a class="reference internal" href="maintaining_sdk.html">Maintaining the SDK</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Maintaining the SDK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#grabbing-a-new-gentoo-stage-3-tarball">Grabbing a new Gentoo stage 3 tarball</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-the-sdk-recipe">Updating the SDK recipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rebuilding-the-sdk-from-scratch">Rebuilding the SDK from scratch</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Contributing</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to contribute</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to derive this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derive.html">How to derive this project</a></li>
 </ul>
 
             
@@ -160,13 +166,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>How to derive this project</li>
+      <li>Maintaining the SDK</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/toolkit/derive.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/toolkit/maintaining_sdk.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,24 +185,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-derive-this-project">
-<span id="derive"></span><h1>How to derive this project<a class="headerlink" href="#how-to-derive-this-project" title="Permalink to this headline">¶</a></h1>
-<p>We designed the project to be extensible and maintainable over time for
-downstream derivative projects.</p>
-<div class="note admonition">
-<p class="first admonition-title">Work in progress</p>
-<p class="last">We will add more information about the way you may extend the CLIP OS
-project with your own changes in a near future.</p>
+  <div class="section" id="maintaining-the-sdk">
+<span id="maintaining-sdk"></span><h1>Maintaining the SDK<a class="headerlink" href="#maintaining-the-sdk" title="Permalink to this headline">¶</a></h1>
+<div class="important admonition">
+<p class="first admonition-title">Before going further, make sure to update the Portage tree</p>
+<p class="last">You should complete the <a class="reference internal" href="maintaining_portage_tree.html#maintaining-portage-tree"><span class="std std-ref">Portage tree update</span></a>
+steps before executing any command from this page.</p>
 </div>
-<div class="warning admonition">
-<p class="first admonition-title">CLIP OS trademark</p>
-<p class="last">CLIP OS is a trademark of the French Republic. As a consequence, any use of
-the name “CLIP OS” has to be first authorized by the ANSSI. This does not
-preclude changes to the software posted online and their republication or
-quotation from identifying the original software under the terms of the LGPL
-v2.1+ license.  Regardless, no use of the name “CLIP OS” on a modified
-version should suggest that this version is the original work published by
-the ANSSI.</p>
+<div class="section" id="grabbing-a-new-gentoo-stage-3-tarball">
+<h2>Grabbing a new Gentoo stage 3 tarball<a class="headerlink" href="#grabbing-a-new-gentoo-stage-3-tarball" title="Permalink to this headline">¶</a></h2>
+<p>In order to obtain the latest Gentoo stage 3 tarball, use the <code class="docutils literal notranslate"><span class="pre">vendor-gentoo-stage3</span></code>
+helper script, which shall store it in <code class="docutils literal notranslate"><span class="pre">assets/gentoo</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> toolkit/helpers/vendor-gentoo-stage3.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-the-sdk-recipe">
+<h2>Updating the SDK recipe<a class="headerlink" href="#updating-the-sdk-recipe" title="Permalink to this headline">¶</a></h2>
+<p>The SDK recipe then <strong>needs</strong> to be updated:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> product/clipos/sdk/sdk.toml
+<span class="go">tag = &lt;portage tree tag&gt;</span>
+<span class="go">rootfs = &quot;assets/gentoo/stage3-amd64-hardened+nomultilib-&lt;portage tree tag&gt;.tar.xz&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebuilding-the-sdk-from-scratch">
+<h2>Rebuilding the SDK from scratch<a class="headerlink" href="#rebuilding-the-sdk-from-scratch" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Remove all <strong>distfiles</strong> from the <code class="docutils literal notranslate"><span class="pre">assets/distfiles</span></code> directory (<strong>and only
+distfiles</strong>, do not delete <code class="docutils literal notranslate"><span class="pre">README.md</span></code> nor hidden configuration files)</li>
+<li>Delete the <code class="docutils literal notranslate"><span class="pre">out/sdk</span></code> and <code class="docutils literal notranslate"><span class="pre">cache/sdk</span></code> directories.</li>
+<li><strong>Disable</strong> all instrumentation features for the SDK build and rebuild the
+SDK:</li>
+</ul>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk bootstrap sdk
+</pre></div>
+</div>
+<p>The resulting SDK can then be employed, for instance, to launch a full project
+rebuild with the up-to-date Portage tree and the desired instrumentation
+features.</p>
 </div>
 </div>
 
@@ -208,8 +235,10 @@ the ANSSI.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="contribute.html" class="btn btn-neutral float-right" title="How to contribute" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="contribute.html" class="btn btn-neutral float-left" title="How to contribute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="maintaining_portage_tree.html" class="btn btn-neutral float-left" title="Maintaining the Portage tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
