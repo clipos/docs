@@ -200,7 +200,7 @@ build</span></a> before executing any command from this page.</p>
 <h2>Virtual testbed setup<a class="headerlink" href="#virtual-testbed-setup" title="Permalink to this headline">¶</a></h2>
 <p>In order to test some functionalities of a CLIP OS system, you will need a
 virtual infrastructure acting as testbed. To setup this infrastructure, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> --setup
 </pre></div>
 </div>
 <p>This will setup virtual networks using <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> and create
@@ -232,7 +232,7 @@ passphrase at bootup if TPM support is not available:</p>
 </div>
 <p>To build a QCOW2 QEMU disk image and to setup a EFI &amp; QEMU/KVM enabled virtual
 machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> --qemu
 </pre></div>
 </div>
 <div class="important admonition">

@@ -24,8 +24,8 @@ To build the documentation and to open it in your browser, run:
 
 .. code-block:: shell-session
 
-   $ cosmk doc build
-   $ cosmk doc open
+   $ cosmk doc --build
+   $ cosmk doc --open
 
 SDK
 ---
@@ -93,7 +93,7 @@ QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
 
 .. code-block:: shell-session
 
-   $ cosmk test qemu
+   $ cosmk test --qemu
 
 Testbed environment setup
 -------------------------
@@ -102,7 +102,7 @@ To setup the virtual testbed environment with ``Vagrant`` and ``libvirt``, use:
 
 .. code-block:: shell-session
 
-  $ cosmk test setup
+  $ cosmk test --setup
 
 Testing the QEMU image
 ----------------------
@@ -111,7 +111,7 @@ To setup a EFI & QEMU/KVM enabled virtual machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   $ cosmk test run
+   $ cosmk test --start
 
 Caching and binary packages
 ---------------------------

@@ -22,7 +22,7 @@ virtual infrastructure acting as testbed. To setup this infrastructure, use:
 
 .. code-block:: shell-session
 
-   $ cosmk test setup
+   $ cosmk test --setup
 
 This will setup virtual networks using ``Vagrant`` with ``libvirt`` and create
 a Debian virtual machine running the following services:
@@ -62,7 +62,7 @@ machine with ``libvirt``, use:
 
 .. code-block:: shell-session
 
-   $ cosmk test qemu
+   $ cosmk test --qemu
 
 .. admonition:: Local login disabled by default
    :class: important

@@ -204,8 +204,8 @@ use directly the instructions from the <a class="reference internal" href="build
 <p>The project documentation is built with Sphinx. The documentation sources are
 available in the <code class="docutils literal notranslate"><span class="pre">docs-src</span></code> directory.</p>
 <p>To build the documentation and to open it in your browser, run:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk doc build
-<span class="gp">$</span> cosmk doc open
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk doc --build
+<span class="gp">$</span> cosmk doc --open
 </pre></div>
 </div>
 </div>
@@ -263,21 +263,21 @@ the configuration to be installed in the system state partition:</p>
 <p>In order to test the resulting OS, we use <code class="docutils literal notranslate"><span class="pre">libguestfs</span></code> tools to assemble a
 QEMU qcow2 disk image to boot inside a EFI enabled virtual machine using
 <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>. The qcow2 QEMU image may be assembled using:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> qemu
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> --qemu
 </pre></div>
 </div>
 </div>
 <div class="section" id="testbed-environment-setup">
 <h2>Testbed environment setup<a class="headerlink" href="#testbed-environment-setup" title="Permalink to this headline">¶</a></h2>
 <p>To setup the virtual testbed environment with <code class="docutils literal notranslate"><span class="pre">Vagrant</span></code> and <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> setup
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> --setup
 </pre></div>
 </div>
 </div>
 <div class="section" id="testing-the-qemu-image">
 <h2>Testing the QEMU image<a class="headerlink" href="#testing-the-qemu-image" title="Permalink to this headline">¶</a></h2>
 <p>To setup a EFI &amp; QEMU/KVM enabled virtual machine with <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>, use:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> run
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cosmk <span class="nb">test</span> --start
 </pre></div>
 </div>
 </div>
